@@ -107,7 +107,7 @@ export default {
         queryContractStatus() {
             this.loading = true
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 fromAddress: this.freezeThawFrom.fromAddress,
                 contractAddress: this.contractAddress,
                 handleType: this.handleFreezeThawType
@@ -142,7 +142,7 @@ export default {
         queryCommitteeList() {
             
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 contractAddress:this.contractAddress,
                
             }
@@ -177,7 +177,7 @@ export default {
         },
         getUserData() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

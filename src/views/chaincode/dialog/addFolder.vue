@@ -95,7 +95,7 @@ export default {
         add: function () {
             let reqData = {
                 contractPath: this.userFolader + this.folderFrom.folderName,
-                groupId: localStorage.getItem("groupId")
+                groupId: localStorage.getItem("groupId1")
             }
             addContractPath(reqData).then(res => {
                 if (res.data.code === 0) {

@@ -175,8 +175,8 @@ export default {
         Bus.$off("addFront")
     },
     mounted: function () {
-        if (localStorage.getItem("groupName")) {
-            this.groupName = localStorage.getItem("groupName");
+        if (localStorage.getItem("groupName1")) {
+            this.groupName = localStorage.getItem("groupName1");
         }
         if (localStorage.getItem("user")) {
             this.accountName = localStorage.getItem("user");
@@ -203,26 +203,26 @@ export default {
                         if (this.updateGroupType === 'update') {
                             this.$nextTick(_ => {
                                 this.groupName = res.data.data[0].groupName;
-                                localStorage.setItem("groupName", res.data.data[0].groupName)
-                                localStorage.setItem("groupId", res.data.data[0].groupId)
+                                localStorage.setItem("groupName1", res.data.data[0].groupName)
+                                localStorage.setItem("groupId1", res.data.data[0].groupId)
                             })
                         }
 
                     } else {
                         this.groupList = [];
-                        localStorage.setItem("groupName", "")
-                        localStorage.setItem("groupId", "")
+                        localStorage.setItem("groupName1", "")
+                        localStorage.setItem("groupId1", "")
                     }
                     if (type && res.data.data && res.data.data.length) {
                         this.groupName = res.data.data[0].groupName;
-                        localStorage.setItem("groupName", res.data.data[0].groupName)
-                        localStorage.setItem("groupId", res.data.data[0].groupId)
-                    } else if (res.data.data && res.data.data.length && !localStorage.getItem("groupName")) {
+                        localStorage.setItem("groupName1", res.data.data[0].groupName)
+                        localStorage.setItem("groupId1", res.data.data[0].groupId)
+                    } else if (res.data.data && res.data.data.length && !localStorage.getItem("groupName1")) {
                         this.groupName = res.data.data[0].groupName;
-                        localStorage.setItem("groupName", res.data.data[0].groupName)
-                        localStorage.setItem("groupId", res.data.data[0].groupId)
-                    } else if (res.data.data && res.data.data.length && localStorage.getItem("groupName")) {
-                        this.groupName = localStorage.getItem("groupName");
+                        localStorage.setItem("groupName1", res.data.data[0].groupName)
+                        localStorage.setItem("groupId1", res.data.data[0].groupId)
+                    } else if (res.data.data && res.data.data.length && localStorage.getItem("groupName1")) {
+                        this.groupName = localStorage.getItem("groupName1");
                     }
                 } else {
                     this.groupList = [];
@@ -231,13 +231,13 @@ export default {
                         type: "error",
                         duration: 2000
                     });
-                    localStorage.setItem("groupName", "")
-                    localStorage.setItem("groupId", "")
+                    localStorage.setItem("groupName1", "")
+                    localStorage.setItem("groupId1", "")
                 }
             }).catch(err => {
                 this.groupList = [];
-                localStorage.setItem("groupName", "")
-                localStorage.setItem("groupId", "")
+                localStorage.setItem("groupName1", "")
+                localStorage.setItem("groupId1", "")
                 this.$message({
                     message: err.data || this.$t('text.systemError'),
                     type: "error",
@@ -258,8 +258,8 @@ export default {
         },
         changeGroup: function (val) {
             this.groupName = val.groupName
-            localStorage.setItem("groupName", val.groupName);
-            localStorage.setItem("groupId", val.groupId);
+            localStorage.setItem("groupName1", val.groupName);
+            localStorage.setItem("groupId1", val.groupId);
             this.$emit('changGroup', val.groupId);
             // this.dialogShow = true;
              Bus.$emit("changGroup", val.groupId);

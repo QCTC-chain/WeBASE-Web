@@ -221,7 +221,7 @@ export default {
 
             var form = {
                 signUserId: this.exportInfo.signUserId,
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
 
             }
             exportPemPrivateKey(form)
@@ -263,7 +263,7 @@ export default {
             var form = {
                 signUserId: this.exportInfo.signUserId,
                 p12Password: Base64.encode(this.keyForm.password),
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
             }
             exportP12PrivateKey(form)
                 .then(res => {

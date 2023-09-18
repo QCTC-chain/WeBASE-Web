@@ -374,7 +374,7 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.getItem("root") === "admin"|| localStorage.getItem("groupId")) {
+    if (localStorage.getItem("root") === "admin"|| localStorage.getItem("groupId1")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -427,7 +427,7 @@ export default {
             this.loading = false;
             let num = 0;
             let versionKey;
-            if (!localStorage.getItem("nodeVersionChange")) {
+            if (!localStorage.getItem("nodeVersionChange1")) {
               for (let i = 0; i < this.frontData.length; i++) {
                 if (
                   res.data.data[i].clientVersion ||
@@ -453,12 +453,12 @@ export default {
                 }
               }
               if (num > 0) {
-                localStorage.setItem("nodeVersionChange", 1);
+                localStorage.setItem("nodeVersionChange1", 1);
               } else {
-                localStorage.setItem("nodeVersionChange", "");
+                localStorage.setItem("nodeVersionChange1", "");
               }
               this.getVersionList();
-              if (localStorage.getItem("nodeVersionChange")) {
+              if (localStorage.getItem("nodeVersionChange1")) {
                 this.$emit("versionChange");
               }
             }
@@ -630,7 +630,7 @@ export default {
     },
     getNodeTable() {
       this.loadingNodes = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,

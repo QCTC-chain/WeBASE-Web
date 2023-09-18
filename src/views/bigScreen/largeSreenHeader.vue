@@ -34,7 +34,7 @@ export default {
     return {
       nowTime1: "",
       nowTime2: "",
-      groupId: localStorage.getItem("groupId"),
+      groupId: localStorage.getItem("groupId1"),
       groupName: "WeBASE数据大屏",
     };
   },

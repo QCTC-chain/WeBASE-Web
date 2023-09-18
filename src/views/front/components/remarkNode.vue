@@ -91,7 +91,7 @@ export default {
           : "",
       },
       nodeId: this.remarkNode.nodeId,
-      groupId: localStorage.getItem("groupId"),
+      groupId: localStorage.getItem("groupId1"),
       deployType: null,
       ruleTest: this.$t("rule.adminRule"),
       rules: {
@@ -139,8 +139,8 @@ export default {
 
   mounted() {
 
-    if (localStorage.getItem("deployType")) {
-      this.deployType = localStorage.getItem("deployType");
+    if (localStorage.getItem("deployType1")) {
+      this.deployType = localStorage.getItem("deployType1");
     } else {
       this.deployType = 0;
     }

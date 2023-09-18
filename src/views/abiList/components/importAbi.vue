@@ -130,7 +130,7 @@ export default {
                 contractName: this.abiForm.contractName,
                 contractAddress: this.abiForm.contractAddress,
                 contractAbi: JSON.parse(this.abiForm.contractAbi),
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 account: localStorage.getItem('user')
             }
             importAbi(data)
@@ -167,7 +167,7 @@ export default {
                     if (value.name && value.type == "function") {
                         let data = {};
                         let methodId;
-                        if (localStorage.getItem("encryptionId") == 1) {
+                        if (localStorage.getItem("encryptionId1") == 1) {
                             methodId = Web3EthAbi.smEncodeFunctionSignature({
                                 name: value.name,
                                 type: value.type,
@@ -187,7 +187,7 @@ export default {
                     } else if (value.name && value.type == "event") {
                         let data = {};
                         let methodId;
-                        if (localStorage.getItem("encryptionId") == 1) {
+                        if (localStorage.getItem("encryptionId1") == 1) {
                             methodId = Web3EthAbi.smEncodeEventSignature({
                                 name: value.name,
                                 type: value.type,
@@ -213,7 +213,7 @@ export default {
         },
         addAbiMethod(list) {
             let data = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 methodList: list
             }
             addFunctionAbi(data).then(res => {

@@ -130,7 +130,7 @@ export default {
         queryPostPermission() {
             this.loading = true;
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 permissionType: this.authorType,
                 tableName: '',
                 fromAddress: this.permissionForm.adminRivateKey,
@@ -165,7 +165,7 @@ export default {
         sureDeleteUser(param) {
             this.loading = true;
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 permissionType: this.authorType,
                 tableName: '',
                 fromAddress: this.permissionForm.adminRivateKey,
@@ -204,7 +204,7 @@ export default {
         },
         getUserData: function () {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };
@@ -245,11 +245,11 @@ export default {
         },
         getAdminAddress() {
             let reqAdminData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 permissionType: this.authorType
             };
             let reqUserData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

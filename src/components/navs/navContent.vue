@@ -90,7 +90,7 @@ export default {
       let pre = this.currentRoute.substring(1);
       this.contents = navContent[pre];
       if (this.$route.path == "/front") {
-        if (localStorage.getItem("deployType")==0) {
+        if (localStorage.getItem("deployType1")==0) {
           this.contents = navContent["newNodes"];
         } else {
           this.contents = navContent["newNode"];

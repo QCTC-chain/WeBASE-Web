@@ -242,7 +242,7 @@ export default {
     },
     mounted: function () {
         this.$nextTick(() => {
-            localStorage.setItem("sidebarHide", false);
+            localStorage.setItem("sidebarHide1", false);
             this.getFrontTable();
             this.changeRouter();
         });
@@ -376,7 +376,7 @@ export default {
                                 it.menuShow = false;
                             }
                             
-                            if ((localStorage.getItem("deployType") == 0||localStorage.getItem("deployType") == null) && it.nameKey == 'hostMgrTitle') {
+                            if ((localStorage.getItem("deployType1") == 0||localStorage.getItem("deployType1") == null) && it.nameKey == 'hostMgrTitle') {
                                 it.menuShow = false;
                             }
                         })
@@ -396,17 +396,17 @@ export default {
                     // if (item.nameKey == 'systemManager') {
                     //     if (item.children) {
                     //         item.children.forEach(it => {
-                    //             if (it.nameKey == 'permission' && localStorage.getItem("nodeVersionChange")) {
+                    //             if (it.nameKey == 'permission' && localStorage.getItem("nodeVersionChange1")) {
                     //                 it.menuShow = false;
                     //             } else if (it.nameKey == 'newPermission') {
                     //                 it.menuShow = true;
                     //             } else {
                     //                 it.menuShow = true;
                     //             }
-                    //             if (it.nameKey == 'newPermission' && !localStorage.getItem("nodeVersionChange")) {
+                    //             if (it.nameKey == 'newPermission' && !localStorage.getItem("nodeVersionChange1")) {
                     //                 it.menuShow = false;
                     //             }
-                    //             if (localStorage.getItem("deployType") == 0 && it.nameKey == 'hostMgrTitle') {
+                    //             if (localStorage.getItem("deployType1") == 0 && it.nameKey == 'hostMgrTitle') {
                     //                 it.menuShow = false;
                     //             }
                     //         })
@@ -432,9 +432,9 @@ export default {
                 this.menuShow = true;
             }
             if (this.$route.path === "contract" && val) {
-                localStorage.setItem("sidebarHide", true);
+                localStorage.setItem("sidebarHide1", true);
             } else {
-                localStorage.setItem("sidebarHide", false);
+                localStorage.setItem("sidebarHide1", false);
             }
         },
         getAdmin: function () { },
@@ -461,9 +461,9 @@ export default {
                                 }
                             }
                             if (num > 0) {
-                                localStorage.setItem("nodeVersionChange", 1)
+                                localStorage.setItem("nodeVersionChange1", 1)
                             } else {
-                                localStorage.setItem("nodeVersionChange", "")
+                                localStorage.setItem("nodeVersionChange1", "")
                             }
 
                         }

@@ -181,16 +181,16 @@ export default {
         }
     },
     mounted() {
-        if ((localStorage.getItem("root") === "admin" || localStorage.getItem("root") === "developer") || localStorage.getItem("groupId")) {
+        if ((localStorage.getItem("root") === "admin" || localStorage.getItem("root") === "developer") || localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getUnusualUserList();
         }
      Bus.$on("changGroup", (item) => {
-          if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+          if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getUnusualUserList();
         }
     })
@@ -212,7 +212,7 @@ export default {
         },
         getUnusualUserList() {
             this.loading = true;
-            let groupId = localStorage.getItem("groupId");
+            let groupId = localStorage.getItem("groupId1");
             let reqData = {
                 groupId: groupId,
                 pageNumber: this.currentPage,

@@ -231,7 +231,7 @@ export default {
             let param = {
                 contractItems: contractItems,
                 contractPath: this.folderName,
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 account: localStorage.getItem('user')
             }
             batchSaveContract(param)
@@ -268,7 +268,7 @@ export default {
         },
         querySaveContract() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 contractName: this.fileItem.contractName,
                 contractPath: this.folderName,
                 contractSource: this.fileItem.contractSource,

@@ -474,7 +474,7 @@ export default {
     },
     getUserData: function () {
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         pageNumber: 1,
         pageSize: 1000,
       };
@@ -551,7 +551,7 @@ export default {
         }
       });
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         user:
           this.constant ||
           this.stateMutability === "view" ||
@@ -651,7 +651,7 @@ export default {
     },
     queryFindCnsInfo() {
       let param = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractAddress: this.data.contractAddress,
       };
       findCnsInfo(param).then((res) => {

@@ -321,7 +321,7 @@ export default {
       let reqQuery = {
         privateKey: Base64.encode(fileString),
         userName: this.keyForm.fileName,
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         description: this.keyForm.description,
         account: localStorage.getItem("user"),
       };
@@ -353,7 +353,7 @@ export default {
       let reqQuery = {
         pemContent: fileContent,
         userName: this.keyForm.fileName,
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         description: this.keyForm.description,
         account: localStorage.getItem("user"),
       };
@@ -386,7 +386,7 @@ export default {
       form.append("userName", this.keyForm.fileName);
       form.append("p12File", param);
       form.append("p12Password", Base64.encode(this.keyForm.password));
-      form.append("groupId", localStorage.getItem("groupId"));
+      form.append("groupId", localStorage.getItem("groupId1"));
       form.append("description", this.keyForm.description);
       form.append("account", localStorage.getItem("user"));
       ImportP12PrivateKey(form)

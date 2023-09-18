@@ -127,7 +127,7 @@ export default {
             activeName: 'first',
             fileList: [],
             fileType: "file-first",
-            encryptionId: localStorage.getItem('encryptionId'),
+            encryptionId: localStorage.getItem('encryptionId1'),
         }
     },
 
@@ -269,7 +269,7 @@ export default {
 
          getUserData: function () {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

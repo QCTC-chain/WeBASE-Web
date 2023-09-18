@@ -126,17 +126,17 @@ export default {
 
 
     mounted() {
-        if (localStorage.getItem("root") === "admin"||localStorage.getItem("groupId")) {
+        if (localStorage.getItem("root") === "admin"||localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getUserData()
             this.getSysConfigList()
         }
     Bus.$on("changGroup", (item) => {
-       if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+       if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getUserData()
             this.getSysConfigList()
         }
@@ -154,7 +154,7 @@ export default {
         },
         getSysConfigList() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: this.currentPage,
                 pageSize: this.pageSize,
             }
@@ -196,7 +196,7 @@ export default {
         },
         getUserData() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };
@@ -242,7 +242,7 @@ export default {
         },
         suremodifyConfig() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 configKey: this.configForm.configKey,
                 configValue: this.configForm.configValue,
                 fromAddress: this.configForm.adminRivateKey,

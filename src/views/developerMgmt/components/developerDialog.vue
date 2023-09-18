@@ -122,7 +122,7 @@ export default {
         sureAddDevOps() {
             this.loading = true
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 fromAddress: this.addDevForm.fromAddress,
                 address: this.addDevForm.address,
             }
@@ -155,7 +155,7 @@ export default {
         sureDeleteDevOps() {
             this.loading = true
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 fromAddress: this.addDevForm.fromAddress,
                 address: this.devOpsAddress,
             }
@@ -187,7 +187,7 @@ export default {
         },
         getUserData() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };
@@ -219,11 +219,11 @@ export default {
         },
         getAdminAddress() {
             let reqAdminData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 permissionType: this.authorType
             };
             let reqUserData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

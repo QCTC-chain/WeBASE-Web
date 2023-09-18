@@ -123,7 +123,7 @@ export default {
         getTransaction: function () {
             this.expands = [];
             this.loading = true;
-            let groupId = localStorage.getItem("groupId");
+            let groupId = localStorage.getItem("groupId1");
             let reqData = {
                 groupId: groupId,
                 pageNumber: this.currentPage,

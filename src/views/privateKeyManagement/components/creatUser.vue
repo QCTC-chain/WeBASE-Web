@@ -69,7 +69,7 @@ export default {
                 publicKey: ""
             },
             timeGranularity: "RIV",
-            groupId: localStorage.getItem("groupId"),
+            groupId: localStorage.getItem("groupId1"),
         };
     },
     computed: {

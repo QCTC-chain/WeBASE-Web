@@ -146,7 +146,7 @@ export default {
             }
         },
         addChaincode: function() {
-            let groupId = localStorage.getItem("groupId");
+            let groupId = localStorage.getItem("groupId1");
             let reqData = {
                 groupId: groupId,
                 contractName: this.filename,

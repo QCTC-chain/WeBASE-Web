@@ -127,7 +127,7 @@ export default {
     methods: {
 
         queryNodeList() {
-            let groupId = localStorage.getItem("groupId");
+            let groupId = localStorage.getItem("groupId1");
 
             p2pNodeList(groupId)
                 .then(res => {

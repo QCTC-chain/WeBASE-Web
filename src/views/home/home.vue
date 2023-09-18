@@ -363,7 +363,7 @@ export default {
         },
       },
       reloadNumber: true,
-      groupId: localStorage.getItem("groupId"),
+      groupId: localStorage.getItem("groupId1"),
       nodeData: [],
       blockData: [],
       transactionList: [],
@@ -371,11 +371,11 @@ export default {
   },
   mounted: function () {
      this.getConfigType();
-    this.groupId = localStorage.getItem("groupId");
+    this.groupId = localStorage.getItem("groupId1");
     if (
       this.groupId ||
-      (localStorage.getItem("configData") == 3 ||
-        localStorage.getItem("deployType") == 0)
+      (localStorage.getItem("configData1") == 3 ||
+        localStorage.getItem("deployType1") == 0)
     ) {            
       this.getNetworkDetails();
       this.getNodeTable();
@@ -408,7 +408,7 @@ export default {
       getDeployType()
         .then((res) => {
           if (res.data.code == 0) {
-            localStorage.setItem("deployType", res.data.data);
+            localStorage.setItem("deployType1", res.data.data);
          
           } else {
             this.$message({
@@ -481,7 +481,7 @@ export default {
       this.chartStatistics.show = false;
       this.chartStatistics.date = [];
       this.chartStatistics.dataArr = [];
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       getChartData(groupId)
         .then((res) => {
           this.loadingCharts = false;
@@ -510,7 +510,7 @@ export default {
     },
     getNodeTable: function () {
       this.loadingNodes = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,
@@ -561,7 +561,7 @@ export default {
     },
     getBlockList: function () {
       this.loadingBlock = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,
@@ -591,7 +591,7 @@ export default {
     },
     getTransaction: function () {
       this.loadingTransaction = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,

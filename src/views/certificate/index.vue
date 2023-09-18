@@ -157,17 +157,17 @@ export default {
     },
 
     mounted() {
-        if (localStorage.getItem("root") === "admin"||localStorage.getItem("groupId")) {
+        if (localStorage.getItem("root") === "admin"||localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getCertList()
         }
         this.queryFronts()
     Bus.$on("changGroup", (item) => {
-    if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+    if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getCertList()
         }
         this.queryFronts()
@@ -311,7 +311,7 @@ export default {
             let list = {
                 pageNumber: this.currentPage,
                 pageSize: this.pageSize,
-                groupId: localStorage.getItem("groupId")
+                groupId: localStorage.getItem("groupId1")
             }
             certList(list).then(res => {
                 this.loading = false;

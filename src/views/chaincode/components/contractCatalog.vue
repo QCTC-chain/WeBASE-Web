@@ -183,16 +183,16 @@ export default {
     if (
       (localStorage.getItem("root") === "admin" ||
         localStorage.getItem("root") === "developer") ||
-      localStorage.getItem("groupId")
+      localStorage.getItem("groupId1")
     ) {
       this.disabled = false;
     } else {
       this.disabled = true;
     }
     if (
-      localStorage.getItem("groupId") ||
-      (localStorage.getItem("configData") == 3 ||
-        localStorage.getItem("deployType") == 0)
+      localStorage.getItem("groupId1") ||
+      (localStorage.getItem("configData1") == 3 ||
+        localStorage.getItem("deployType1") == 0)
     ) {
       this.$nextTick(function () {
         this.getContractPaths();
@@ -563,7 +563,7 @@ export default {
      */
     async saveOneContract(data, type) {
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractName: data.contractName,
         contractPath: data.contractPath,
         contractSource: data.contractSource,
@@ -643,7 +643,7 @@ export default {
      * @param val 合约对象
      */
     getContractPaths(val) {
-      getContractPathList(localStorage.getItem("groupId"))
+      getContractPathList(localStorage.getItem("groupId1"))
         .then((res) => {
           if (res.data.code == 0) {
             this.pathList = res.data.data;
@@ -655,7 +655,7 @@ export default {
                   folderId:
                     new Date().getTime() + this.pathList[i].contractPath,
                   folderActive: false,
-                  groupId: localStorage.getItem("groupId"),
+                  groupId: localStorage.getItem("groupId1"),
                   modifyTime: this.pathList[i].modifyTime,
                 };
                 this.folderList.push(item);
@@ -750,7 +750,7 @@ export default {
      */
     saveContract: function (data, title) {
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractName: data.contractName,
         contractPath: data.contractPath,
         contractSource: data.contractSource,
@@ -800,7 +800,7 @@ export default {
      */
     getContracts: function (path, list) {
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
       };
       try {
         //当用户权限为开发者时，需要传入参数account
@@ -988,7 +988,7 @@ export default {
         return item;
       }, []);
       for (let i = 0; i < list3.length; i++) {
-        if (list3[i].groupId == localStorage.getItem("groupId")) {
+        if (list3[i].groupId == localStorage.getItem("groupId1")) {
           list.push(list3[i]);
         }
       }
@@ -1155,7 +1155,7 @@ export default {
     deleteData: function (val) {
       this.loading = true;
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractId: val.contractId,
       };
       deleteCode(data, {})
@@ -1178,7 +1178,7 @@ export default {
                 arry.push(this.contractArry[i].contractName);
               }
             }
-            // localStorage.setItem("contractList", JSON.stringify(allContractList))
+            // localStorage.setItem("contractList1", JSON.stringify(allContractList))
             this.getContracts(arry);
           } else {
             this.loading = false;
@@ -1214,7 +1214,7 @@ export default {
     deleteFolderData: function (val) {
       this.loading = true;
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractPath: val.contractName,
       };
       deletePath(reqData)
@@ -1244,7 +1244,7 @@ export default {
                 arry.push(this.contractArry[i].contractName);
               }
             }
-            // localStorage.setItem("contractList", JSON.stringify(allContractList))
+            // localStorage.setItem("contractList1", JSON.stringify(allContractList))
             this.getContractPaths(arry);
           } else {
             this.loading = false;
@@ -1302,7 +1302,7 @@ export default {
     sureExportFolderSol(val) {
       this.loading = true;
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractPathList: [val.contractName],
       };
       searchContract(data).then((res) => {

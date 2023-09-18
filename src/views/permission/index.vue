@@ -234,12 +234,12 @@ export default {
     },
 
     mounted() {
-        if (localStorage.getItem("root") === "admin"|| localStorage.getItem("groupId")) {
+        if (localStorage.getItem("root") === "admin"|| localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getUserData()
             this.queryGetPermission();//链管理列表
         }
@@ -259,7 +259,7 @@ export default {
                 permissionType: this.authorType,
                 pageNumber: this.currentPage,
                 pageSize: this.pageSize,
-                groupId: localStorage.getItem("groupId")
+                groupId: localStorage.getItem("groupId1")
             }
             if (this.authorType === 'userTable') {
                 reqData.tableName = this.tableName
@@ -318,7 +318,7 @@ export default {
         },
         getUserData() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };
@@ -390,7 +390,7 @@ export default {
             let list = {
                 pageNumber: this.sortedCurrentPage,
                 pageSize: this.sortedPageSize,
-                groupId: localStorage.getItem("groupId")
+                groupId: localStorage.getItem("groupId1")
             }
             getPermissionSorted(list).then(res => {
                 this.loading = false;
@@ -434,7 +434,7 @@ export default {
         },
         postUpdatePermission(row) {
             let param = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 fromAddress: this.chainAdmin ? this.chainAdmin : row.address,
                 address: row.address,
                 permissionState: {

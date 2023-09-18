@@ -55,12 +55,12 @@ export default {
     return {
       dataV_item: [],
       tradeVar: null,
-      groupId: localStorage.getItem("groupId"),
+      groupId: localStorage.getItem("groupId1"),
       groupVar: null,
       ballArr: [],
       balls: [],
       nodeVar: null,
-      groupMiddle: localStorage.getItem("groupName"),
+      groupMiddle: localStorage.getItem("groupName1"),
       renderOne: null,
     };
   },

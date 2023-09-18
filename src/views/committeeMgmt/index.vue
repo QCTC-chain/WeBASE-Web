@@ -421,12 +421,12 @@ export default {
     },
 
     mounted() {
-        if (localStorage.getItem("root") === "admin"|| localStorage.getItem("groupId")) {
+        if (localStorage.getItem("root") === "admin"|| localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId")) {
+        if (localStorage.getItem("groupId1")) {
             this.queryGetThreshold()
              this.queryCommitteeList()
             this.queryVoteRecordList()
@@ -450,7 +450,7 @@ export default {
         },
         queryGetThreshold() {
             let reqData = {
-                groupId: localStorage.getItem("groupId")
+                groupId: localStorage.getItem("groupId1")
             }
             getThreshold(reqData)
                 .then(res => {
@@ -468,7 +468,7 @@ export default {
         },
         getUserData() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };
@@ -522,7 +522,7 @@ export default {
         },
         queryAddCommittee() {
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 fromAddress: this.governForm.fromAddress,
                 address: this.governForm.address,
             }
@@ -572,7 +572,7 @@ export default {
         },
         queryModifyThreshold() {
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 fromAddress: this.governForm.fromAddress,
                 threshold: this.governForm.threshold
             }
@@ -612,7 +612,7 @@ export default {
                 if (valid) {
                     this.btnLoading = true
                     let reqData = {
-                        groupId: localStorage.getItem('groupId'),
+                        groupId: localStorage.getItem('groupId1'),
                         fromAddress: this.governForm.fromAddress,
                         address: this.governForm.address,
                         weight: this.governForm.weight
@@ -656,7 +656,7 @@ export default {
         },
         queryCommitteeList() {
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 pageNumber: this.currentPage,
                 pageSize: this.pageSize
             }
@@ -700,7 +700,7 @@ export default {
                 if (valid) {
                     this.btnLoading = true
                     let reqData = {
-                        groupId: localStorage.getItem('groupId'),
+                        groupId: localStorage.getItem('groupId1'),
                         fromAddress: this.governForm.fromAddress,
                         address: this.governForm.address,
                     }
@@ -739,7 +739,7 @@ export default {
         },
         queryVoteRecordList() {
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 pageNumber: this.voteCurrentPage,
                 pageSize: this.votePageSize
             }
@@ -823,7 +823,7 @@ export default {
             this.queryVoteRecordList();
         },
         getNetworkDetails() {
-            let groupId = localStorage.getItem('groupId');
+            let groupId = localStorage.getItem('groupId1');
             getNetworkStatistics(groupId)
                 .then(res => {
                     if (res.data.code === 0) {
@@ -886,7 +886,7 @@ export default {
         },
         changeAddress(val) {
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 address: val
             }
             getCommitteeWeight(reqData)

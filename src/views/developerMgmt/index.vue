@@ -87,12 +87,12 @@ export default {
     },
 
     mounted() {
-        if (localStorage.getItem("root") === "admin" || localStorage.getItem("groupId")) {
+        if (localStorage.getItem("root") === "admin" || localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId")) {
+        if (localStorage.getItem("groupId1")) {
             this.queryOperatorList()
             this.getUserData()
         }
@@ -123,7 +123,7 @@ export default {
         },
         queryOperatorList() {
             let reqData = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 pageNumber: this.currentPage,
                 pageSize: this.pageSize
             }
@@ -160,7 +160,7 @@ export default {
         },
         getUserData() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

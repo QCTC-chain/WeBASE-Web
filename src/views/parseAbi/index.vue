@@ -327,7 +327,7 @@ export default {
                 }
             }
             try {
-                if (localStorage.getItem("encryptionId") == 1) {
+                if (localStorage.getItem("encryptionId1") == 1) {
                     this.textarea = web3Abi.smEncodeFunctionCall({
                         name: this.functionValue,
                         type: this.functionType,

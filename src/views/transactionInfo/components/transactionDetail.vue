@@ -197,7 +197,7 @@ export default {
         },
         getContacts: function() {
             let reqdata = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageSize: 1,
                 pageNumber: 1000
             };

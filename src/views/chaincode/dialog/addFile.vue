@@ -106,7 +106,7 @@ export default {
         addPath() {
             let reqData = {
                 contractPath: this.userFolader,
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
             };
             addContractPath(reqData)
                 .then((res) => {
@@ -127,7 +127,7 @@ export default {
                 });
         },
         getContractPaths() {
-            getContractPathList(localStorage.getItem("groupId"))
+            getContractPathList(localStorage.getItem("groupId1"))
                 .then((res) => {
                     if (res.data.code == 0) {
                         this.pathList = res.data.data;
@@ -165,7 +165,7 @@ export default {
                                         new Date().getTime() +
                                         this.pathList[i].contractPath,
                                     folderActive: false,
-                                    groupId: localStorage.getItem("groupId"),
+                                    groupId: localStorage.getItem("groupId1"),
                                     modifyTime: this.pathList[i].modifyTime,
                                 };
                                 this.folderList.push(item);

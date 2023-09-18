@@ -108,7 +108,7 @@ function setMethod(abiFile) {
             if (value.name && value.type == 'function') {
                 let data = {}
                 let methodId;
-                if (localStorage.getItem("encryptionId") == 1) {
+                if (localStorage.getItem("encryptionId1") == 1) {
                     methodId = Web3EthAbi.smEncodeFunctionSignature({
                         name: value.name,
                         type: value.type,
@@ -128,7 +128,7 @@ function setMethod(abiFile) {
             } else if (value.name && value.type == 'event') {
                 let data = {}
                 let methodId;
-                if (localStorage.getItem("encryptionId") == 1) {
+                if (localStorage.getItem("encryptionId1") == 1) {
                     methodId = Web3EthAbi.smEncodeEventSignature({
                         name: value.name,
                         type: value.type,
@@ -156,7 +156,7 @@ function setMethod(abiFile) {
 
 function addAbiMethod(list) {
     let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         methodList: list
     }
     addFunctionAbi(data).then(res => {

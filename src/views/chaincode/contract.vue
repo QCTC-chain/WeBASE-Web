@@ -92,8 +92,8 @@ export default {
       host: location.host,
       protocol: location.protocol,
       subPath: window.__POWERED_BY_QIANKUN__ ? '/child/bcos1' : '',
-      groupId: localStorage.getItem("groupId")
-        ? localStorage.getItem("groupId")
+      groupId: localStorage.getItem("groupId1")
+        ? localStorage.getItem("groupId1")
         : "",
       liquidCheck: false,
       frontList: null,
@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     liquidCheckMethod() {
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       checkIsWasm(this.frontId, groupId)
         .then((res) => {
           if (res.data.data == true) {
@@ -268,7 +268,7 @@ export default {
     querySolcList() {
       for (let i = 0; i < this.allVersion.length; i++) {
         if (
-          localStorage.getItem("encryptionId") == this.allVersion[i].encryptType
+          localStorage.getItem("encryptionId1") == this.allVersion[i].encryptType
         ) {
           this.versionList.push(this.allVersion[i]);
         }
@@ -372,11 +372,11 @@ export default {
     },
     getEncryption: function (callback) {
       this.loading = true;
-      this.groupId = localStorage.getItem("groupId");
+      this.groupId = localStorage.getItem("groupId1");
       encryption(this.groupId)
         .then((res) => {
           if (res.status == 200) {
-            localStorage.setItem("encryptionId", res.data.data);
+            localStorage.setItem("encryptionId1", res.data.data);
             callback();
           } else {
             this.$message({

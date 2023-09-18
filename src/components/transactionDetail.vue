@@ -322,7 +322,7 @@ export default {
     },
     getHashTransactionInfo() {
       let reqdata = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         transHash: this.transHash,
       };
       hashTransactionInfo(reqdata, {})
@@ -355,7 +355,7 @@ export default {
     // decode method
     getMethod: function (id, output) {
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         data: id.substring(0, 10),
       };
       getFunctionAbi(data, {})
@@ -391,7 +391,7 @@ export default {
     getDeloyAbi: function (input, output) {
       if (input && input != "0x") {
         let data = {
-          groupId: localStorage.getItem("groupId"),
+          groupId: localStorage.getItem("groupId1"),
           partOfBytecodeBin: input.substring(2),
         };
         getAbi(data)
@@ -416,7 +416,7 @@ export default {
     },
     getUser: function () {
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         pageNumber: 1,
         pageSize: 1000,
       };
@@ -440,7 +440,7 @@ export default {
     },
     getCreatTime: function (number) {
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         blockNumber: number,
       };
       getBlockDetail(data)
@@ -505,7 +505,7 @@ export default {
     },
     getAdderss: function (to, input) {
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         transHash: this.transHash,
       };
 
@@ -544,7 +544,7 @@ export default {
           return;
         }
         let data = {
-          groupId: localStorage.getItem("groupId"),
+          groupId: localStorage.getItem("groupId1"),
           data: this.eventLog[i].topics[0],
         };
         getFunctionAbi(data)

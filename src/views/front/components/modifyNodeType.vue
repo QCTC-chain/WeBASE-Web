@@ -95,8 +95,8 @@ export default {
     },
 
     mounted() {
-        if (localStorage.getItem("deployType")) {
-            this.deployType = localStorage.getItem("deployType")
+        if (localStorage.getItem("deployType1")) {
+            this.deployType = localStorage.getItem("deployType1")
         } else {
             this.deployType = 0
         }
@@ -153,7 +153,7 @@ export default {
         queryConsensusNodeId() {
             this.loading = true;
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 nodeType: this.modifyForm.nodeType,
                 nodeId: this.modifyNode.nodeId,
                 fromAddress: this.modifyForm.adminRivateKey,
@@ -189,7 +189,7 @@ export default {
         },
         getUserData: function () {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

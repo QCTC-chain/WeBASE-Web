@@ -377,7 +377,7 @@ export default {
             // }else{
             //     this.encryption = 'hash'
             // }
-            localStorage.setItem("encryptionId", res.data.data);
+            localStorage.setItem("encryptionId1", res.data.data);
           } else {
             this.$message({
               message: this.$chooseLang(res.data.code),
@@ -468,7 +468,7 @@ export default {
             this.configData = res.data.data;
             if (res.data.data) {
               this.chainList = res.data.data;
-              localStorage.setItem("configData", res.data.data.chainStatus);
+              localStorage.setItem("configData1", res.data.data.chainStatus);
               if (
                 (res.data.data.chainStatus == 3 ||
                   res.data.data.chainStatus == 2) &&
@@ -483,7 +483,7 @@ export default {
               this.chainList = null;
               clearInterval(this.progressInterval);
               clearInterval(this.frontInterval);
-              localStorage.setItem("configData", 0);
+              localStorage.setItem("configData1", 0);
             }
             this.loadingNodes = false;
             this.getFrontTable();
@@ -676,8 +676,8 @@ export default {
                   path: "/node/chain",
                 });
                 this.$store.dispatch("set_contract_dataList_action", []);
-                localStorage.setItem("contractList", JSON.stringify([]));
-                localStorage.setItem("groupId", null);
+                localStorage.setItem("contractList1", JSON.stringify([]));
+                localStorage.setItem("groupId1", null);
                 this.configData = null;
                 this.loadingNodes = false;
                 this.loading = false;
@@ -808,11 +808,11 @@ export default {
               }
             }
             if (num > 0) {
-              localStorage.setItem("nodeVersionChange", 1);
+              localStorage.setItem("nodeVersionChange1", 1);
             } else {
-              localStorage.setItem("nodeVersionChange", "");
+              localStorage.setItem("nodeVersionChange1", "");
             }
-            if (localStorage.getItem("nodeVersionChange")) {
+            if (localStorage.getItem("nodeVersionChange1")) {
               this.$emit("versionChange");
             }
             this.total = res.data.totalCount;
@@ -849,7 +849,7 @@ export default {
 
     getConsensus: function () {
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         pageNumber: 1,
         pageSize: 100,
       };
@@ -895,14 +895,14 @@ export default {
           if (res.data.code === 0) {
             try {
               if (res.data.data && res.data.data.length) {
-                // if (!localStorage.getItem("groupId")) {
-                //     localStorage.setItem("groupId", res.data.data[0].groupId)
+                // if (!localStorage.getItem("groupId1")) {
+                //     localStorage.setItem("groupId1", res.data.data[0].groupId)
                 // }
-                // if (!localStorage.getItem("groupName")) {
-                //     localStorage.setItem("groupName", res.data.data[0].groupName);
+                // if (!localStorage.getItem("groupName1")) {
+                //     localStorage.setItem("groupName1", res.data.data[0].groupName);
                 // }
-                localStorage.setItem("groupId", res.data.data[0].groupId);
-                localStorage.setItem("groupName", res.data.data[0].groupName);
+                localStorage.setItem("groupId1", res.data.data[0].groupId);
+                localStorage.setItem("groupName1", res.data.data[0].groupName);
                 if (res.data.data.length > 0) {
                   Bus.$emit("changeHeadGroup");
                 }
@@ -1042,7 +1042,7 @@ export default {
 
     getNodeTable() {
       this.loadingNodes = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,

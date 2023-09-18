@@ -113,7 +113,7 @@ export default {
                 endDate: `${format(new Date().getTime(), 'yyyy-MM-dd')}T${format(new Date().getTime(), 'HH:mm:ss')}`,
                 contrastBeginDate: "",
                 contrastEndDate: "",
-                groupId: localStorage.getItem('groupId') ? localStorage.getItem('groupId') : '1'
+                groupId: localStorage.getItem('groupId1') ? localStorage.getItem('groupId1') : '1'
             },
             chartTypeList: [
                 {
@@ -146,10 +146,10 @@ export default {
     mounted() {
         this.getChartData();
         Bus.$on("changeGroup", data => {
-            this.changGroup(localStorage.getItem('groupId'))
+            this.changGroup(localStorage.getItem('groupId1'))
         })
         Bus.$on("chooselanguage", data => {
-            this.changGroup(localStorage.getItem('groupId'))
+            this.changGroup(localStorage.getItem('groupId1'))
         })
     },
     methods: {
@@ -365,7 +365,7 @@ export default {
             this.chartParam.contrastBeginDate = this.contrastBeginDate;
             this.chartParam.contrastEndDate = this.contrastEndDate;
             this.chartParam.gap = this.timeGranularity;
-            this.chartParam.groupId = localStorage.getItem('groupId') ? localStorage.getItem('groupId') : '1';
+            this.chartParam.groupId = localStorage.getItem('groupId1') ? localStorage.getItem('groupId1') : '1';
         }
     }
 };

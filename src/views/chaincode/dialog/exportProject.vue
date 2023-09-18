@@ -243,7 +243,7 @@ export default {
         getUserInfoData() {
             this.loading = true;
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 500
             }, reqQuery = {}
@@ -291,7 +291,7 @@ export default {
         },
         getContractList(row, handleType) {
             const reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 contractPathList: [row.contractPath]
             }
             searchContract(reqData).then(res => {
@@ -407,7 +407,7 @@ export default {
                 group: this.projectFrom.group,
                 artifactName: this.projectFrom.artifactName,
                 frontId: this.projectFrom.frontId,
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 channelIp: this.projectFrom.channelIp,
                 channelPort:this.projectFrom.channelPort
             }

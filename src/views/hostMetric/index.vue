@@ -122,7 +122,7 @@ export default {
                 )}T${format(new Date().getTime(), "HH:mm:ss")}`,
                 contrastBeginDate: "",
                 contrastEndDate: "",
-                groupId: localStorage.getItem('groupId') ? localStorage.getItem('groupId') : '1'
+                groupId: localStorage.getItem('groupId1') ? localStorage.getItem('groupId1') : '1'
             },
             reloadNum: 1,
             metricData: [],
@@ -135,7 +135,7 @@ export default {
         Bus.$off("chooselanguage")
     },
     mounted() {
-        if (localStorage.getItem("groupId") && (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+        if (localStorage.getItem("groupId1") && (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.getFrontTable();
         }
         Bus.$on("changGroup", data => {
@@ -317,7 +317,7 @@ export default {
             this.chartParam.contrastBeginDate = this.contrastBeginDate;
             this.chartParam.contrastEndDate = this.contrastEndDate;
             this.chartParam.gap = this.timeGranularity;
-            this.chartParam.groupId = localStorage.getItem('groupId') ? localStorage.getItem('groupId') : '1';
+            this.chartParam.groupId = localStorage.getItem('groupId1') ? localStorage.getItem('groupId1') : '1';
         }
     }
 };

@@ -113,7 +113,7 @@ export default {
         queryquerySysConfig() {
             this.loading = true;
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 configKey: this.configKey,
                 configValue: this.modifyForm.configValue,
                 fromAddress: this.modifyForm.adminRivateKey,
@@ -145,7 +145,7 @@ export default {
         },
         getUserData: function () {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };

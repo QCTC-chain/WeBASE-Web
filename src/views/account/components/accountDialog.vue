@@ -197,7 +197,7 @@ export default {
             });
         },
         getRoleList: function () {
-            let groupId = localStorage.getItem("groupId");
+            let groupId = localStorage.getItem("groupId1");
             let reqQuery = {};
             reqQuery = {
                 groupId: groupId,
@@ -267,7 +267,7 @@ export default {
                 accountPwd: sha256(this.accountForm.password),
                 roleId: this.accountForm.role,
             };
-            // if(localStorage.getItem("encryptionId") == 1){
+            // if(localStorage.getItem("encryptionId1") == 1){
             //     reqData.accountPwd = "0x" + utils.sha4(this.accountForm.password);
             // }else{
             //     reqData.accountPwd = sha256(this.accountForm.password);
@@ -319,7 +319,7 @@ export default {
                 accountPwd: sha256(this.accountForm.password),
                 roleId: this.accountForm.role,
             };
-            // if(localStorage.getItem("encryptionId") == 1){
+            // if(localStorage.getItem("encryptionId1") == 1){
             //     reqData.accountPwd = "0x" + utils.sha4(this.accountForm.password)
             // }else{
             //     reqData.accountPwd = sha256(this.accountForm.password)
@@ -370,7 +370,7 @@ export default {
                 account: this.accountForm.name,
                 roleId: this.accountForm.role,
             };
-            // if(localStorage.getItem("encryptionId") == 1){
+            // if(localStorage.getItem("encryptionId1") == 1){
             //     reqData.accountPwd = "0x" + utils.sha4(this.accountForm.password)
             // }else{
             //     reqData.accountPwd = sha256(this.accountForm.password)

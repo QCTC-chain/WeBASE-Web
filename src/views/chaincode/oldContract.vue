@@ -204,7 +204,7 @@ export default {
             checkEventResultVisible: false,
             // contractInfo: null,
             checkEventResult: null,
-            groupId: localStorage.getItem("groupId"),
+            groupId: localStorage.getItem("groupId1"),
             mgmtCnsVisible: false,
             mgmtCnsItem: {},
             importVisibility: false,
@@ -218,12 +218,12 @@ export default {
         }
     },
     mounted: function () {
-        if ((localStorage.getItem("root") === "admin" || localStorage.getItem("root") === "developer") || localStorage.getItem("groupId")) {
+        if ((localStorage.getItem("root") === "admin" || localStorage.getItem("root") === "developer") || localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId")) {
+        if (localStorage.getItem("groupId1")) {
             this.getContracts()
         }
           Bus.$on("changGroup", (item) => {
@@ -480,7 +480,7 @@ export default {
         async deleteContractData(val) {
             this.loading = true;
             let data = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 contractId: val.contractId
             }
             await deleteCode(data, {}).then(res => {

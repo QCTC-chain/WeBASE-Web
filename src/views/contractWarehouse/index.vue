@@ -209,7 +209,7 @@ export default {
             let param = {
                 contractItems: contractItems,
                 contractPath: this.folderName,
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 account: localStorage.getItem("user")
             }
             console.log(param);

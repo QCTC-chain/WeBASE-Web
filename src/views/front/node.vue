@@ -147,7 +147,7 @@ export default {
     data() {
         return {
             chainFrom: {
-                encryptType: localStorage.getItem("encryptionId"),
+                encryptType: localStorage.getItem("encryptionId1"),
                 chainVersion: null,
                 dockerImageType: 2
             },

@@ -67,7 +67,7 @@ export default {
             groupList: localStorage.getItem("cluster")
                 ? JSON.parse(localStorage.getItem("cluster"))
                 : [],
-            groupId: localStorage.getItem("groupId"),
+            groupId: localStorage.getItem("groupId1"),
             inputList: []
         }
     },

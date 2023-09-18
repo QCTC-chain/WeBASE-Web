@@ -96,7 +96,7 @@ export default {
                 contractName: this.updateItem.contractName,
                 contractAddress: this.updateItem.contractAddress,
                 contractAbi: JSON.parse(this.abiForm.contractAbi),
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 abiId: this.updateItem.abiId
             }
             updateImportAbi(data)

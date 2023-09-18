@@ -297,7 +297,7 @@ export default {
       this.chartStatistics.show = false;
       this.chartStatistics.date = [];
       this.chartStatistics.dataArr = [];
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       getChartData(groupId)
         .then((res) => {
           this.loadingCharts = false;
@@ -326,7 +326,7 @@ export default {
     },
     getNodeTable: function () {
       this.loadingNodes = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,
@@ -377,7 +377,7 @@ export default {
     },
     getBlockList: function () {
       this.loadingBlock = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,
@@ -407,7 +407,7 @@ export default {
     },
     getTransaction: function () {
       this.loadingTransaction = true;
-      let groupId = localStorage.getItem("groupId");
+      let groupId = localStorage.getItem("groupId1");
       let reqData = {
           groupId: groupId,
           pageNumber: 1,
@@ -440,9 +440,9 @@ export default {
         .then((res) => {
           if (res.data.code === 0) {
             if (res.data.data) {
-              localStorage.setItem("configData", res.data.data.chainStatus);
+              localStorage.setItem("configData1", res.data.data.chainStatus);
             } else {
-              localStorage.setItem("configData", 0);
+              localStorage.setItem("configData1", 0);
             }
             this.getFrontTable();
           } else {
@@ -564,17 +564,17 @@ export default {
                 }
               }
               if (num > 0) {
-                localStorage.setItem("nodeVersionChange", 1);
+                localStorage.setItem("nodeVersionChange1", 1);
               } else {
-                localStorage.setItem("nodeVersionChange", "");
+                localStorage.setItem("nodeVersionChange1", "");
               }
-              // if(localStorage.getItem("nodeVersionChange")){
+              // if(localStorage.getItem("nodeVersionChange1")){
               //     this.$emit("versionChange")
               // }
               this.accountStatus = sessionStorage.getItem("accountStatus");
               this.getVersionList();
               this.getGroupList();
-              if (localStorage.getItem("nodeVersionChange")) {
+              if (localStorage.getItem("nodeVersionChange1")) {
                 this.versionChange();
               }
             } else {
@@ -603,11 +603,11 @@ export default {
         .then((res) => {
           if (res.data.code === 0) {
             if (res.data.data && res.data.data.length) {
-              if (!localStorage.getItem("groupId")) {
-                localStorage.setItem("groupId", res.data.data[0].groupId);
+              if (!localStorage.getItem("groupId1")) {
+                localStorage.setItem("groupId1", res.data.data[0].groupId);
               }
-              if (!localStorage.getItem("groupName")) {
-                localStorage.setItem("groupName", res.data.data[0].groupName);
+              if (!localStorage.getItem("groupName1")) {
+                localStorage.setItem("groupName1", res.data.data[0].groupName);
               }
               this.accountStatus = sessionStorage.getItem("accountStatus");
               if (this.$route.path && this.$route.path !== "/main") {
@@ -654,17 +654,17 @@ export default {
     //                 for(let i = 0; i < this.frontData.length; i++){
     //                     if(this.frontData[i].clientVersion){
     //                         versionKey = this.frontData[i].clientVersion.substring(2,3)
-    //                         if(versionKey > 4 && !localStorage.getItem("nodeVersionChange")){
+    //                         if(versionKey > 4 && !localStorage.getItem("nodeVersionChange1")){
     //                             num ++
     //                         }
     //                     }
     //                 }
     //                 if(num > 0) {
-    //                     localStorage.setItem("nodeVersionChange",1)
+    //                     localStorage.setItem("nodeVersionChange1",1)
     //                 }else{
-    //                     localStorage.setItem("nodeVersionChange","")
+    //                     localStorage.setItem("nodeVersionChange1","")
     //                 }
-    //                 if(localStorage.getItem("nodeVersionChange")){
+    //                 if(localStorage.getItem("nodeVersionChange1")){
     //                     this.$refs.menu.changeRouter();
     //                 }
     //             } else {
@@ -689,11 +689,11 @@ export default {
       encryption()
         .then((res) => {
           if (res.data.code === 0) {
-            if (res.data.data != localStorage.getItem("encryptionId")) {
+            if (res.data.data != localStorage.getItem("encryptionId1")) {
               localStorage.removeItem("solcName");
               localStorage.removeItem("versionId");
             }
-            localStorage.setItem("encryptionId", res.data.data);
+            localStorage.setItem("encryptionId1", res.data.data);
           } else {
             this.$message({
               message: this.$chooseLang(res.data.code),

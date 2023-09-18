@@ -21,8 +21,8 @@ export default {
     },
     created: function () {
         localStorage.removeItem('selectData')
-        if (localStorage.getItem("deployType")) {
-            this.deployType = localStorage.getItem("deployType")
+        if (localStorage.getItem("deployType1")) {
+            this.deployType = localStorage.getItem("deployType1")
         } else {
             this.deployType = 0
         }

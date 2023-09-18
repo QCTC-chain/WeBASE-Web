@@ -101,7 +101,7 @@ export default {
                 toBlock: '',
                 eventName: ''
             },
-            groupId: localStorage.getItem("groupId"),
+            groupId: localStorage.getItem("groupId1"),
             inputList: [],
             addressList: [],
             contractId: '',
@@ -238,12 +238,12 @@ export default {
     created() {
     },
     mounted() {
-        if (localStorage.getItem("groupId")) {
+        if (localStorage.getItem("groupId1")) {
             this.queryInit()
         }
         Bus.$on("changGroup", (item) => {
             this.groupId=item;
-          if (localStorage.getItem("groupId")) {
+          if (localStorage.getItem("groupId1")) {
            this.queryInit()
         }
     })

@@ -333,7 +333,7 @@ export default {
     if (
       localStorage.getItem("root") === "admin" ||
       localStorage.getItem("root") === "developer" ||
-      localStorage.getItem("groupId")
+      localStorage.getItem("groupId1")
     ) {
       this.disabled = false;
     } else {
@@ -935,7 +935,7 @@ export default {
     // todo 保存后加一个Close函数 刷新当前的ID数据
     addContract: function () {
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractName: this.data.contractName,
         contractPath: this.data.contractPath,
         contractSource: this.data.contractSource,
@@ -998,7 +998,7 @@ export default {
           if (value.name && value.type == "function") {
             let data = {};
             let methodId;
-            if (localStorage.getItem("encryptionId") == 1) {
+            if (localStorage.getItem("encryptionId1") == 1) {
               methodId = Web3EthAbi.smEncodeFunctionSignature({
                 name: value.name,
                 type: value.type,
@@ -1018,7 +1018,7 @@ export default {
           } else if (value.name && value.type == "event") {
             let data = {};
             let methodId;
-            if (localStorage.getItem("encryptionId") == 1) {
+            if (localStorage.getItem("encryptionId1") == 1) {
               methodId = Web3EthAbi.smEncodeEventSignature({
                 name: value.name,
                 type: value.type,
@@ -1044,7 +1044,7 @@ export default {
     },
     addAbiMethod: function (list) {
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         methodList: list,
       };
       addFunctionAbi(data)
@@ -1080,7 +1080,7 @@ export default {
       }
       this.loading = true;
       let reqData = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractBin: this.bin,
         bytecodeBin: this.bytecodeBin,
         contractAbi: this.abiFile,
@@ -1147,7 +1147,7 @@ export default {
     },
     queryRegisterCns(val, cns) {
       let param = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractName: this.contractName,
         version: cns.version,
         contractAbi: this.abiFile,
@@ -1256,7 +1256,7 @@ export default {
     },
     queryFindCnsInfo() {
       let param = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         contractAddress: this.data.contractAddress,
       };
       findCnsInfo(param).then((res) => {

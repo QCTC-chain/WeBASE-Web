@@ -176,7 +176,7 @@ export default {
         clearInterval(this.timer)
     },
     mounted() {
-        if (localStorage.getItem("root") === "admin"||localStorage.getItem("groupId")) {
+        if (localStorage.getItem("root") === "admin"||localStorage.getItem("groupId1")) {
             this.disabled = false
         } else {
             this.disabled = true

@@ -67,7 +67,7 @@ export default {
     },
     methods: {
         getContractPaths() {
-            getContractPathList(localStorage.getItem("groupId")).then(res => {
+            getContractPathList(localStorage.getItem("groupId1")).then(res => {
                 if (res.data.code == 0) {
                     var list = res.data.data;
                     this.options = list.filter(item => {

@@ -137,7 +137,7 @@ export default {
     methods: {
         getLocalKeyStores() {
             let reqData = {
-                groupId: localStorage.getItem("groupId"),
+                groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,
                 pageSize: 1000
             };
@@ -204,7 +204,7 @@ export default {
         },
         queryRegisterCns() {
             let param = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 contractName: this.mgmtCnsItem.contractName,
                 version: this.cnsVersionFrom.cnsVersion,
                 contractAbi: this.mgmtCnsItem.contractAbi,
@@ -235,7 +235,7 @@ export default {
         },
         queryFindCnsInfo() {
             let param = {
-                groupId: localStorage.getItem('groupId'),
+                groupId: localStorage.getItem('groupId1'),
                 contractAddress: this.mgmtCnsItem.contractAddress
             }
             findCnsInfo(param)

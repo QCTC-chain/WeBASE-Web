@@ -76,7 +76,7 @@ export default {
     data() {
         return {
             loading: false,
-            groupId: localStorage.getItem("groupId"),
+            groupId: localStorage.getItem("groupId1"),
             reloadNum: 1,
             chartStatistics: {
                 show: true,
@@ -145,7 +145,7 @@ export default {
         this.$nextTick(() => {
             this.chartStatistics.chartSize.width = this.$refs.chart.offsetWidth;
             this.chartStatistics.chartSize.height = this.$refs.chart.offsetHeight;
-            if (localStorage.getItem("groupId") || (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+            if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
                 this.getMonitorTransactionInfo();
                 this.getMonitorUserList();
             }

@@ -104,7 +104,7 @@ export default {
       tradeVar: null,
       cityVar: null,
       lineVar: null,
-      groupId: localStorage.getItem("groupId"),
+      groupId: localStorage.getItem("groupId1"),
       listData: {},
       blockList: [],
       transList: [],
@@ -123,8 +123,8 @@ export default {
         )}`,
         contrastBeginDate: "",
         contrastEndDate: "",
-        groupId: localStorage.getItem("groupId")
-          ? localStorage.getItem("groupId")
+        groupId: localStorage.getItem("groupId1")
+          ? localStorage.getItem("groupId1")
           : "1",
       },
       nodesOptions: [],

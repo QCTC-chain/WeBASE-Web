@@ -42,7 +42,7 @@ export default {
             // handleClick:'',
             // changGroup:'',
             activeName: 0,
-            nodeVersionChange: localStorage.getItem("nodeVersionChange")
+            nodeVersionChange: localStorage.getItem("nodeVersionChange1")
             // nodeVersionChange: ""
         }
     },  
@@ -59,14 +59,14 @@ export default {
         handleClick() {
             if (this.activeName == 0) {
                 this.$refs.committeeMgmt.adminRivateKeyList = [];
-                if (localStorage.getItem("groupId")) {
+                if (localStorage.getItem("groupId1")) {
                     this.$refs.committeeMgmt.queryGetThreshold()
                     this.$refs.committeeMgmt.getUserData()
                     this.$refs.committeeMgmt.queryCommitteeList()
                     this.$refs.committeeMgmt.queryVoteRecordList()
                 }
             } else {
-                if (localStorage.getItem("groupId")) {
+                if (localStorage.getItem("groupId1")) {
                     this.$refs.developerMgmt.queryOperatorList()
                     this.$refs.developerMgmt.getUserData()
                 }
@@ -74,7 +74,7 @@ export default {
         },
         changGroup() {
             if (this.activeName == 0) {
-                if (localStorage.getItem("groupId")) {
+                if (localStorage.getItem("groupId1")) {
                     this.$refs.committeeMgmt.adminRivateKeyList = [];
                     this.$refs.committeeMgmt.queryGetThreshold()
                     this.$refs.committeeMgmt.getUserData()
@@ -82,7 +82,7 @@ export default {
                     this.$refs.committeeMgmt.queryVoteRecordList()
                 }
             } else {
-                if (localStorage.getItem("groupId")) {
+                if (localStorage.getItem("groupId1")) {
                     this.$refs.developerMgmt.queryOperatorList()
                     this.$refs.developerMgmt.getUserData()
                 }
@@ -92,7 +92,7 @@ export default {
       mounted(){
       Bus.$on("changGroup", (item) => {
          if (this.activeName == 0) {
-                if (localStorage.getItem("groupId")) {
+                if (localStorage.getItem("groupId1")) {
                     this.$refs.committeeMgmt.adminRivateKeyList = [];
                     this.$refs.committeeMgmt.queryGetThreshold()
                     this.$refs.committeeMgmt.getUserData()
@@ -100,7 +100,7 @@ export default {
                     this.$refs.committeeMgmt.queryVoteRecordList()
                 }
             } else {
-                if (localStorage.getItem("groupId")) {
+                if (localStorage.getItem("groupId1")) {
                     this.$refs.developerMgmt.queryOperatorList()
                     this.$refs.developerMgmt.getUserData()
                 }

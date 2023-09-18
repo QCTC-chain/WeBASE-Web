@@ -41,7 +41,7 @@ export default {
             pageSize: 10,
             total: 0,
             eventList: [],
-            group: localStorage.getItem('groupId') || null
+            group: localStorage.getItem('groupId1') || null
         }
     },
 
@@ -89,7 +89,7 @@ export default {
         Bus.$on("changGroup", data => {
             this.changeGroup(data)
         })
-        if (this.group && (localStorage.getItem("configData") == 3 || localStorage.getItem("deployType") == 0)) {
+        if (this.group && (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
             this.queryBlockEventList()
         }
     },

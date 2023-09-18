@@ -20,9 +20,9 @@ export default {
         }
     },
     created() {
-        console.log(localStorage.getItem("deployType"))
-        if (localStorage.getItem("deployType")) {
-            this.deployType = localStorage.getItem("deployType")
+        console.log(localStorage.getItem("deployType1"))
+        if (localStorage.getItem("deployType1")) {
+            this.deployType = localStorage.getItem("deployType1")
         } else {
             this.deployType = 0
         }

@@ -227,9 +227,9 @@ export default {
     },
     handleEncryption: function () {
       if (this.encryption == "guomi") {
-        localStorage.setItem("encryptionId", 1);
+        localStorage.setItem("encryptionId1", 1);
       } else {
-        localStorage.setItem("encryptionId", 0);
+        localStorage.setItem("encryptionId1", 0);
       }
     },
     submit: function (formName) {
@@ -283,8 +283,8 @@ export default {
       login(reqData, checkCode, this.authToken)
         .then((res) => {
           if (res.data.code === 0) {
-            localStorage.setItem("groupName", "");
-            localStorage.setItem("groupId", "");
+            localStorage.setItem("groupName1", "");
+            localStorage.setItem("groupId1", "");
             localStorage.setItem("folderList", "");
             localStorage.setItem("user", res.data.data.account);
             localStorage.setItem("root", res.data.data.roleName);
@@ -295,7 +295,7 @@ export default {
             );
             sessionStorage.setItem("reload", 1);
             localStorage.setItem("config", 0);
-            localStorage.setItem("nodeVersionChange", "");
+            localStorage.setItem("nodeVersionChange1", "");
             localStorage.setItem("selectData", "");
             localStorage.setItem("solcName", "");
             localStorage.setItem("versionId", null);
@@ -324,7 +324,7 @@ export default {
             } else {
               this.encryption = "hash";
             }
-            localStorage.setItem("encryptionId", res.data.data);
+            localStorage.setItem("encryptionId1", res.data.data);
           } else {
             this.$message({
               message: this.$chooseLang(res.data.code),
@@ -345,7 +345,7 @@ export default {
       getDeployType()
         .then((res) => {
           if (res.data.code == 0) {
-            localStorage.setItem("deployType", res.data.data);
+            localStorage.setItem("deployType1", res.data.data);
             router.push("/main");
           } else {
             this.$message({

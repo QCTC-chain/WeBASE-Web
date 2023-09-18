@@ -371,7 +371,7 @@ export default {
     decodeEvent: function () {
       for (let i = 0; i < this.transationData.logs.length; i++) {
         let data = {
-          groupId: localStorage.getItem("groupId"),
+          groupId: localStorage.getItem("groupId1"),
           data: this.transationData.logs[i].topics[0],
         };
         getFunctionAbi(data)
@@ -403,7 +403,7 @@ export default {
       //transactionDecode
       decodeInputApi(param) {
       let data = {
-        groupId: localStorage.getItem("groupId"),
+        groupId: localStorage.getItem("groupId1"),
         data: param,
       };
       getFunctionAbi(data)
