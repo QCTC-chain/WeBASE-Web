@@ -24,32 +24,33 @@ const webpackConfig = merge(baseWebpackConfig, {
             usePostCSS: true
         })
     },
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                common: {
-                    name: 'common',
-                    chunks: 'all',
-                    test: /vue/
-                },
-                vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    chunks: 'initial',
-                    name: 'vendors',
-                },
-                'async-vendors': {
-                    test: /[\\/]node_modules[\\/]/,
-                    minChunks: 2,
-                    chunks: 'async',
-                    name: 'async-vendors'
-                }
-            }
-        },
-        runtimeChunk: { name: 'runtime' }
-    },
+    //不做Chunks，会导致index.html里app.js不是最后一个加载的，造成主应用无法从微应用的entry js（src/main.js）中识别出其导出的生命周期钩子
+    // optimization: {
+    //     splitChunks: {
+    //         cacheGroups: {
+    //             common: {
+    //                 name: 'common',
+    //                 chunks: 'all',
+    //                 test: /vue/
+    //             },
+    //             vendors: {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 chunks: 'initial',
+    //                 name: 'vendors',
+    //             },
+    //             'async-vendors': {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 minChunks: 2,
+    //                 chunks: 'async',
+    //                 name: 'async-vendors'
+    //             }
+    //         }
+    //     },
+    //     runtimeChunk: { name: 'runtime' }
+    // },
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
-        publicPath: './',
+        publicPath: config.build.assetsPublicPath,
         path: config.build.assetsRoot,
         filename: utils.assetsPath('js/[name].[chunkhash].js'),
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')

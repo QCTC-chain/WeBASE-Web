@@ -40,8 +40,8 @@
         <div class="menu-wrapper header" :class="{'menu-show': menuShow,'menu-hide': menuHide}">
             <v-menu @sidebarChange="change($event)" :minMenu="show" ref='menu'></v-menu>
         </div>
-         <div class="content">
-      <div
+         <div class="content" :class="{ 'content2': isMicroApp}">
+      <div v-if='!isMicroApp'
         class="menu-wrapper header"
         :class="{ 'menu-show': menuShow, 'menu-hide': menuHide }"
       >
@@ -58,6 +58,7 @@
           'view-hide': menuHide,
           'contentShow': contentShow,
           viewHide: menuHide && contentShow,
+          'micro-app': isMicroApp
         }"
       >
         <router-view class="bg-f7f7f7"></router-view>
@@ -96,6 +97,7 @@ export default {
     },
     data: function () {
         return {
+            isMicroApp: window.__POWERED_BY_QIANKUN__ ? true : false,
             version: "",
             guideShow: false,
             frontShow: false,
@@ -734,5 +736,13 @@ export default {
   height: calc(100vh - 56px);
   padding-top: 56px;
   display: flex;
+}
+.content2 {
+  height: 100%;
+  padding-top: 0px;
+}
+.micro-app {
+  width: 100%;
+  padding-left: 0px;
 }
 </style>

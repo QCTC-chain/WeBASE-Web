@@ -147,7 +147,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-group sidebar-icon',
     children: [{
-        path: '/host',
+        path: '/chain/host',
         component: host,
         name: '主机管理',
         nameKey: "hostMgrTitle",
@@ -157,7 +157,7 @@ const routes = [{
         }
       },
       {
-        path: '/front',
+        path: '/chain/front',
         component: front,
         name: '节点管理',
         nameKey: "nodeTitle",
@@ -229,7 +229,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-heyueguanli sidebar-icon',
     children: [{
-        path: '/contract',
+        path: '/contract/ide',
         component: contract,
         name: '合约IDE',
         nameKey: "contractIDE",
@@ -239,7 +239,7 @@ const routes = [{
         }
       },
       {
-        path: '/contractList',
+        path: '/contract/contractList',
         component: oldContract,
         name: '合约列表',
         nameKey: "contractList",
@@ -249,7 +249,7 @@ const routes = [{
         }
       },
       {
-        path: '/contractWarehouse',
+        path: '/contract/contractWarehouse',
         component: contractWarehouse,
         name: '合约仓库',
         nameKey: 'contractWarehouse',
@@ -270,7 +270,7 @@ const routes = [{
         }
       },
       {
-        path: '/cnsManagement',
+        path: '/contract/cnsManagement',
         component: cnsManagement,
         name: 'CNS查询',
         nameKey: "CNSmanager",
@@ -280,7 +280,7 @@ const routes = [{
         }
       },
       {
-        path: '/CRUDServiceManagement',
+        path: '/contract/CRUDServiceManagement',
         component: CRUDServiceManagement,
         name: 'CRUD',
         nameKey: "CRUDServiceManagement",
@@ -290,7 +290,7 @@ const routes = [{
         }
       },
       {
-        path: '/eventCheck',
+        path: '/contract/eventCheck',
         component: eventCheck,
         name: 'Event 查看',
         nameKey: "checkEvent",
@@ -301,7 +301,7 @@ const routes = [{
       },
       // { path: '/onlineTools', component: onlineTools, name: '在线工具', enName: 'onlineTools', menuShow: true, meta: { requireAuth: false } }, 
       {
-        path: '/toolsContract',
+        path: '/contract/toolsContract',
         component: toolsContract,
         name: '工具合约',
         nameKey: 'toolsContract',
@@ -340,7 +340,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-xitongguanli sidebar-icon',
     children: [{
-        path: '/newPermission',
+        path: '/sys/newPermission',
         component: newPermission,
         name: '权限管理',
         nameKey: "newPermission",
@@ -351,7 +351,7 @@ const routes = [{
       },
       // { path: '/permission', component: permission, name: '权限管理', nameKey: "permission", menuShow: true, meta: { requireAuth: true } },
       {
-        path: '/configManagement',
+        path: '/sys/configManagement',
         component: configManagement,
         name: '配置管理',
         nameKey: "configManager",
@@ -361,7 +361,7 @@ const routes = [{
         }
       },
       {
-        path: '/certificate',
+        path: '/sys/certificate',
         component: certificate,
         name: '证书管理',
         nameKey: "certificate",
@@ -403,7 +403,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-monitor sidebar-icon',
     children: [{
-        path: '/nodesMetric',
+        path: '/monitor/nodesMetric',
         component: nodesMetric,
         name: '节点监控',
         nameKey: "nodesMonitor",
@@ -413,7 +413,7 @@ const routes = [{
         }
       },
       {
-        path: '/hostMetric',
+        path: '/monitor/hostMetric',
         component: hostMetric,
         name: '主机监控',
         nameKey: "hostMonitor",
@@ -423,7 +423,7 @@ const routes = [{
         }
       },
       {
-        path: '/emailAlarm',
+        path: '/monitor/emailAlarm',
         component: emailAlarm,
         name: '邮件告警配置',
         nameKey: "emailAlarm",
@@ -433,7 +433,7 @@ const routes = [{
         }
       },
       {
-        path: '/emailAlarmType',
+        path: '/monitor/emailAlarmType',
         component: emailAlarmType,
         name: '告警类型配置',
         nameKey: "emailAlarmType",
@@ -453,7 +453,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-regulatory sidebar-icon',
     children: [{
-        path: '/transactionCharts',
+        path: '/audit/transactionCharts',
         component: transactionCharts,
         name: '用户交易',
         nameKey: "userTransaction",
@@ -463,7 +463,7 @@ const routes = [{
         }
       },
       {
-        path: '/unusualUser',
+        path: '/audit/unusualUser',
         component: unusualUser,
         name: '异常用户',
         nameKey: "unusualUser",
@@ -473,7 +473,7 @@ const routes = [{
         }
       },
       {
-        path: '/unusualContract',
+        path: '/audit/unusualContract',
         component: unusualContract,
         name: '异常合约',
         nameKey: "unusualContract",
@@ -495,7 +495,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-dingyue sidebar-icon',
     children: [{
-        path: '/blockEvent',
+        path: '/subscribe/blockEvent',
         component: blockEvent,
         name: '出块事件',
         nameKey: "blockEvent",
@@ -505,7 +505,7 @@ const routes = [{
         }
       },
       {
-        path: '/contractEvent',
+        path: '/subscribe/contractEvent',
         component: contractEvent,
         name: '合约Event事件',
         nameKey: "contractEvent",
@@ -538,7 +538,10 @@ const routes = [{
   }
 
 ]
+const base = window.__POWERED_BY_QIANKUN__ ? '/bcos1' : '/'
 const router = new Router({
+  base,
+  mode: 'history',
   routes
 });
 const originalPush = Router.prototype.push;

@@ -11,18 +11,18 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/mgr': {
-                target: 'http://127.0.0.1/', 
+            '/mgr1': {
+                target: 'http://192.168.1.44:5001/',
                 changeOrigin: true,
-                pathRewrite: { 
-                    '^/mgr': ''
+                pathRewrite: {
+                    '^/mgr1': ''
                 }
             },
         },
 
         // Various Dev Server settings
         host: 'localhost', // can be overwritten by process.env.HOST
-        port: 3006, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+        port: 3005, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
         autoOpenBrowser: false,
         errorOverlay: true,
         notifyOnErrors: true,
@@ -53,7 +53,7 @@ module.exports = {
         // Paths
         assetsRoot: path.resolve(__dirname, '../dist'),
         assetsSubDirectory: 'static',
-        assetsPublicPath: './',
+        assetsPublicPath: '/child/bcos1/',
 
         /**
          * Source Maps
@@ -67,7 +67,7 @@ module.exports = {
         // Surge or Netlify already gzip all static assets for you.
         // Before setting to `true`, make sure to:
         // npm install --save-dev compression-webpack-plugin
-        productionGzip: true,
+        productionGzip: false,
         productionGzipExtensions: ['js', 'css'],
 
         // Run the build command with an extra argument to

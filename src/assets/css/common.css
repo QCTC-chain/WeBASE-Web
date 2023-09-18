@@ -51,7 +51,7 @@
 
 .module-wrapper {
     min-width: 540px;
-    /* margin: 0 15px 0 15px; */
+    margin: 15px 15px 15px 15px;
     background-color: #fff;
     box-shadow: 0 4px 12px 0 #dfe2e9;
     border-radius: 10px;
@@ -331,12 +331,15 @@
     border-color: #20D4D9;
     color: #fff;
 }
-
+/*
 .el-button--default {
     border-color: #9da2ab;
     color: #9da2ab;
 }
-
+*/
+.el-button {
+  padding: 8px 15px;
+}
 .el-message-box .el-button--small {
     padding: 11px 20px;
 }
@@ -590,4 +593,15 @@ th {
 
 .el-pager li.active {
     color: #00c1d4
+}
+
+.el-menu {
+  background-color: var(--el-menu-bg-color);
+}
+.el-menu-item {
+  color: var(--el-menu-text-color);
+}
+
+.el-pagination {
+  display: block;
 }
