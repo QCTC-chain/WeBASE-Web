@@ -239,7 +239,7 @@ const routes = [{
         }
       },
       {
-        path: '/contract/contractList',
+        path: '/contract/List',
         component: oldContract,
         name: '合约列表',
         nameKey: "contractList",
@@ -249,7 +249,7 @@ const routes = [{
         }
       },
       {
-        path: '/contract/contractWarehouse',
+        path: '/contract/Warehouse',
         component: contractWarehouse,
         name: '合约仓库',
         nameKey: 'contractWarehouse',
@@ -301,7 +301,7 @@ const routes = [{
       },
       // { path: '/onlineTools', component: onlineTools, name: '在线工具', enName: 'onlineTools', menuShow: true, meta: { requireAuth: false } }, 
       {
-        path: '/contract/toolsContract',
+        path: '/toolsContract',
         component: toolsContract,
         name: '工具合约',
         nameKey: 'toolsContract',

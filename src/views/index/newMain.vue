@@ -738,7 +738,7 @@ export default {
   display: flex;
 }
 .content2 {
-  height: 100%;
+  height: calc(100vh - 1px);
   padding-top: 0px;
 }
 .micro-app {

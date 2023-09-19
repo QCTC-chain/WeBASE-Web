@@ -221,7 +221,7 @@ export default {
                             message: this.$t('text.importSuccessed')
                         })
                         this.$router.push({
-                            path: "/contract",
+                            path: "/contract/ide",
                             query: {
                                 contractPath: this.folderName
                             }
