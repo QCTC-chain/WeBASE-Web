@@ -1,4 +1,12 @@
 /*
+ * @Author: yyzhangyang zy871029@126.com
+ * @Date: 2023-09-14 10:54:38
+ * @LastEditors: yyzhangyang zy871029@126.com
+ * @LastEditTime: 2023-09-20 09:35:42
+ * @FilePath: /WeBASE-Web/src/util/url.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
  * Copyright 2014-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +25,7 @@
 /*mgr*/
 let mgr = process.env.MGR_PATH;
 export default {
-    ORG_LIST: `${mgr}/WeBASE-Node-Manager`,
+    ORG_LIST: `${mgr}/node-mgr`,
     // codeUrl: `${mgr}/webase-node-mgr`
+    HOST_URL: `${mgr}/host-mgr`
 }

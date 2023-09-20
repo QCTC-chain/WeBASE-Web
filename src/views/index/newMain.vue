@@ -79,7 +79,7 @@ import sidebar from "./sidebar";
 import setFront from "./dialog/setFront"
 import guide from "./dialog/guide"
 import contentHead from "@/components/contentHead";
-import { resetPassword, getNodeList, getConsensusNodeId, encryption, getGroupsInvalidIncluded, getFronts, getVersion, refreshFront,getNetworkStatistics,getBlockPage,getTransactionList,} from "@/util/api";
+import { resetPassword, getNodeList, getConsensusNodeId, encryption, getGroupsInvalidIncluded, getFronts, getVersion, refreshFront,getNetworkStatistics,getBlockPage,getTransactionList, getDeployType} from "@/util/api";
 import router from "@/router";
 const sha256 = require("js-sha256").sha256;
 import NavContent from "../../components/navs/navContent.vue";
@@ -199,6 +199,26 @@ export default {
         }
     },
     mounted() {
+        getDeployType()
+        .then((res) => {
+          if (res.data.code == 0) {
+            console.log("!!!!!deployType11:", res.data.data);
+            localStorage.setItem("deployType1", res.data.data);
+          } else {
+            this.$message({
+              message: this.$chooseLang(res.data.code),
+              type: "error",
+              duration: 2000,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: this.$t("text.systemError"),
+            type: "error",
+            duration: 2000,
+          });
+        });
         this.getRefreshFront()
         this.getEncryption();
         this.getGroupList();
@@ -518,7 +538,7 @@ export default {
                         type: "error",
                         duration: 2000
                     });
-                    router.push("/login");
+                    // router.push("/login");
                 }
             }).catch(err => {
                 this.$message({
@@ -526,7 +546,7 @@ export default {
                     type: "error",
                     duration: 2000
                 });
-                router.push("/login");
+                // router.push("/login");
             })
         },
         getFrontTable() {

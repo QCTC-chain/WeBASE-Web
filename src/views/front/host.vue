@@ -167,6 +167,7 @@ export default {
         getHostList() {
             this.loading = true
             getHosts().then(res => {
+                console.lo
                 this.loading = false
                 if (res.data.code === 0) {
                     this.hostList = res.data.data

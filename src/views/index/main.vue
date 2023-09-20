@@ -124,6 +124,7 @@ import {
   getFronts,
   getChainInfo,
   getVersion,
+  getDeployType
 } from "@/util/api";
 import router from "@/router";
 const sha256 = require("js-sha256").sha256;
@@ -237,9 +238,28 @@ export default {
     },
   },
   mounted() {
+    getDeployType()
+        .then((res) => {
+          if (res.data.code == 0) {
+            console.log("!!!!!deployType1:", res.data.data);
+            localStorage.setItem("deployType1", res.data.data);
+          } else {
+            this.$message({
+              message: this.$chooseLang(res.data.code),
+              type: "error",
+              duration: 2000,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: this.$t("text.systemError"),
+            type: "error",
+            duration: 2000,
+          });
+        });
     this.getEncryption();
     this.getConfigList();
-    console.log(1);
     this.contentShow=false;
     let that = this;
     Bus.$on("navIfShow", () => {
@@ -579,10 +599,10 @@ export default {
               }
             } else {
               this.accountStatus = sessionStorage.getItem("accountStatus");
-              router.push("/host");
+              // router.push("/host");
             }
           } else {
-            router.push("/host");
+            // router.push("/host");
             this.$message({
               message: this.$chooseLang(res.data.code),
               type: "error",

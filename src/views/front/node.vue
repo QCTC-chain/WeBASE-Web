@@ -814,7 +814,7 @@ export default {
         },
         getHostList() {
             getHosts().then(res => {
-                if (res.data.code === 0) {
+                if (res.data.code === 0 || res.data.code === 200) {
                     this.hostList = res.data.data;
                     this.changeHostStatus()
                 } else {

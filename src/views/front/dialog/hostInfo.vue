@@ -62,7 +62,7 @@ export default {
         },
         getHosts: function () {
             getHostList().then(res => {
-                if (res.data.code == 0) {
+                if (res.data.code == 0 || res.data.code === 200) {
                     this.tableData = res.data.data
                 } else {
                     this.$message({
