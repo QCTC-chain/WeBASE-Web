@@ -15,7 +15,7 @@
  */
 <template>
   <div class="over-view-wrapper">
-    <!-- <v-content-head :headTitle="$t('title.dataOverview')" @changGroup="changGroup"></v-content-head> -->
+    <nav-menu :headTitle="$t('title.dataOverview')"></nav-menu>
     <div style="margin: 5px">
       <div style="margin: 10px 10px 6px 10px">
         <el-row>
@@ -256,7 +256,7 @@
 </template>
 
 <script>
-import contentHead from "@/components/contentHead";
+import NavMenu from '../../components/navs/navMenu.vue';
 import charts from "./components/chart";
 import {
   getDeployType,
@@ -279,7 +279,7 @@ import Bus from "@/bus";
 export default {
   name: "home",
   components: {
-    "v-content-head": contentHead,
+    'nav-menu':NavMenu,
     "v-chart": charts,
   },
   computed: {

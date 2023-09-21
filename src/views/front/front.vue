@@ -15,17 +15,7 @@
  */
 <template>
   <div class="front-module">
-    <!-- <v-content-head :headTitle="$t('title.nodeTitle')" :headSubTitle="$t('title.nodeTitle')" @changGroup="changGroup" ref='heads'></v-content-head> -->
-    <nav-menu :headTitle="$t('title.nodeTitle')" :headSubTitle="$t('title.nodeTitle')"></nav-menu>
-    <!-- <div class="module-wrapper" >
-            <div class="search-part" style="padding-top: 20px;" v-if='deployShow || (configData && (configData.chainStatus == 3 || configData.chainStatus == 4)) '>
-                    <div class="search-part-left" v-if='!disabled'>
-                        <el-button v-if='deployShow' type="primary" class="search-part-left-btn" @click="deployChain">{{$t('text.deploy')}}</el-button>
-                        <el-button type="primary" class="search-part-left-btn" v-if="configData && configData.chainStatus == 3" @click="createFront">{{$t('text.addNode')}}</el-button>
-                        <el-button type="primary" class="search-part-left-btn" v-if="configData && (configData.chainStatus == 3 || configData.chainStatus == 4)" @click="reset">{{$t('text.reset')}}</el-button>
-                    </div>
-                </div>
-        </div> -->
+    <nav-menu :headTitle="$t('title.nodeTitle')"></nav-menu>
     <div class="module-wrapper">
       <div class="search-part" style="padding-top: 20px;" v-if='!disabled'>
         <div class="search-part-left">
@@ -147,7 +137,6 @@
 </template>
 
 <script>
-import contentHead from "@/components/contentHead";
 import modifyNodeType from "./components/modifyNodeType";
 import {
   getFronts,
@@ -183,7 +172,6 @@ import navMenu from "@/components/navs/navMenu";
 export default {
   name: "node",
   components: {
-    "v-content-head": contentHead,
     "v-setFront": setFront,
     modifyNodeType,
     "add-node": addNode,
@@ -329,6 +317,7 @@ export default {
   },
   beforeDestroy: function () {
     Bus.$off("changeConfig");
+    Bus.$off("changGroup");
     clearInterval(this.frontInterval);
     clearInterval(this.progressInterval);
   },
@@ -341,6 +330,9 @@ export default {
     Bus.$on("changeConfig", (data) => {
       this.getData();
     });
+    Bus.$on("changGroup", data => {
+      this.getConfigList();
+    })
     this.getConfigList();
     this.getData();
   },
@@ -487,7 +479,7 @@ export default {
             }
             this.loadingNodes = false;
             this.getFrontTable();
-            this.getNodeTable();
+            //this.getNodeTable();
           } else {
             clearInterval(this.progressInterval);
             clearInterval(this.frontInterval);
@@ -769,10 +761,6 @@ export default {
       this.getData();
       // this.getProgresses();
     },
-    changGroup() {
-      this.getFrontTable();
-      this.getData();
-    },
     search() {
       this.currentPage = 1;
       this.getFrontTable();
@@ -824,9 +812,9 @@ export default {
             }
             if (this.configData && this.configData.chainStatus == 3) {
               this.getEncryption();
-              this.getGroupList();
+              //this.getGroupList();
               this.getConsensus();
-              this.getVersionList();
+              //this.getVersionList();
             }
           } else {
             this.loadingNodes = false;
@@ -1270,6 +1258,9 @@ debugger</script>
 .guide-content-title {
   display: inline-block;
   color: #000;
+}
+.chain-info >>> .el-form-item {
+  display: block;
 }
 .chain-info >>> .el-form-item__label {
   line-height: 16px;

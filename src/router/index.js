@@ -147,7 +147,7 @@ const routes = [{
     menuShow: true,
     iconCls: 'wbs-icon-group sidebar-icon',
     children: [{
-        path: '/chain/host',
+        path: '/host',
         component: host,
         name: '主机管理',
         nameKey: "hostMgrTitle",
@@ -157,7 +157,7 @@ const routes = [{
         }
       },
       {
-        path: '/chain/front',
+        path: '/front',
         component: front,
         name: '节点管理',
         nameKey: "nodeTitle",

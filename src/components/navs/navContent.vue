@@ -43,13 +43,13 @@ export default {
   mounted() {
     let that = this;
     Bus.$on("navIfShow", () => {
-      console.log(that.contentShow);
+      //console.log(that.contentShow);
       that.contentShow = !that.contentShow;
     });
     Bus.$on("closeNav", () => {
       that.contentShow = true;
     });
-    console.log(navContent);
+    //console.log(navContent);
     this.getContents();
   },
   watch: {

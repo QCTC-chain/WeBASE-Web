@@ -263,7 +263,7 @@ export default {
     this.contentShow=false;
     let that = this;
     Bus.$on("navIfShow", () => {
-      console.log(that.contentShow);
+      //console.log(that.contentShow);
       that.contentShow = !that.contentShow;
     });
       Bus.$on("closeNav", () => {
