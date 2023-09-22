@@ -19,7 +19,6 @@
     <div class="module-wrapper">
       <div class="search-part" style="padding-top: 20px;" v-if='!disabled'>
         <div class="search-part-left">
-          <!-- <el-button v-if='deployShow' type="primary" class="search-part-left-btn" @click="deployChain">{{$t('text.deploy')}}</el-button> -->
           <el-button type="primary" class="search-part-left-btn" :disabled="!(configData && configData.chainStatus == 3)" @click="createFront">{{$t('text.addNode')}}</el-button>
           <el-button type="primary" class="search-part-left-btn" :disabled='!(configData && (configData.chainStatus == 3 || configData.chainStatus == 2))' @click="reset">{{$t('text.reset')}}</el-button>
         </div>
@@ -126,7 +125,6 @@
         <new-node v-if='newNodeShow' :show='newNodeShow' @close='newNodeClose' :data='frontData'></new-node>
         <update-node v-if='updateNodeShow' :show='updateNodeShow' @close='updateNodeClose' @success='updateNodeSuccess'></update-node>
         <!-- <delete-node v-if='deleteNodeShow' :show='deleteNodeShow' @close='deleteNodeClose' :data='nodeData'></delete-node> -->
-        <set-config :show='configShow' v-if='configShow' @close='closeConfig' @success='successConfig'></set-config>
         <host-info v-if='hostInfoShow' :show='hostInfoShow' @close='hostInfoClose'></host-info>
         <el-dialog :title="$t('text.remarks')" :visible.sync="remarkDialogVisible" width="500px" v-if="remarkDialogVisible" center>
           <remark-node @nodeRemarkClose="nodeRemarkClose" @nodeRemarkSuccess="nodeRemarkSuccess" :remarkNode="remarkNode"></remark-node>
@@ -160,7 +158,6 @@ import {
 import { format, unique, dynamicPoint } from "@/util/util";
 import errcode from "@/util/errcode";
 import setFront from "../index/dialog/setFront.vue";
-import setConfig from "../index/dialog/setConfig";
 import addNode from "./dialog/addNode";
 import newNode from "./dialog/newNode";
 import updateNode from "./dialog/updateNode";
@@ -177,15 +174,9 @@ export default {
     "add-node": addNode,
     "new-node": newNode,
     "update-node": updateNode,
-    "set-config": setConfig,
     "host-info": hostInfo,
     remarkNode,
     "nav-menu": navMenu,
-  },
-  watch: {
-    $route() {
-      this.urlQuery = this.$root.$route.query;
-    },
   },
   data() {
     return {
@@ -204,10 +195,8 @@ export default {
       nodesDialogVisible: false,
       nodesDialogTitle: "",
       nodesDialogOptions: {},
-      frontId: null,
       loadingNodes: false,
       nodeData: [],
-      urlQuery: this.$root.$route.query,
       disabled: false,
       modifyNode: {},
       modifyDialogVisible: false,
@@ -222,7 +211,6 @@ export default {
       configShow: false,
       guideShow: false,
       guideImg: guideImg,
-      deployShow: false,
       progressInterval: null,
       statusNumber: null,
       number: 0,
@@ -244,14 +232,26 @@ export default {
         {
           enName: "frontPort",
           name: this.$t("nodes.frontPort"),
+          width: 100,
+        },
+        {
+          enName: "p2pPort",
+          name: 'P2P' + this.$t("alarm.port"),
+          width: 100,
+        },
+        {
+          enName: "channelPort",
+          name: 'Channel' + this.$t("alarm.port"),
+          width: 100,
+        },
+        {
+          enName: "jsonrpcPort",
+          name: 'RPC' + this.$t("alarm.port"),
+          width: 100,
         },
         {
           enName: "nodeId",
           name: this.$t("home.nodeId"),
-        },
-        {
-          enName: "clientVersion",
-          name: this.$t("nodes.version"),
         },
         {
           enName: "agency",
@@ -264,52 +264,17 @@ export default {
         {
           enName: "status",
           name: this.$t("home.status"),
-          width: 100,
+          width: 80,
         },
         {
           enName: "nodeType",
           name: this.$t("nodes.nodeStyle"),
-          width: 100,
+          width: 80,
         },
         {
           enName: "operate",
           name: this.$t("nodes.operation"),
           width: 180,
-        },
-      ];
-      return data;
-    },
-    nodeHead() {
-      let data = [
-        {
-          enName: "nodeId",
-          name: this.$t("home.nodeId"),
-          width: "",
-        },
-        {
-          enName: "nodeType",
-          name: this.$t("nodes.nodeStyle"),
-          width: 180,
-        },
-        {
-          enName: "blockNumber",
-          name: this.$t("home.blockHeight"),
-          width: 180,
-        },
-        {
-          enName: "pbftView",
-          name: "pbftView",
-          width: 180,
-        },
-        {
-          enName: "nodeActive",
-          name: this.$t("home.status"),
-          width: 150,
-        },
-        {
-          enName: "operate",
-          name: this.$t("nodes.operation"),
-          width: 150,
         },
       ];
       return data;
@@ -331,9 +296,9 @@ export default {
       this.getData();
     });
     Bus.$on("changGroup", data => {
-      this.getConfigList();
+      this.getFrontTable();
     })
-    this.getConfigList();
+    //this.getConfigList();
     this.getData();
   },
   methods: {
@@ -360,32 +325,6 @@ export default {
     openHostInfo: function () {
       this.hostInfoShow = true;
     },
-    getEncryption: function () {
-      encryption()
-        .then((res) => {
-          if (res.data.code === 0) {
-            // if(res.data.data == 1){
-            //     this.encryption = 'guomi'
-            // }else{
-            //     this.encryption = 'hash'
-            // }
-            localStorage.setItem("encryptionId1", res.data.data);
-          } else {
-            this.$message({
-              message: this.$chooseLang(res.data.code),
-              type: "error",
-              duration: 2000,
-            });
-          }
-        })
-        .catch((err) => {
-          this.$message({
-            message: err.data || this.$t("text.systemError"),
-            type: "error",
-            duration: 2000,
-          });
-        });
-    },
     // 动态小数点
     getProgresses: function (val) {
       clearInterval(this.progressInterval);
@@ -398,19 +337,6 @@ export default {
           this.loadingTxt = dynamicPoint(this.$t("text.loading"), number);
         }
       }, 500);
-    },
-    deployChain: function () {
-      this.configShow = true;
-    },
-    closeConfig: function () {
-      this.configShow = false;
-      this.getData();
-    },
-    successConfig: function () {
-      this.configShow = false;
-      this.getData();
-      localStorage.setItem("config", 1);
-      // this.getProgresses()
     },
     getData: function () {
       this.number = 0;
@@ -767,11 +693,12 @@ export default {
     },
     getFrontTable() {
       let reqData = {
-        frontId: this.frontId,
+        groupId: localStorage.getItem("groupId1"),
       };
       getFronts(reqData)
         .then((res) => {
           if (res.data.code === 0) {
+            /*
             let num = 0;
             let versionKey;
             for (let i = 0; i < res.data.data.length; i++) {
@@ -803,16 +730,10 @@ export default {
             if (localStorage.getItem("nodeVersionChange1")) {
               this.$emit("versionChange");
             }
+            */
             this.total = res.data.totalCount;
             this.frontData = res.data.data || [];
-            if (this.frontData.length == 0) {
-              this.deployShow = true;
-            } else {
-              this.deployShow = false;
-            }
             if (this.configData && this.configData.chainStatus == 3) {
-              this.getEncryption();
-              //this.getGroupList();
               this.getConsensus();
               //this.getVersionList();
             }
@@ -869,44 +790,6 @@ export default {
         })
         .catch((err) => {
           clearInterval(this.frontInterval);
-          this.$message({
-            message: err.data || this.$t("text.systemError"),
-            type: "error",
-            duration: 2000,
-          });
-        });
-    },
-    getGroupList: function () {
-      let _this = this;
-      getGroupsInvalidIncluded()
-        .then((res) => {
-          if (res.data.code === 0) {
-            try {
-              if (res.data.data && res.data.data.length) {
-                // if (!localStorage.getItem("groupId1")) {
-                //     localStorage.setItem("groupId1", res.data.data[0].groupId)
-                // }
-                // if (!localStorage.getItem("groupName1")) {
-                //     localStorage.setItem("groupName1", res.data.data[0].groupName);
-                // }
-                localStorage.setItem("groupId1", res.data.data[0].groupId);
-                localStorage.setItem("groupName1", res.data.data[0].groupName);
-                if (res.data.data.length > 0) {
-                  Bus.$emit("changeHeadGroup");
-                }
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          } else {
-            this.$message({
-              message: this.$chooseLang(res.data.code),
-              type: "error",
-              duration: 2000,
-            });
-          }
-        })
-        .catch((err) => {
           this.$message({
             message: err.data || this.$t("text.systemError"),
             type: "error",
@@ -1267,5 +1150,9 @@ debugger</script>
 }
 .chain-info >>> .el-form-item__content {
   line-height: 16px;
+}
+.el-button--text {
+    padding-left: 0;
+    padding-right: 0;
 }
 </style>
