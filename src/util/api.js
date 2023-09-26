@@ -1918,7 +1918,7 @@ function getAuthHeaders() {
     // };
 
     return {
-        Authorization: "Bearer " +  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJkRGowM3ZacGFQblhlREhxbXJsQmJrVnhqdDhVOU94ciIsInVzZXJJZCI6MX0.bUx8qthEUgQyBdL5uYlBGXe1douQqupU6BjOph6tdxk"
+        Authorization: "Bearer " +  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJMejNMSjNqVW5BekhRWGZ5RlRxZkJISEdiWGNzbnJRWSIsInVzZXJJZCI6MX0.SQizcMb_XtvBwXI8_1nFnZlpPebnhQ719fBvxoDPszA"
     };
 }
 
