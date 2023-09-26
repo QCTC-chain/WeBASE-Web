@@ -15,9 +15,8 @@
  */
 import url from './url'
 import { post, get, patch, put, deleted } from './http'
-import { reviseParam } from './util'
+import { reviseParam, getCookie } from './util'
 import qs from 'qs'
-import { debug } from 'request'
 
 //login
 export function login(data, code, token) {
@@ -1909,16 +1908,8 @@ export function queryChannelIP(data) {
 }
 
 function getAuthHeaders() {
-    // return {
-    //     AuthorizationToken: "Token " + localStorage.getItem("token") || ""
-    // };
-
-    // return {
-    //     Authorization: "Bearer " + localStorage.getItem("token") || "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJHU2hHM0FkWEZzQVhmZWtOekJWR0NZYVp5TGlOZW5NRiIsInVzZXJJZCI6MX0.pwnUuD_VsFVJBB0OcjVDxyATRzhUH66Kksl0fYdDmnA"
-    // };
-
     return {
-        Authorization: "Bearer " +  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJMejNMSjNqVW5BekhRWGZ5RlRxZkJISEdiWGNzbnJRWSIsInVzZXJJZCI6MX0.SQizcMb_XtvBwXI8_1nFnZlpPebnhQ719fBvxoDPszA"
+        Authorization: "Bearer " +  getCookie("Admin-Token")
     };
 }
 
