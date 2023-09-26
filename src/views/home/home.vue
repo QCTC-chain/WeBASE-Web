@@ -633,7 +633,7 @@ export default {
           break;
         case "contractCount":
           router.push({
-            path: "contractList",
+            path: "contract/List",
             query: { from: "home", tab: "total" },
           });
           break;
