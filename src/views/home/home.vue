@@ -370,13 +370,13 @@ export default {
     };
   },
   mounted: function () {
-     this.getConfigType();
+    this.getConfigType();
     this.groupId = localStorage.getItem("groupId1");
     if (
-      this.groupId ||
-      (localStorage.getItem("configData1") == 3 ||
-        localStorage.getItem("deployType1") == 0)
-    ) {            
+      this.groupId 
+      // || (localStorage.getItem("configData1") == 3 ||
+      //   localStorage.getItem("deployType1") == 0)
+    ) { 
       this.getNetworkDetails();
       this.getNodeTable();
       this.getBlockList();
@@ -387,7 +387,7 @@ export default {
         this.getChart();
       });
     }
-      Bus.$on("changGroup", val => {
+    Bus.$on("changGroup", val => {
       this.groupId = val;
       this.getNetworkDetails();
       this.getNodeTable();
@@ -398,7 +398,7 @@ export default {
         this.chartStatistics.chartSize.height = this.$refs.chart.offsetHeight;
         this.getChart();
       });
-        })
+    })
   },
   destroyed() {
      Bus.$off("changGroup");

@@ -206,23 +206,22 @@ export default {
                                 localStorage.setItem("groupName1", res.data.data[0].groupName)
                                 localStorage.setItem("groupId1", res.data.data[0].groupId)
                             })
+                            return;
                         }
 
+                        if (type || !localStorage.getItem("groupName1")) {
+                            this.groupName = res.data.data[0].groupName;
+                            localStorage.setItem("groupName1", res.data.data[0].groupName)
+                            localStorage.setItem("groupId1", res.data.data[0].groupId)
+                            Bus.$emit("changGroup", res.data.data[0].groupId);
+                        } else if (localStorage.getItem("groupName1")) {
+                            this.groupName = localStorage.getItem("groupName1");
+                        }
                     } else {
                         this.groupList = [];
                         localStorage.setItem("groupName1", "")
                         localStorage.setItem("groupId1", "")
-                    }
-                    if (type && res.data.data && res.data.data.length) {
-                        this.groupName = res.data.data[0].groupName;
-                        localStorage.setItem("groupName1", res.data.data[0].groupName)
-                        localStorage.setItem("groupId1", res.data.data[0].groupId)
-                    } else if (res.data.data && res.data.data.length && !localStorage.getItem("groupName1")) {
-                        this.groupName = res.data.data[0].groupName;
-                        localStorage.setItem("groupName1", res.data.data[0].groupName)
-                        localStorage.setItem("groupId1", res.data.data[0].groupId)
-                    } else if (res.data.data && res.data.data.length && localStorage.getItem("groupName1")) {
-                        this.groupName = localStorage.getItem("groupName1");
+                        Bus.$emit("changGroup", "");
                     }
                 } else {
                     this.groupList = [];
@@ -233,6 +232,7 @@ export default {
                     });
                     localStorage.setItem("groupName1", "")
                     localStorage.setItem("groupId1", "")
+                    Bus.$emit("changGroup", "");
                 }
             }).catch(err => {
                 this.groupList = [];
@@ -243,9 +243,8 @@ export default {
                     type: "error",
                     duration: 2000
                 });
-
-            })
-                ;
+                Bus.$emit("changGroup", "");
+            });
         },
         checkGroup: function () {
             if (this.dialogShow) {
@@ -261,9 +260,8 @@ export default {
             localStorage.setItem("groupName1", val.groupName);
             localStorage.setItem("groupId1", val.groupId);
             this.$emit('changGroup', val.groupId);
+            Bus.$emit("changGroup", val.groupId);
             // this.dialogShow = true;
-             Bus.$emit("changGroup", val.groupId);
-
         },
         skip: function () {
             if (this.route) {

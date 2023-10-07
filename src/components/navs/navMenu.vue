@@ -163,26 +163,23 @@ export default {
             if (this.updateGroupType === 'update') {
               this.$nextTick(_ => {
                 this.groupName = res.data.data[0].groupName;
-                localStorage.setItem("groupName1", res.data.data[0].groupName)
-                localStorage.setItem("groupId1", res.data.data[0].groupId)
+                // localStorage.setItem("groupName1", res.data.data[0].groupName)
+                // localStorage.setItem("groupId1", res.data.data[0].groupId)
+                return;
               })
+            }
+
+            if (type || !localStorage.getItem("groupName1")) {
+                this.groupName = res.data.data[0].groupName;
+                // localStorage.setItem("groupName1", res.data.data[0].groupName)
+                // localStorage.setItem("groupId1", res.data.data[0].groupId)
+            } else if (localStorage.getItem("groupName1")) {
+                this.groupName = localStorage.getItem("groupName1");
             }
           } else {
             this.groupList = [];
-            localStorage.setItem("groupName1", "")
-            localStorage.setItem("groupId1", "")
-          }
-
-          if (type && res.data.data && res.data.data.length) {
-            this.groupName = res.data.data[0].groupName;
-            localStorage.setItem("groupName1", res.data.data[0].groupName)
-            localStorage.setItem("groupId1", res.data.data[0].groupId)
-          } else if (res.data.data && res.data.data.length && !localStorage.getItem("groupName1")) {
-            this.groupName = res.data.data[0].groupName;
-            localStorage.setItem("groupName1", res.data.data[0].groupName)
-            localStorage.setItem("groupId1", res.data.data[0].groupId)
-          } else if (res.data.data && res.data.data.length && localStorage.getItem("groupName1")) {
-            this.groupName = localStorage.getItem("groupName1");
+            // localStorage.setItem("groupName1", "")
+            // localStorage.setItem("groupId1", "")
           }
         } else {
           this.groupList = [];
@@ -191,13 +188,13 @@ export default {
             type: "error",
             duration: 2000
           });
-          localStorage.setItem("groupName1", "")
-          localStorage.setItem("groupId1", "")
+          // localStorage.setItem("groupName1", "")
+          // localStorage.setItem("groupId1", "")
         }
       }).catch(err => {
         this.groupList = [];
-        localStorage.setItem("groupName1", "")
-        localStorage.setItem("groupId1", "")
+        // localStorage.setItem("groupName1", "")
+        // localStorage.setItem("groupId1", "")
         this.$message({
           message: err.data || this.$t('text.systemError'),
           type: "error",
