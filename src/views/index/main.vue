@@ -497,7 +497,9 @@ export default {
         });
     },
     versionChange: function () {
-      this.$refs.menu.changeRouter();
+      if (this.$refs.menu) {
+        this.$refs.menu.changeRouter();
+      }
     },
     change: function (val) {
       this.menuShow = !val;
