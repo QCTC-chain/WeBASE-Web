@@ -195,7 +195,14 @@ export default {
         localStorage.getItem("deployType1") == 0)
     ) {
       this.$nextTick(function () {
-        this.getContractPaths();
+        if (localStorage.getItem("groupId1")) {
+          this.getContractPaths();
+        } else {
+            // 刷新或者第一次进应用时，groupid此时未获取到
+            setTimeout(()=>{
+              this.getContractPaths();
+            }, 500)
+        }
       });
     }
     Bus.$on("compile", (data) => {

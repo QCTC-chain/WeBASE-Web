@@ -71,7 +71,14 @@ export default {
         }
     },
     mounted() {
-        this.getContractPaths();
+        if (localStorage.getItem("groupId1")) {
+            this.getContractPaths();
+        } else {
+            // 刷新或者第一次进应用时，groupid此时未获取到
+            setTimeout(()=>{
+                 this.getContractPaths();
+            }, 500)
+        }
         if (this.folderItem) {
             this.folderFrom.folderName = this.folderItem.warehouseNameEn
         }

@@ -165,7 +165,8 @@ export default {
             this.disabled = true
         }
         console.log(localStorage.getItem("groupId1"))
-        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        // if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        if (localStorage.getItem("groupId1")) {
             this.getUserInfoData();
         }
     },
