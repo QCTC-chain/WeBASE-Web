@@ -658,7 +658,7 @@ export default {
         checkEvent: function (val) {
             this.contractInfo = val;
             this.$router.push({
-                path: '/eventCheck',
+                path: '/contract/eventCheck',
                 query: {
                     groupId: this.groupId,
                     type: 'abi',
