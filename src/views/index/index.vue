@@ -24,19 +24,19 @@ export default {
     localStorage.removeItem("selectData");
     this.getConfigType();
 
-    localStorage.setItem("groupName1", "");
-    localStorage.setItem("groupId1", "");
-    localStorage.setItem("folderList", "");
-    // localStorage.setItem("user", res.data.data.account);
-    // localStorage.setItem("root", res.data.data.roleName);
-    // localStorage.setItem("token", res.data.data.token);
-    sessionStorage.setItem("accountStatus", 2);
-    sessionStorage.setItem("reload", 1);
-    localStorage.setItem("config", 0);
-    localStorage.setItem("nodeVersionChange1", "");
-    localStorage.setItem("selectData", "");
-    localStorage.setItem("solcName", "");
-    localStorage.setItem("versionId", null);
+    // localStorage.setItem("groupName1", "");
+    // localStorage.setItem("groupId1", "");
+    // localStorage.setItem("folderList", "");
+    // // localStorage.setItem("user", res.data.data.account);
+    // // localStorage.setItem("root", res.data.data.roleName);
+    // // localStorage.setItem("token", res.data.data.token);
+    // sessionStorage.setItem("accountStatus", 2);
+    // sessionStorage.setItem("reload", 1);
+    // localStorage.setItem("config", 0);
+    // localStorage.setItem("nodeVersionChange1", "");
+    // localStorage.setItem("selectData", "");
+    // localStorage.setItem("solcName", "");
+    // localStorage.setItem("versionId", null);
   },
   methods: {
     getConfigType: function () {

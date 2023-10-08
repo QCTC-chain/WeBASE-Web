@@ -233,9 +233,13 @@ export default {
             this.getCnsList();
         },
         queryLocalCns() {
+            const groupId = localStorage.getItem("groupId1");
+            if (!groupId || groupId.length == 0) {
+                return;
+            } 
             this.loadingLocal = true;
             let reqData = {
-                groupId: localStorage.getItem("groupId1"),
+                groupId: groupId,
                 pageNumber: this.currentPageLocal,
                 pageSize: this.pageSizeLocal,
             }

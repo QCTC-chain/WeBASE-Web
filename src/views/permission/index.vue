@@ -239,7 +239,8 @@ export default {
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        // if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        if (localStorage.getItem("groupId1") || localStorage.getItem("deployType1") == 0) {
             this.getUserData()
             this.queryGetPermission();//链管理列表
         }

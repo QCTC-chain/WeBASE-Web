@@ -131,12 +131,14 @@ export default {
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        // if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        if (localStorage.getItem("groupId1") || localStorage.getItem("deployType1") == 0) {
             this.getUserData()
             this.getSysConfigList()
         }
     Bus.$on("changGroup", (item) => {
-       if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+    //    if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        if (localStorage.getItem("groupId1") || localStorage.getItem("deployType1") == 0) {
             this.getUserData()
             this.getSysConfigList()
         }
@@ -195,6 +197,7 @@ export default {
                 });
         },
         getUserData() {
+            console.log("!!!!222222@#!@#!@#,groupId:", localStorage.getItem("groupId1"));
             let reqData = {
                 groupId: localStorage.getItem("groupId1"),
                 pageNumber: 1,

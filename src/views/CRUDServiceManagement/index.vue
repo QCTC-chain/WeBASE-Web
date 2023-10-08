@@ -129,11 +129,13 @@ export default {
             this.disabled = true
         }
         this.initEditor()
-        if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        // if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        if (localStorage.getItem("groupId1") || localStorage.getItem("deployType1") == 0) {
             this.getUserData()
         }
         Bus.$on("changGroup", (item) => {
-          if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        //   if (localStorage.getItem("groupId1") || (localStorage.getItem("configData1") == 3 || localStorage.getItem("deployType1") == 0)) {
+        if (localStorage.getItem("groupId1") || localStorage.getItem("deployType1") == 0) {
            this.getUserData()
             this.sqlForm = {
                 adminRivateKey: ''

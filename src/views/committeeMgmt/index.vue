@@ -426,9 +426,9 @@ export default {
         } else {
             this.disabled = true
         }
-        if (localStorage.getItem("groupId1")) {
+        if (localStorage.getItem("groupId1") && localStorage.getItem("groupId1").length > 0) {
             this.queryGetThreshold()
-             this.queryCommitteeList()
+            this.queryCommitteeList()
             this.queryVoteRecordList()
             this.getUserData()
         }
@@ -439,7 +439,7 @@ export default {
             this.adminRivateKeyList = []
             this.queryGetThreshold()
             this.getUserData()
-             this.queryCommitteeList()
+            this.queryCommitteeList()
             this.queryVoteRecordList()
 
         },
