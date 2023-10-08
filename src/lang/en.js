@@ -292,7 +292,7 @@ export default {
         appStepTag2: 'Chain and configuration',
         appStepTag3: 'Mgt account',
         appStepTag4: 'Contract',
-        appDescContent: 'Application management function is a kind of application management plug-in access function provided by webase management desk. Webase provides application management function menu and access general specification. Each application can register to the webase management console according to the access specification, so as to realize the connection between webase and each application from the user, blockchain account, basic configuration, contract and other aspects.',
+        appDescContent: 'Application management function is a kind of application management plug-in access function provided by baas management desk. BAAS provides application management function menu and access general specification. Each application can register to the baas management console according to the access specification, so as to realize the connection between baas and each application from the user, blockchain account, basic configuration, contract and other aspects.',
         copyInfo: 'Copy',
         imgSize: 'Only one picture can be uploaded at a time, with the size of 80 * 80px. PNG and JPG formats are supported, and the size cannot exceed 200KB',
         imgSize200k: 'Upload image size cannot exceed 200KB!',
