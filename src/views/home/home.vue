@@ -18,52 +18,12 @@
     <nav-menu :headTitle="$t('title.dataOverview')"></nav-menu>
     <div style="margin: 5px">
       <div style="margin: 10px 10px 6px 10px">
-        <el-row>
-          <el-col
-            :xs="24"
-            :sm="24"
-            :md="11"
-            :lg="10"
-            :xl="8"
-            v-loading="loadingNumber"
-          >
-            <div
-              class="overview-item"
-              style="font-size: 0"
-              v-for="item in detailsList"
-              :key="item.label"
-              @click="goDetailRouter(item)"
-              :class="item.bg"
-            >
-              <div class="overview-item-img">
-                <svg
-                  class="overview-item-svg"
-                  aria-hidden="true"
-                  v-if="item.icon == '#wbs-icon-node1'"
-                >
-                  <use xlink:href="#wbs-icon-node1"></use>
-                </svg>
-                <svg
-                  class="overview-item-svg"
-                  aria-hidden="true"
-                  v-else-if="item.icon == '#wbs-icon-contract'"
-                >
-                  <use xlink:href="#wbs-icon-contract"></use>
-                </svg>
-                <svg
-                  class="overview-item-svg"
-                  aria-hidden="true"
-                  v-else-if="item.icon == '#wbs-icon-block'"
-                >
-                  <use xlink:href="#wbs-icon-block"></use>
-                </svg>
-                <svg
-                  class="overview-item-svg"
-                  aria-hidden="true"
-                  v-else-if="item.icon == '#wbs-icon-transation'"
-                >
-                  <use xlink:href="#wbs-icon-transation"></use>
-                </svg>
+        <el-row type="flex">
+          <el-col :xs="24" :sm="24" :md="11" :lg="10" :xl="8" v-loading="loadingNumber" class="overview-info">
+            <div class="overview-item" v-for="(item, index) in detailsList" :key="item.label"
+              @click="goDetailRouter(item)">
+              <div class="overview-item-img" :class="item.bg">
+                <img :class="['img-icon', `icon${index}`]" :src="require('../../assets/image/' + item.icon)" />
               </div>
               <div class="overview-item-content">
                 <div class="overview-item-number">{{ item.value }}</div>
@@ -82,175 +42,116 @@
                 }}</span>
               </div>
               <div class="chart" ref="chart">
-                <v-chart
-                  ref="linechart"
-                  :id="'homeId'"
-                  v-if="chartStatistics.show"
-                  :data="chartStatistics.date"
-                  :transactionDataArr="chartStatistics.dataArr"
-                  :size="chartStatistics.chartSize"
-                  v-loading="loadingCharts"
-                ></v-chart>
+                <v-chart ref="linechart" :id="'homeId'" v-if="chartStatistics.show" :data="chartStatistics.date"
+                  :transactionDataArr="chartStatistics.dataArr" :size="chartStatistics.chartSize"
+                  v-loading="loadingCharts"></v-chart>
               </div>
             </div>
           </el-col>
         </el-row>
       </div>
-      <div class="module-wrapper-small" style="padding: 30px 31px 26px 32px">
-        <el-table
-          :data="nodeData"
-          class="search-table-content"
-          v-loading="loadingNodes"
-        >
-          <el-table-column
-            v-for="head in nodeHead"
-            :label="head.name"
-            :key="head.enName"
-            show-overflow-tooltip
-            align=""
-            :width="head.width"
-          >
-            <template slot-scope="scope">
-              <template>
-                <span v-if="head.enName === 'nodeActive'">
-                  <i
-                    :style="{ color: textColor(scope.row[head.enName]) }"
-                    class="wbs-icon-radio font-6"
-                  ></i>
-                  {{ nodesStatus(scope.row[head.enName]) }}
-                </span>
-                <span v-else-if="head.enName === 'nodeId'">
-                  <i
-                    class="wbs-icon-copy font-12"
-                    @click="copyNodeIdKey(scope.row[head.enName])"
-                    title="复制"
-                  ></i>
-                  {{ scope.row[head.enName] }}
-                </span>
-                <span v-else>{{ scope.row[head.enName] }}</span>
-              </template>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div style="min-width: 540px; margin: 8px 8px 0px 9px">
-        <el-row :gutter="16">
-          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-            <div class="overview-wrapper">
-              <p>
-                <span class="overview-title">{{ this.$t("home.block") }}</span>
-                <span
-                  class="overview-more cursor-pointer"
-                  @click="goRouter('blocks')"
-                  >{{ this.$t("home.more") }}</span
-                >
-              </p>
-              <div class="overview-item-base" v-loading="loadingBlock">
-                <div
-                  class="block-item font-color-2e384d"
-                  v-for="item in blockData"
-                  :key="item.blockNumber"
-                >
-                  <div class="block-amount" style="padding-bottom: 7px">
-                    <span>
-                      <router-link
-                        :to="{
-                          path: 'blockInfo',
-                          query: { blockNumber: item.blockNumber },
-                        }"
-                        class="node-ip"
-                      >
-                        <span>{{ $t("home.blockHeight") }}</span>
-                        {{ item.blockNumber }}
-                      </router-link>
+      <el-row :gutter="24">
+        <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
+          <div class="module-wrapper-small" style="padding: 30px 31px 26px 32px">
+            <el-table :data="nodeData" class="search-table-content" v-loading="loadingNodes">
+              <el-table-column v-for="head in nodeHead" :label="head.name" :key="head.enName" show-overflow-tooltip
+                align="" :width="head.width">
+                <template slot-scope="scope">
+                  <template>
+                    <span v-if="head.enName === 'nodeActive'">
+                      <i :style="{ color: textColor(scope.row[head.enName]) }" class="wbs-icon-radio font-6"></i>
+                      {{ nodesStatus(scope.row[head.enName]) }}
                     </span>
-                    <span class="color-8798AD">{{ item.blockTimestamp }}</span>
+                    <span v-else-if="head.enName === 'nodeId'">
+                      <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(scope.row[head.enName])" title="复制"></i>
+                      {{ scope.row[head.enName] }}
+                    </span>
+                    <span v-else>{{ scope.row[head.enName] }}</span>
+                  </template>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="overview-wrapper">
+            <p>
+              <span class="overview-title">{{
+                this.$t("home.transaction")
+              }}</span>
+              <span class="overview-more cursor-pointer" @click="goRouter('transactions')">{{ this.$t("home.more")
+              }}</span>
+            </p>
+            <div class="overview-item-base" v-loading="loadingTransaction">
+              <div class="block-item font-color-2e384d" v-for="item in transactionList" :key="item.transHash">
+                <div class="block-amount">
+                  <p class="trans-hash" :title="`${item.transHash}`">
+                    <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(item.transHash)" :title="$t('text.copy')"></i>
+                    <router-link :to="{
+                      path: 'transactionInfo',
+                      query: { blockNumber: item.transHash },
+                    }" class="node-ip">
+                      {{ item.transHash }}
+                    </router-link>
+                  </p>
+                  <p class="trans-address color-8798AD">
+                    <span>
+                      <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(item.transFrom)"
+                        :title="$t('text.copy')"></i>
+                      {{ splitAddress(item.transFrom) }}
+                    </span>
+                    <img :src="sRight" :alt="$t('text.arrow')" />
+                    <span>
+                      <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(item.transTo)" :title="$t('text.copy')"></i>
+                      {{ splitAddress(item.transTo) }}
+                    </span>
+                  </p>
+                </div>
+                <p class="color-8798AD text-right">
+                  {{ item.blockTimestamp }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
+          <div class="overview-wrapper">
+            <p>
+              <span class="overview-title">{{ this.$t("home.block") }}</span>
+              <span class="overview-more cursor-pointer" @click="goRouter('blocks')">{{ this.$t("home.more") }}</span>
+            </p>
+            <div class="overview-item-base" v-loading="loadingBlock">
+              <div class="block-item font-color-2e384d" v-for="item in blockData" :key="item.blockNumber">
+                <div class="block-amount" style="padding-bottom: 7px">
+                  <span>
+                    <router-link :to="{
+                      path: 'blockInfo',
+                      query: { blockNumber: item.blockNumber },
+                    }" class="node-ip">
+                      <span>{{ $t("home.blockHeight") }}</span>
+                      {{ item.blockNumber }}
+                    </router-link>
+                  </span>
+                  <span class="color-8798AD">{{ item.blockTimestamp }}</span>
+                </div>
+                <div>
+                  <div class="block-miner">
+                    <span>{{ $t("home.tranfer") }}</span>
+                    <p :title="`${item.sealer}`">{{ item.sealer }}</p>
                   </div>
-                  <div>
-                    <div class="block-miner">
-                      <span>{{ $t("home.tranfer") }}</span>
-                      <p :title="`${item.sealer}`">{{ item.sealer }}</p>
-                    </div>
-                    <div class="text-right">
-                      <span
-                        class="block-trans"
-                        @click="linkRouter(item.blockNumber)"
-                      >
-                        <!-- <router-link :to="{'path': 'blockInfo', 'query': {blockNumber: item.blockNumber}}" class="node-ip"> -->
-                        <span>{{ item.transCount }}</span>
-                        <span>txns</span>
-                        <!-- </router-link> -->
-                      </span>
-                    </div>
+                  <div class="text-right">
+                    <span class="block-trans" @click="linkRouter(item.blockNumber)">
+                      <!-- <router-link :to="{'path': 'blockInfo', 'query': {blockNumber: item.blockNumber}}" class="node-ip"> -->
+                      <span>{{ item.transCount }}</span>
+                      <span>txns</span>
+                      <!-- </router-link> -->
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-            <div class="overview-wrapper">
-              <p>
-                <span class="overview-title">{{
-                  this.$t("home.transaction")
-                }}</span>
-                <span
-                  class="overview-more cursor-pointer"
-                  @click="goRouter('transactions')"
-                  >{{ this.$t("home.more") }}</span
-                >
-              </p>
-              <div class="overview-item-base" v-loading="loadingTransaction">
-                <div
-                  class="block-item font-color-2e384d"
-                  v-for="item in transactionList"
-                  :key="item.transHash"
-                >
-                  <div class="block-amount">
-                    <p class="trans-hash" :title="`${item.transHash}`">
-                      <i
-                        class="wbs-icon-copy font-12"
-                        @click="copyNodeIdKey(item.transHash)"
-                        :title="$t('text.copy')"
-                      ></i>
-                      <router-link
-                        :to="{
-                          path: 'transactionInfo',
-                          query: { blockNumber: item.transHash },
-                        }"
-                        class="node-ip"
-                      >
-                        {{ item.transHash }}
-                      </router-link>
-                    </p>
-                    <p class="trans-address color-8798AD">
-                      <span>
-                        <i
-                          class="wbs-icon-copy font-12"
-                          @click="copyNodeIdKey(item.transFrom)"
-                          :title="$t('text.copy')"
-                        ></i>
-                        {{ splitAddress(item.transFrom) }}
-                      </span>
-                      <img :src="sRight" :alt="$t('text.arrow')" />
-                      <span>
-                        <i
-                          class="wbs-icon-copy font-12"
-                          @click="copyNodeIdKey(item.transTo)"
-                          :title="$t('text.copy')"
-                        ></i>
-                        {{ splitAddress(item.transTo) }}
-                      </span>
-                    </p>
-                  </div>
-                  <p class="color-8798AD text-right">
-                    {{ item.blockTimestamp }}
-                  </p>
-                </div>      
-              </div>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -279,7 +180,7 @@ import Bus from "@/bus";
 export default {
   name: "home",
   components: {
-    'nav-menu':NavMenu,
+    'nav-menu': NavMenu,
     "v-chart": charts,
   },
   computed: {
@@ -289,28 +190,28 @@ export default {
           label: this.$t("home.nodes"),
           name: "nodeCount",
           value: 0,
-          icon: "#wbs-icon-node1",
+          icon: "node-icon.png",
           bg: "node-bg",
         },
         {
           label: this.$t("home.contracts"),
           name: "contractCount",
           value: 0,
-          icon: "#wbs-icon-contract",
+          icon: "contract-icon.png",
           bg: "contract-bg",
         },
         {
           label: this.$t("home.blocks"),
           name: "latestBlock",
           value: 0,
-          icon: "#wbs-icon-block",
+          icon: "block-icon.png",
           bg: "block-bg",
         },
         {
           label: this.$t("home.transactions"),
           name: "transactionCount",
           value: 0,
-          icon: "#wbs-icon-transation",
+          icon: "trans-icon.png",
           bg: "transation-bg",
         },
       ];
@@ -326,12 +227,12 @@ export default {
         {
           enName: "blockNumber",
           name: this.$t("home.blockHeight"),
-          width: 180,
+          width: 80,
         },
         {
           enName: "pbftView",
           name: this.$t("home.pbftView"),
-          width: 180,
+          width: 100,
         },
         {
           enName: "nodeActive",
@@ -373,10 +274,10 @@ export default {
     this.getConfigType();
     this.groupId = localStorage.getItem("groupId1");
     if (
-      this.groupId 
+      this.groupId
       // || (localStorage.getItem("configData1") == 3 ||
       //   localStorage.getItem("deployType1") == 0)
-    ) { 
+    ) {
       this.getNetworkDetails();
       this.getNodeTable();
       this.getBlockList();
@@ -401,15 +302,15 @@ export default {
     })
   },
   destroyed() {
-     Bus.$off("changGroup");
+    Bus.$off("changGroup");
   },
   methods: {
-        getConfigType: function () {
+    getConfigType: function () {
       getDeployType()
         .then((res) => {
           if (res.data.code == 0) {
             localStorage.setItem("deployType1", res.data.data);
-         
+
           } else {
             this.$message({
               message: this.$chooseLang(res.data.code),
@@ -512,10 +413,10 @@ export default {
       this.loadingNodes = true;
       let groupId = localStorage.getItem("groupId1");
       let reqData = {
-          groupId: groupId,
-          pageNumber: 1,
-          pageSize: 100,
-        },
+        groupId: groupId,
+        pageNumber: 1,
+        pageSize: 100,
+      },
         reqQuery = {},
         reqParam = {
           groupId: groupId,
@@ -563,10 +464,10 @@ export default {
       this.loadingBlock = true;
       let groupId = localStorage.getItem("groupId1");
       let reqData = {
-          groupId: groupId,
-          pageNumber: 1,
-          pageSize: 6,
-        },
+        groupId: groupId,
+        pageNumber: 1,
+        pageSize: 6,
+      },
         reqQuery = {};
       getBlockPage(reqData, reqQuery)
         .then((res) => {
@@ -593,10 +494,10 @@ export default {
       this.loadingTransaction = true;
       let groupId = localStorage.getItem("groupId1");
       let reqData = {
-          groupId: groupId,
-          pageNumber: 1,
-          pageSize: 6,
-        },
+        groupId: groupId,
+        pageNumber: 1,
+        pageSize: 6,
+      },
         reqQuery = {};
       getTransactionList(reqData, reqQuery)
         .then((res) => {
@@ -747,30 +648,38 @@ export default {
 <style scoped>
 .node-bg {
   /* background: linear-gradient(102.87deg, #4ccbf3 0%, #94eefb 100%); */
-  background-color: #73baf6;
+  background: url('../../assets/image/node.png') no-repeat;
 }
+
 .contract-bg {
   /* background: linear-gradient(102.87deg, #4886ff 0%, #62b0f8 100%); */
-  background-color: #6cc8e6;
+  background: url('../../assets/image/contract.png') no-repeat;
 }
+
 .block-bg {
   /* background: linear-gradient(102.87deg, #7280ff 0%, #98afff 100%); */
-  background-color: #ecac7b;
+  background: url('../../assets/image/block.png') no-repeat;
 }
+
 .transation-bg {
   /* background: linear-gradient(102.87deg, #ff9472 0%, #ffc1ad 100%); */
-  background-color: #8aaefd;
+  background: url('../../assets/image/trans.png') no-repeat;
 }
+
 .over-view-wrapper {
   background: #f7f7f7;
+  margin-bottom:80px;
 }
+
 .amount-wrapper {
   margin: 30px 30px 0 31px;
 }
+
 .font-12 {
   font-size: 12px;
   color: #9da2ab;
 }
+
 .part1-content {
   display: flex;
   background: #f7f7f7;
@@ -778,6 +687,7 @@ export default {
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+
 .split-line {
   margin-left: 22px;
   margin-top: 10px;
@@ -785,29 +695,35 @@ export default {
   margin-right: 20px;
   opacity: 0.25;
 }
+
 .overview-number {
   margin-top: 20px;
   margin-left: 20px;
   padding: 20px;
 }
+
 .part1-content-amount {
   overflow: auto;
   min-width: 112px;
 }
+
 .part2-title {
   padding: 22px 31px 26px 32px;
 }
+
 .part2-title::after {
   display: block;
   content: "";
   clear: both;
 }
+
 .part2-title-left {
   float: left;
   font-size: 16px;
   color: #000e1f;
   font-weight: bold;
 }
+
 .part2-title-right {
   float: right;
   font-size: 12px;
@@ -816,103 +732,125 @@ export default {
   border-radius: 20px;
   background: #f6f6f6;
 }
+
 .part3-title {
   padding: 40px 60px 40px 40px;
 }
+
 .part3-title::after {
   display: block;
   content: "";
   clear: both;
 }
+
 .more-content {
   font-size: 14px;
   color: #0db1c1;
   cursor: pointer;
 }
+
 .part3-table-content {
   width: 100%;
   padding: 0 39px 48px 40px;
   font-size: 12px;
 }
-.part3-table-content >>> th,
-.part3-table-content >>> td {
+
+.part3-table-content>>>th,
+.part3-table-content>>>td {
   padding: 8px 0;
 }
+
 .part1-details-bottom {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
+
 .part1-details-arrow-right {
   position: relative;
   top: 4px;
 }
+
 .search-table-content {
   width: 100%;
 }
-.search-table-content >>> th {
+
+.search-table-content>>>th {
   background: #fafafa;
   color: #2e384d;
 }
-.search-table-content >>> th,
-.search-table-content >>> td {
+
+.search-table-content>>>th,
+.search-table-content>>>td {
   font-size: 14px;
 }
+
 .overview-wrapper {
   background: #fff;
   font-size: 15px;
   box-shadow: 0 4px 12px 0 #dfe2e9;
   border-radius: 2px;
 }
-.overview-wrapper > p {
+
+.overview-wrapper>p {
   padding: 26px 18px 0px 22px;
   border-bottom: 1px solid #f2f2f2;
   display: flex;
   justify-content: space-between;
 }
+
 .overview-title {
   font-size: 15px;
   color: #2e384d;
   padding-bottom: 22px;
   border-bottom: 2px solid #2e384d;
 }
+
 .overview-more {
   font-size: 14px;
   color: #2fcdd1;
 }
+
 .block-item {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
   padding-bottom: 10px;
 }
+
 .block-amount {
   display: flex;
   flex-flow: column;
 }
+
 .overview-item-base {
   margin: 26px 18px 30px 22px;
 }
+
 .block-miner {
   display: flex;
   flex-flow: row wrap;
 }
-.block-miner > p {
+
+.block-miner>p {
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-left: 10px;
 }
+
 .trans-hash {
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .node-ip {
   color: #0db1c1;
 }
+
 .block-trans {
   display: inline-block;
   padding: 0 2px;
@@ -920,137 +858,72 @@ export default {
   color: #0db1c1;
   cursor: pointer;
 }
+
 .trans-address span {
   display: inline-block;
   max-width: 150px;
 }
+
 .trans-address img {
   vertical-align: middle;
 }
+
+.overview-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .overview-item {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   width: calc(49% - 15px);
   max-width: 300px;
   height: 120px;
   padding: 28px 16px;
   margin: 8px 15px 16px 0;
-  /* background-color: #fff; */
   box-shadow: 0 4px 12px 0 #dfe2e9;
   border-radius: 2px;
   box-sizing: border-box;
   cursor: pointer;
 }
+
 .overview-item-img {
-  display: inline-block;
-  width: 50px;
+  width: 80px;
+  height: 90px;
+  position: relative;
 }
+
+.img-icon {
+  width: 32px;
+  height: 30px;
+  position: absolute;
+  bottom: 28px;
+  right: 20px;
+}
+
+.icon0 {
+  width: 32px;
+  height: 34px;
+}
+
 .overview-item-content {
   font-size: 12px;
   display: inline-block;
   padding-left: 10px;
-  width: calc(100% - 60px);
+  width: 50%;
 }
+
 .overview-item-number {
-  font-size: 24px;
-  color: #fff;
+  font-size: 30px;
+  color: #1B2337;
+  font-weight: bold;
 }
+
 .overview-item-title {
   width: 100%;
-  color: #fff;
+  color: #000;
+  font-size: 14px;
   min-width: 113px;
-}
-.overview-item-svg {
-  width: 50px;
-  height: 50px;
-}
-@media screen and (max-width: 1142px) {
-  .overview-item {
-    display: inline-block;
-    width: calc(49% - 15px);
-    max-width: 300px;
-    height: 120px;
-    padding: 28px 12px;
-    margin: 8px 15px 16px 0;
-    /* background-color: #fff;
-        box-shadow: 0 4px 12px 0 #dfe2e9; */
-    border-radius: 2px;
-    box-sizing: border-box;
-  }
-  .overview-item-img {
-    display: inline-block;
-    width: 40px;
-  }
-  .overview-item-svg {
-    width: 40px;
-    height: 40px;
-  }
-  .overview-item-content {
-    font-size: 12px;
-    display: inline-block;
-    padding-left: 5px;
-    width: calc(100% - 45px);
-  }
-}
-@media screen and (max-width: 1042px) {
-  .overview-item {
-    display: inline-block;
-    width: calc(49% - 15px);
-    max-width: 300px;
-    height: 120px;
-    padding: 28px 6px;
-    margin: 8px 15px 16px 0;
-    /* background-color: #fff;
-        box-shadow: 0 4px 12px 0 #dfe2e9; */
-    border-radius: 2px;
-    box-sizing: border-box;
-  }
-  .overview-item-img {
-    display: inline-block;
-    width: 35px;
-  }
-  .overview-item-svg {
-    width: 35px;
-    height: 35px;
-  }
-  .overview-item-content {
-    font-size: 12px;
-    display: inline-block;
-    padding-left: 5px;
-    width: calc(100% - 40px);
-  }
-}
-@media screen and (max-width: 991px) {
-  .overview-item {
-    display: inline-block;
-    width: calc(49% - 8px);
-    max-width: 385px;
-    height: 120px;
-    padding: 28px 16px;
-    margin: 8px 15px 16px 0;
-    /* background-color: #fff;
-        box-shadow: 0 4px 12px 0 #dfe2e9; */
-    border-radius: 2px;
-    box-sizing: border-box;
-  }
-  .overview-item-img {
-    display: inline-block;
-    width: 50px;
-  }
-  .overview-item-svg {
-    width: 50px;
-    height: 50px;
-  }
-  .overview-item-content {
-    font-size: 12px;
-    display: inline-block;
-    padding-left: 10px;
-    width: calc(100% - 60px);
-  }
-  /* .el-col:nth-child(2){
-        margin: 8px 16px 16px 0;
-    } */
-  .overview-item:nth-child(2) {
-    margin: 8px 15px 16px 0;
-  }
 }
 </style>
