@@ -80,7 +80,7 @@
               <span class="overview-more cursor-pointer" @click="goRouter('transactions')">{{ this.$t("home.more")
               }}</span>
             </p>
-            <div class="overview-item-base" v-loading="loadingTransaction">
+            <div class="overview-item-base trans" v-loading="loadingTransaction">
               <div class="block-item font-color-2e384d" v-for="item in transactionList" :key="item.transHash">
                 <div class="block-amount">
                   <p class="trans-hash" :title="`${item.transHash}`">
@@ -119,7 +119,7 @@
               <span class="overview-title">{{ this.$t("home.block") }}</span>
               <span class="overview-more cursor-pointer" @click="goRouter('blocks')">{{ this.$t("home.more") }}</span>
             </p>
-            <div class="overview-item-base" v-loading="loadingBlock">
+            <div class="overview-item-base block" v-loading="loadingBlock">
               <div class="block-item font-color-2e384d" v-for="item in blockData" :key="item.blockNumber">
                 <div class="block-amount" style="padding-bottom: 7px">
                   <span>
@@ -791,6 +791,7 @@ export default {
   font-size: 15px;
   box-shadow: 0 4px 12px 0 #dfe2e9;
   border-radius: 2px;
+  margin:0px 8px 0 9px;
 }
 
 .overview-wrapper>p {
@@ -825,7 +826,17 @@ export default {
 }
 
 .overview-item-base {
-  margin: 26px 18px 30px 22px;
+  padding: 26px 18px 30px 22px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+
+.block {
+  max-height:500px;
+}
+
+.trans{
+  max-height:250px;
 }
 
 .block-miner {
