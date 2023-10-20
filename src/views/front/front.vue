@@ -299,6 +299,16 @@ export default {
       this.getFrontTable();
     })
     //this.getConfigList();
+
+    let isDeploy = false
+    if (this.$route.query) {
+      isDeploy = this.$route.query.isDeploy;
+    }
+    
+    if (isDeploy) {
+      this.getGroupList();
+    }
+
     this.getData();
   },
   methods: {
@@ -405,7 +415,7 @@ export default {
             }
             this.loadingNodes = false;
             this.getFrontTable();
-            //this.getNodeTable();
+            this.getNodeTable();
           } else {
             clearInterval(this.progressInterval);
             clearInterval(this.frontInterval);
@@ -595,8 +605,8 @@ export default {
                 });
                 this.$store.dispatch("set_contract_dataList_action", []);
                 localStorage.setItem("contractList1", JSON.stringify([]));
-                localStorage.setItem("groupId1", null);
-                localStorage.setItem("groupName1", null);
+                localStorage.setItem("groupId1", "");
+                localStorage.setItem("groupName1", "");
                 this.configData = null;
                 this.loadingNodes = false;
                 this.loading = false;
@@ -799,6 +809,41 @@ export default {
         })
         .catch((err) => {
           clearInterval(this.frontInterval);
+          this.$message({
+            message: err.data || this.$t("text.systemError"),
+            type: "error",
+            duration: 2000,
+          });
+        });
+    },
+    getGroupList: function () {
+      getGroupsInvalidIncluded()
+        .then((res) => {
+          if (res.data.code === 0) {
+            try {
+              if (res.data.data && res.data.data.length > 0) {
+                if (!localStorage.getItem("groupId1") 
+                      || localStorage.getItem("groupId1").length == 0 
+                      || !localStorage.getItem("groupName1")
+                      || localStorage.getItem("groupName1").length == 0) {
+                    console.log("!!!!getGroupsInvalidIncluded,and to to set id and name");
+                    localStorage.setItem("groupId1", res.data.data[0].groupId)
+                    localStorage.setItem("groupName1", res.data.data[0].groupName);
+                    Bus.$emit("changeHeadGroup");
+                }
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            this.$message({
+              message: this.$chooseLang(res.data.code),
+              type: "error",
+              duration: 2000,
+            });
+          }
+        })
+        .catch((err) => {
           this.$message({
             message: err.data || this.$t("text.systemError"),
             type: "error",

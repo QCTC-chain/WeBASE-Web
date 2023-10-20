@@ -175,6 +175,7 @@ export default {
         Bus.$off("addFront")
     },
     mounted: function () {
+        console.log("!!!contentHead mounted!")
         if (localStorage.getItem("groupName1")) {
             this.groupName = localStorage.getItem("groupName1");
         }
@@ -190,6 +191,7 @@ export default {
             this.getGroupList();
         })
         Bus.$on("changeHeadGroup", () => {
+            console.log("!!!!!!!!!!changeHeadGroup");
             this.getGroupList();
         })
         this.queryGroupStatus4()
@@ -198,7 +200,9 @@ export default {
         getGroupList: function (type) {
             getGroupsInvalidIncluded().then(res => {
                 if (res.data.code === 0) {
-                    if (res.data.data && res.data.data.length) {
+                    console.log("getGroupList, updateGroup type:", this.updateGroupType);
+                    console.log("getGroupList, res:", res);
+                    if (res.data.data && res.data.data.length > 0) {
                         this.groupList = res.data.data || []
                         if (this.updateGroupType === 'update') {
                             this.$nextTick(_ => {
@@ -209,7 +213,11 @@ export default {
                             return;
                         }
 
-                        if (type || !localStorage.getItem("groupName1")) {
+                        const groupId = localStorage.getItem("groupId1");
+                        if (type || !groupId || groupId == "null"
+                                 || groupId == null
+                                 || groupId.length == 0) {
+                            console.log("!!!update group name and id");
                             this.groupName = res.data.data[0].groupName;
                             localStorage.setItem("groupName1", res.data.data[0].groupName)
                             localStorage.setItem("groupId1", res.data.data[0].groupId)

@@ -709,7 +709,7 @@ export default {
                     this.nodeList = []
                     sessionStorage.setItem('nodeList', JSON.stringify(this.nodeList))
                     this.$store.dispatch('set_node_list_action', this.nodeList)
-                    this.$router.push("/newNode")
+                    this.$router.push({ path: "/newNode", query: { isDeploy: true } });
                 } else {
                     this.getHostList()
                     this.initShow = false
