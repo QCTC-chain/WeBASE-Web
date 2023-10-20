@@ -207,7 +207,7 @@ import {
   getUpdateGroup,
   getGroupsInvalidIncluded,
   deleteGroupData,
-  changeDescription,
+  changeDescription
 } from "@/util/api";
 const FileSaver = require("file-saver");
 export default {
@@ -441,8 +441,9 @@ export default {
               localStorage.setItem("groupName1", "")
               localStorage.setItem("groupId1", "")
             }
-            console.log("!!!!delete group and emit");
-            Bus.$emit("changeHeadGroup");
+            // console.log("!!!!delete group and emit");
+            // Bus.$emit("changeHeadGroup");
+            this.getGroupList();
           } else {
             this.$message({
               type: "error",
@@ -537,6 +538,41 @@ export default {
             message: err.data || this.$t("text.systemError"),
           });
           this.descriptionShow = false;
+        });
+    },
+    getGroupList: function () {
+      getGroupsInvalidIncluded()
+        .then((res) => {
+          if (res.data.code === 0) {
+            try {
+              if (res.data.data && res.data.data.length > 0) {
+                if (!localStorage.getItem("groupId1") 
+                      || localStorage.getItem("groupId1").length == 0 
+                      || !localStorage.getItem("groupName1")
+                      || localStorage.getItem("groupName1").length == 0) {
+                    console.log("!!!!getGroupsInvalidIncluded,and to to set id and name");
+                    localStorage.setItem("groupId1", res.data.data[0].groupId)
+                    localStorage.setItem("groupName1", res.data.data[0].groupName);
+                    Bus.$emit("changeHeadGroup");
+                }
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            this.$message({
+              message: this.$chooseLang(res.data.code),
+              type: "error",
+              duration: 2000,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: err.data || this.$t("text.systemError"),
+            type: "error",
+            duration: 2000,
+          });
         });
     },
   },
