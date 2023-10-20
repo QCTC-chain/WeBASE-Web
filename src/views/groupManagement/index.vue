@@ -434,6 +434,13 @@ export default {
             this.queryGroupTable();
             this.updateGroup++;
             this.updateGroupType = "update";
+
+            // 如果本地存储中保存的群组数据是当前群组，则需要重新获取群组列表，设置正确的群组
+            if (localStorage.getItem("groupId") == groupId) {
+              localStorage.setItem("groupName", "")
+              localStorage.setItem("groupId", "")
+            }
+            Bus.$emit("changeHeadGroup");
           } else {
             this.$message({
               type: "error",
