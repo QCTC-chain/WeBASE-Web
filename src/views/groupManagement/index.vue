@@ -430,16 +430,18 @@ export default {
       deleteGroupData(groupId)
         .then((res) => {
           this.dropLoading = false;
+          console.log()
           if (res.data.code === 0) {
             this.queryGroupTable();
             this.updateGroup++;
             this.updateGroupType = "update";
 
             // 如果本地存储中保存的群组数据是当前群组，则需要重新获取群组列表，设置正确的群组
-            if (localStorage.getItem("groupId") == groupId) {
-              localStorage.setItem("groupName", "")
-              localStorage.setItem("groupId", "")
+            if (localStorage.getItem("groupId1") == groupId) {
+              localStorage.setItem("groupName1", "")
+              localStorage.setItem("groupId1", "")
             }
+            console.log("!!!!delete group and emit");
             Bus.$emit("changeHeadGroup");
           } else {
             this.$message({

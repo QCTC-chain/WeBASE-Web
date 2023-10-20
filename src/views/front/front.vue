@@ -596,10 +596,15 @@ export default {
                 this.$store.dispatch("set_contract_dataList_action", []);
                 localStorage.setItem("contractList1", JSON.stringify([]));
                 localStorage.setItem("groupId1", null);
+                localStorage.setItem("groupName1", null);
                 this.configData = null;
                 this.loadingNodes = false;
                 this.loading = false;
                 this.getConfigList();
+
+                // 通知group变化了
+                Bus.$emit("changeHeadGroup");
+                console.log("!!!!!delete chain and emit changeHeadGroup");
               } else {
                 this.$message({
                   type: "error",
@@ -692,6 +697,10 @@ export default {
       this.getFrontTable();
     },
     getFrontTable() {
+      const groupId = localStorage.getItem("groupId1");
+      if (!groupId || groupId.length == 0) {
+        return;
+      }
       let reqData = {
         groupId: localStorage.getItem("groupId1"),
       };
