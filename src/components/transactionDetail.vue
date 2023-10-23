@@ -726,6 +726,11 @@ export default {
           if (JSON.stringify(this.decodeData) != "{}") {
             for (const key in this.decodeData) {
               abiData.abiInfo.inputs.forEach((val, index) => {
+                if (val && val.components && val.components.length == 0) {
+                    // components为空时，导致解析错误
+                    delete val.components;
+                }
+
                 if (val && val.name && val.type) {
                   if (key === val.name) {
                     this.inputData[index] = {};
