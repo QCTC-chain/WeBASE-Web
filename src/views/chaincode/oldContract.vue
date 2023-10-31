@@ -18,7 +18,7 @@
         <div class="module-wrapper">
             <div class="search-part">
                 <div class="search-part-left" style="padding-top: 20px;display: inline-block;">
-                    <el-button type="primary" class="search-part-left-btn" @click="generateAbi">{{this.$t("nodes.addAbi")}}</el-button>
+                    <el-button type="primary" class="search-part-left-btn" @click="generateAbi" v-hasPermi="['bcos:contract:addAbi']">{{this.$t("nodes.addAbi")}}</el-button>
                     <el-button type="primary" class="search-part-left-btn" @click="routeAbi">{{$t('title.parseAbi')}}</el-button>
                 </div>
                 <div class="search-part-right" style="margin-top: 20px;">
@@ -68,8 +68,8 @@
                     <el-table-column fixed="right" :label="$t('nodes.operation')" width="360">
                         <template slot-scope="scope">
                             <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="send(scope.row)" type="text" size="small">{{$t('contracts.sendTransaction')}}</el-button>
-                            <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="updateAbi(scope.row)" type="text" size="small">{{$t('contracts.updateAbi')}}</el-button>
-                            <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="deleteAbi(scope.row)" type="text" size="small">{{$t('contracts.deleteAbi')}}</el-button>
+                            <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="updateAbi(scope.row)" type="text" size="small" v-hasPermi="['bcos:contract:updateAbi']">{{$t('contracts.updateAbi')}}</el-button>
+                            <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="deleteAbi(scope.row)" type="text" size="small" v-hasPermi="['bcos:contract:deleteAbi']">{{$t('contracts.deleteAbi')}}</el-button>
                             <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="handleStatusBtn(scope.row)" type="text" size="small">{{freezeThawBtn(scope.row)}}</el-button>
                             <el-button :disabled="disabled" :class="{'grayColor': disabled}" @click="handleMgmtCns(scope.row)" type="text" size="small">{{$t('text.cns')}}</el-button>
                              <el-button :disabled="!scope.row.contractAddress || !scope.row.haveEvent" :class="{'grayColor': !scope.row.contractAddress}" @click="checkEvent(scope.row)" type="text" size="small">{{$t('title.checkEvent')}}</el-button>

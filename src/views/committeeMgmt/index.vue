@@ -3,10 +3,10 @@
         <!-- <v-content-head :headTitle="$t('title.systemManager')" :headSubTitle="$t('title.committeeMgmt')" @changGroup="changGroup"></v-content-head> -->
         <div style="padding: 10px 20px 0 20px;">
             <div class="">
-                <el-button type="primary" :disabled="disabled" @click="addCommittee">{{this.$t('govCommittee.addCommittee')}}</el-button>
-                <el-button type="primary" :disabled="disabled" @click="deleteCommittee">{{this.$t('govCommittee.deleteCommittee')}}</el-button>
-                <el-button type="primary" :disabled="disabled" @click="modifyWeight">{{this.$t('govCommittee.modifyWeight')}}</el-button>
-                <el-button type="primary" :disabled="disabled" @click="modifyThreshold">{{this.$t('govCommittee.modifyThreshold')}}({{currentThreshold}})</el-button>
+                <el-button type="primary" :disabled="disabled" @click="addCommittee" v-hasPermi="['bcos:sys:grantCommittee']">{{this.$t('govCommittee.addCommittee')}}</el-button>
+                <el-button type="primary" :disabled="disabled" @click="deleteCommittee" v-hasPermi="['bcos:sys:revokeCommittee']">{{this.$t('govCommittee.deleteCommittee')}}</el-button>
+                <el-button type="primary" :disabled="disabled" @click="modifyWeight" v-hasPermi="['bcos:sys:updateCommitteeWeight']">{{this.$t('govCommittee.modifyWeight')}}</el-button>
+                <el-button type="primary" :disabled="disabled" @click="modifyThreshold" v-hasPermi="['bcos:sys:updateThreshold']">{{this.$t('govCommittee.modifyThreshold')}}({{currentThreshold}})</el-button>
             </div>
             <div>
                 <el-table :data="chainCommitteeList" tooltip-effect="dark" v-loading="loading">

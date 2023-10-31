@@ -1,30 +1,42 @@
-/*
- * Copyright 2014-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* * Copyright 2014-2020 the original author or authors. * * Licensed under the
+Apache License, Version 2.0 (the "License"); * you may not use this file except
+in compliance with the License. * You may obtain a copy of the License at * *
+http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law
+or agreed to in writing, software * distributed under the License is distributed
+on an "AS IS" BASIS, * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied. * See the License for the specific language governing
+permissions and * limitations under the License. */
 <template>
   <div class="front-module">
     <nav-menu :headTitle="$t('title.nodeTitle')"></nav-menu>
     <div class="module-wrapper">
-      <div class="search-part" style="padding-top: 20px;" v-if='!disabled'>
+      <div class="search-part" style="padding-top: 20px" v-if="!disabled">
         <div class="search-part-left">
-          <el-button type="primary" class="search-part-left-btn" :disabled="!(configData && configData.chainStatus == 3)" @click="createFront">{{$t('text.addNode')}}</el-button>
-          <el-button type="primary" class="search-part-left-btn" :disabled='!(configData && (configData.chainStatus == 3 || configData.chainStatus == 2))' @click="reset">{{$t('text.reset')}}</el-button>
+          <el-button
+            type="primary"
+            class="search-part-left-btn"
+            :disabled="!(configData && configData.chainStatus == 3)"
+            @click="createFront"
+            v-hasPermi="['bcos:chain:addNode']"
+            >{{ $t("text.addNode") }}</el-button
+          >
+          <el-button
+            type="primary"
+            class="search-part-left-btn"
+            :disabled="
+              !(
+                configData &&
+                (configData.chainStatus == 3 || configData.chainStatus == 2)
+              )
+            "
+            @click="reset"
+            v-hasPermi="['bcos:chain:deleteChain']"
+            >{{ $t("text.reset") }}</el-button
+          >
         </div>
       </div>
       <div class="search-table">
-        <el-form style="padding-top: 20px" v-if='chainList' class="chain-info">
+        <el-form style="padding-top: 20px" v-if="chainList" class="chain-info">
           <el-row>
             <!-- <el-col :span="12">
                             <el-form-item :label='$t("text.chainName") + "："'>
@@ -32,25 +44,36 @@
                             </el-form-item>
                         </el-col> -->
             <el-col :span="12">
-              <el-form-item :label='$t("text.chainVersion") + "："'>
-                <span>{{chainList.version}}</span>
+              <el-form-item :label="$t('text.chainVersion') + '：'">
+                <span>{{ chainList.version }}</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item :label='$t("text.chainType") + "："'>
-                <span v-if='chainList.encryptType === 0'>{{$t("text.sha256")}}</span>
-                <span v-if='chainList.encryptType === 1'>{{$t("text.sm3")}}</span>
+              <el-form-item :label="$t('text.chainType') + '：'">
+                <span v-if="chainList.encryptType === 0">{{
+                  $t("text.sha256")
+                }}</span>
+                <span v-if="chainList.encryptType === 1">{{
+                  $t("text.sm3")
+                }}</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item :label='$t("text.chainStatus") + "："'>
-                <span :style="{'color': chainColor(chainList.chainStatus)}">{{ChainStatus(chainList.chainStatus)}}</span>
-                <i class="el-icon-loading" v-if='chainList.chainStatus != 2 && chainList.chainStatus != 3'></i>
+              <el-form-item :label="$t('text.chainStatus') + '：'">
+                <span :style="{ color: chainColor(chainList.chainStatus) }">{{
+                  ChainStatus(chainList.chainStatus)
+                }}</span>
+                <i
+                  class="el-icon-loading"
+                  v-if="
+                    chainList.chainStatus != 2 && chainList.chainStatus != 3
+                  "
+                ></i>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item :label='$t("home.createTime") + "："'>
-                <span>{{changeDate(chainList.createTime)}}</span>
+              <el-form-item :label="$t('home.createTime') + '：'">
+                <span>{{ changeDate(chainList.createTime) }}</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -67,67 +90,208 @@
                 </el-table> -->
       </div>
     </div>
-    <div class="module-wrapper" style="margin-top: 10px;">
+    <div class="module-wrapper" style="margin-top: 10px">
       <div class="search-table">
-
-        <el-table :data="frontData" class="search-table-content" v-loading="loadingNodes" :element-loading-text="loadingTxt" element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 0.8)"
-          style="padding-bottom: 20px;">
-          <el-table-column v-for="head in frontHead" :label="head.name" :key="head.enName" show-overflow-tooltip :width='head.width'>
+        <el-table
+          :data="frontData"
+          class="search-table-content"
+          v-loading="loadingNodes"
+          :element-loading-text="loadingTxt"
+          element-loading-spinner="el-icon-loading"
+          element-loading-background="rgba(255, 255, 255, 0.8)"
+          style="padding-bottom: 20px"
+        >
+          <el-table-column
+            v-for="head in frontHead"
+            :label="head.name"
+            :key="head.enName"
+            show-overflow-tooltip
+            :width="head.width"
+          >
             <template slot-scope="scope">
-              <template v-if='head.enName === "frontIp"'>
+              <template v-if="head.enName === 'frontIp'">
                 <span>
-                  <router-link :to="{'path': 'hostDetail', 'query': {nodeIp: scope.row['frontIp'], nodeId: scope.row['frontId']}}" class="link">{{scope.row[head.enName]}}</router-link>
+                  <router-link
+                    :to="{
+                      path: 'hostDetail',
+                      query: {
+                        nodeIp: scope.row['frontIp'],
+                        nodeId: scope.row['frontId'],
+                      },
+                    }"
+                    class="link"
+                    >{{ scope.row[head.enName] }}</router-link
+                  >
                 </span>
               </template>
-              <template v-else-if="head.enName ==='status'">
-                <span v-if='configData && configData.chainStatus  == 3'>
-                  <i :style="{'color': textColor(scope.row[head.enName])}" class="wbs-icon-radio font-6"></i> {{Status(scope.row.status)}}
+              <template v-else-if="head.enName === 'status'">
+                <span v-if="configData && configData.chainStatus == 3">
+                  <i
+                    :style="{ color: textColor(scope.row[head.enName]) }"
+                    class="wbs-icon-radio font-6"
+                  ></i>
+                  {{ Status(scope.row.status) }}
                 </span>
-                <span v-else-if='configData'>
+                <span v-else-if="configData">
                   <i style="color: #f00" class="wbs-icon-radio font-6"></i>
                   <!-- {{Status(scope.row.status)}} -->
                 </span>
               </template>
-              <template v-else-if="head.enName ==='nodeType'">
+              <template v-else-if="head.enName === 'nodeType'">
                 <span>
-                  {{nodeText(scope.row.nodeType)}}
-                  <span v-if='scope.row.status == 1 && !scope.row.nodeType' class="el-icon-loading"></span>
-                  <span v-if='scope.row.status == 2 && !scope.row.nodeType'>{{$t("nodes.remove")}}</span>
+                  {{ nodeText(scope.row.nodeType) }}
+                  <span
+                    v-if="scope.row.status == 1 && !scope.row.nodeType"
+                    class="el-icon-loading"
+                  ></span>
+                  <span v-if="scope.row.status == 2 && !scope.row.nodeType">{{
+                    $t("nodes.remove")
+                  }}</span>
                 </span>
               </template>
 
-              <template v-else-if="head.enName ==='operate'">
-                <el-button v-if='scope.row.status == 2 && (configData && configData.chainStatus  == 3)' :disabled="disabled" type="text" size="small" :style="{'color': disabled?'#666':''}"
-                  @click="start(scope.row)">{{$t("text.start")}}</el-button>
-                <el-button v-if='scope.row.status == 1 && scope.row.nodeType == "remove" && (configData && configData.chainStatus  == 3)' :disabled="disabled" type="text" size="small"
-                  :style="{'color': disabled?'#666':''}" @click="stop(scope.row)">{{$t('text.stop')}}</el-button>
-                <el-button v-if='scope.row.status == 5 || ((scope.row.nodeType == "remove" || !scope.row.nodeType) && scope.row.status == 2 && (configData && configData.chainStatus  == 3))' :disabled="disabled"
-                  type="text" size="small" :style="{'color': disabled?'#666':''}" @click="deleted(scope.row)">{{$t("text.delete")}}</el-button>
-                <el-button v-if='scope.row.status == 1 && (configData && configData.chainStatus  == 3)' :disabled="disabled" type="text" size="small" :style="{'color': disabled?'#666':''}"
-                  @click="modifyNodeType(scope.row)">{{$t("text.update")}}</el-button>
-                <el-button v-if='scope.row.status == 1 && (configData && configData.chainStatus  == 3)' :disabled="disabled" type="text" size="small" :style="{'color': disabled?'#666':''}"
-                  @click="restartNode(scope.row)">{{$t("text.restart")}}</el-button>
-                <el-button type="text" size="small" :style="{'color': disabled?'#666':''}" @click="remarks(scope.row)">{{$t("text.remarks")}}</el-button>
+              <template v-else-if="head.enName === 'operate'">
+                <el-button
+                  v-if="
+                    scope.row.status == 2 &&
+                    configData &&
+                    configData.chainStatus == 3
+                  "
+                  :disabled="disabled"
+                  type="text"
+                  size="small"
+                  :style="{ color: disabled ? '#666' : '' }"
+                  @click="start(scope.row)"
+                  v-hasPermi="['bcos:chain:startNode']"
+                  >{{ $t("text.start") }}</el-button
+                >
+                <el-button
+                  v-if="
+                    scope.row.status == 1 &&
+                    scope.row.nodeType == 'remove' &&
+                    configData &&
+                    configData.chainStatus == 3
+                  "
+                  :disabled="disabled"
+                  type="text"
+                  size="small"
+                  :style="{ color: disabled ? '#666' : '' }"
+                  @click="stop(scope.row)"
+                  v-hasPermi="['bcos:chain:stopNode']"
+                  >{{ $t("text.stop") }}</el-button
+                >
+                <el-button
+                  v-if="
+                    scope.row.status == 5 ||
+                    ((scope.row.nodeType == 'remove' || !scope.row.nodeType) &&
+                      scope.row.status == 2 &&
+                      configData &&
+                      configData.chainStatus == 3)
+                  "
+                  :disabled="disabled"
+                  type="text"
+                  size="small"
+                  :style="{ color: disabled ? '#666' : '' }"
+                  @click="deleted(scope.row)"
+                  v-hasPermi="['bcos:chain:deleteNode']"
+                  >{{ $t("text.delete") }}</el-button
+                >
+                <el-button
+                  v-if="
+                    scope.row.status == 1 &&
+                    configData &&
+                    configData.chainStatus == 3
+                  "
+                  :disabled="disabled"
+                  type="text"
+                  size="small"
+                  :style="{ color: disabled ? '#666' : '' }"
+                  @click="modifyNodeType(scope.row)"
+                  v-hasPermi="['bcos:chain:updateNodeDesc']"
+                  >{{ $t("text.update") }}</el-button
+                >
+                <el-button
+                  v-if="
+                    scope.row.status == 1 &&
+                    configData &&
+                    configData.chainStatus == 3
+                  "
+                  :disabled="disabled"
+                  type="text"
+                  size="small"
+                  :style="{ color: disabled ? '#666' : '' }"
+                  @click="restartNode(scope.row)"
+                  v-hasPermi="['bcos:chain:restartNode']"
+                  >{{ $t("text.restart") }}</el-button
+                >
+                <el-button
+                  type="text"
+                  size="small"
+                  :style="{ color: disabled ? '#666' : '' }"
+                  @click="remarks(scope.row)"
+                  >{{ $t("text.remarks") }}</el-button
+                >
               </template>
               <template v-else>
-                <span>{{scope.row[head.enName]}}</span>
+                <span>{{ scope.row[head.enName] }}</span>
               </template>
             </template>
-
           </el-table-column>
         </el-table>
-        <v-setFront :show='frontShow' v-if='frontShow' :showClose='true' @close='close'></v-setFront>
-        <el-dialog :title="$t('nodes.updateNodesType')" :visible.sync="modifyDialogVisible" width="387px" v-if="modifyDialogVisible" center>
-
-          <modify-node-type @nodeModifyClose="nodeModifyClose" @nodeModifySuccess="nodeModifySuccess" :modifyNode="modifyNode"></modify-node-type>
+        <v-setFront
+          :show="frontShow"
+          v-if="frontShow"
+          :showClose="true"
+          @close="close"
+        ></v-setFront>
+        <el-dialog
+          :title="$t('nodes.updateNodesType')"
+          :visible.sync="modifyDialogVisible"
+          width="387px"
+          v-if="modifyDialogVisible"
+          center
+        >
+          <modify-node-type
+            @nodeModifyClose="nodeModifyClose"
+            @nodeModifySuccess="nodeModifySuccess"
+            :modifyNode="modifyNode"
+          ></modify-node-type>
         </el-dialog>
-        <add-node v-if='addNodeShow' :show='addNodeShow' @close='addNodeClose'></add-node>
-        <new-node v-if='newNodeShow' :show='newNodeShow' @close='newNodeClose' :data='frontData'></new-node>
-        <update-node v-if='updateNodeShow' :show='updateNodeShow' @close='updateNodeClose' @success='updateNodeSuccess'></update-node>
+        <add-node
+          v-if="addNodeShow"
+          :show="addNodeShow"
+          @close="addNodeClose"
+        ></add-node>
+        <new-node
+          v-if="newNodeShow"
+          :show="newNodeShow"
+          @close="newNodeClose"
+          :data="frontData"
+        ></new-node>
+        <update-node
+          v-if="updateNodeShow"
+          :show="updateNodeShow"
+          @close="updateNodeClose"
+          @success="updateNodeSuccess"
+        ></update-node>
         <!-- <delete-node v-if='deleteNodeShow' :show='deleteNodeShow' @close='deleteNodeClose' :data='nodeData'></delete-node> -->
-        <host-info v-if='hostInfoShow' :show='hostInfoShow' @close='hostInfoClose'></host-info>
-        <el-dialog :title="$t('text.remarks')" :visible.sync="remarkDialogVisible" width="500px" v-if="remarkDialogVisible" center>
-          <remark-node @nodeRemarkClose="nodeRemarkClose" @nodeRemarkSuccess="nodeRemarkSuccess" :remarkNode="remarkNode"></remark-node>
+        <host-info
+          v-if="hostInfoShow"
+          :show="hostInfoShow"
+          @close="hostInfoClose"
+        ></host-info>
+        <el-dialog
+          :title="$t('text.remarks')"
+          :visible.sync="remarkDialogVisible"
+          width="500px"
+          v-if="remarkDialogVisible"
+          center
+        >
+          <remark-node
+            @nodeRemarkClose="nodeRemarkClose"
+            @nodeRemarkSuccess="nodeRemarkSuccess"
+            :remarkNode="remarkNode"
+          ></remark-node>
         </el-dialog>
       </div>
     </div>
@@ -236,17 +400,17 @@ export default {
         },
         {
           enName: "p2pPort",
-          name: 'P2P' + this.$t("alarm.port"),
+          name: "P2P" + this.$t("alarm.port"),
           width: 100,
         },
         {
           enName: "channelPort",
-          name: 'Channel' + this.$t("alarm.port"),
+          name: "Channel" + this.$t("alarm.port"),
           width: 100,
         },
         {
           enName: "jsonrpcPort",
-          name: 'RPC' + this.$t("alarm.port"),
+          name: "RPC" + this.$t("alarm.port"),
           width: 100,
         },
         {
@@ -295,16 +459,16 @@ export default {
     Bus.$on("changeConfig", (data) => {
       this.getData();
     });
-    Bus.$on("changGroup", data => {
+    Bus.$on("changGroup", (data) => {
       this.getFrontTable();
-    })
+    });
     //this.getConfigList();
 
-    let isDeploy = false
+    let isDeploy = false;
     if (this.$route.query) {
       isDeploy = this.$route.query.isDeploy;
     }
-    
+
     if (isDeploy) {
       this.getGroupList();
     }
@@ -822,14 +986,21 @@ export default {
           if (res.data.code === 0) {
             try {
               if (res.data.data && res.data.data.length > 0) {
-                if (!localStorage.getItem("groupId1") 
-                      || localStorage.getItem("groupId1").length == 0 
-                      || !localStorage.getItem("groupName1")
-                      || localStorage.getItem("groupName1").length == 0) {
-                    console.log("!!!!getGroupsInvalidIncluded,and to to set id and name");
-                    localStorage.setItem("groupId1", res.data.data[0].groupId)
-                    localStorage.setItem("groupName1", res.data.data[0].groupName);
-                    Bus.$emit("changeHeadGroup");
+                if (
+                  !localStorage.getItem("groupId1") ||
+                  localStorage.getItem("groupId1").length == 0 ||
+                  !localStorage.getItem("groupName1") ||
+                  localStorage.getItem("groupName1").length == 0
+                ) {
+                  console.log(
+                    "!!!!getGroupsInvalidIncluded,and to to set id and name"
+                  );
+                  localStorage.setItem("groupId1", res.data.data[0].groupId);
+                  localStorage.setItem(
+                    "groupName1",
+                    res.data.data[0].groupName
+                  );
+                  Bus.$emit("changeHeadGroup");
                 }
               }
             } catch (error) {
@@ -1098,8 +1269,7 @@ export default {
     },
   },
 };
-
-debugger</script>
+</script>
 <style scoped>
 .module-wrapper {
   height: 100%;
@@ -1206,7 +1376,7 @@ debugger</script>
   line-height: 16px;
 }
 .el-button--text {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>

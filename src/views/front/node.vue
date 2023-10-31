@@ -88,8 +88,8 @@
                 </div>
                 <div :element-loading-text="laodingText" v-loading="loading3" element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 0.8)">
                     <el-divider></el-divider>
-                    <el-button type="primary" @click="add">{{$t('text.addNode')}}</el-button>
-                    <el-button type="primary" :loading="loading" @click="check()">{{$t('text.check')}}</el-button>
+                    <el-button type="primary" @click="add" v-hasPermi="['bcos:chain:addNode']">{{$t('text.addNode')}}</el-button>
+                    <el-button type="primary" :loading="loading" @click="check()" v-hasPermi="['bcos:chain:checkHostInit']">{{$t('text.check')}}</el-button>
                     <el-button class="clear-right" @click='clearNode'>{{$t("text.clearNode")}}</el-button>
 
                     <el-table :data="nodeList" class="search-table-content">
@@ -105,13 +105,13 @@
                         </el-table-column>
                         <el-table-column :label="$t('nodes.operation')" fixed="right" width='200px'>
                             <template slot-scope='scope'>
-                                <el-button type='text' @click="deleteNode(scope.row)">{{$t('text.delete')}}</el-button>
+                                <el-button type='text' @click="deleteNode(scope.row)" v-hasPermi="['bcos:chain:deleteNode']">{{$t('text.delete')}}</el-button>
                                 <!-- <el-button type='text' v-if='scope.row.status === 5' @click="checkone(scope.row)">{{$t('text.check')}}</el-button> -->
                             </template>
                         </el-table-column>
                     </el-table>
                     <div style="padding: 10px 0" class="check-button">
-                        <el-button type="primary" :loading="loading1" @click="init('chainFrom')" v-if='!initShow'>{{$t('nodes.initialize')}}</el-button>
+                        <el-button type="primary" :loading="loading1" @click="init('chainFrom')" v-if='!initShow' v-hasPermi="['bcos:chain:initHost']">{{$t('nodes.initialize')}}</el-button>
                         <el-button type="primary" :loading="loading2" @click="deploy('chainFrom')" v-if='initShow'>{{$t('text.deploy')}}</el-button>
                     </div>
                 </div>

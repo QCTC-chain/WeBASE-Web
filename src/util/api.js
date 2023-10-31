@@ -39,6 +39,14 @@ export function loginOut() {
         headers: getAuthHeaders()
     })
 }
+
+export function getUserInfo() {
+  return get({
+    url: `${url.MGR}/system/user/getInfo`,
+    method: "get",
+    headers: getAuthHeaders(),
+  });
+}
 //
 export function encryption() {
     return get({

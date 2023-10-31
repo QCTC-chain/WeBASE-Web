@@ -15,12 +15,14 @@
             type="primary"
             class="search-part-left-btn"
             @click="generateGroup"
+            v-hasPermi="['bcos:groups:operate']"
             >{{ this.$t("nodes.addGroup") }}</el-button
           >
           <el-button
             type="primary"
             class="search-part-left-btn"
             @click="addHadGroup"
+            v-hasPermi="['bcos:groups:operate']"
             >{{ this.$t("nodes.addHadGroup") }}</el-button
           >
           <el-button
@@ -29,6 +31,7 @@
             @click="queryUpdateGroup"
             v-preventReClick
             :title="$t('alarm.refresh')"
+            v-hasPermi="['bcos:groups:operate']"
           ></el-button>
         </div>
         <div class="">
@@ -81,6 +84,7 @@
                   type="text"
                   size="small"
                   @click="queryCrudGroup(scope.row)"
+                  v-hasPermi="['bcos:groups:operate']"
                   >{{ $t("text.update") }}</el-button
                 >
                 <el-button
@@ -88,6 +92,7 @@
                   size="small"
                   :loading="dropLoading && dropIndex === scope.row.groupId"
                   @click="queryDeleteGroupData(scope.row)"
+                  v-hasPermi="['bcos:groups:operate']"
                   >{{ $t("text.dropGroupData") }}</el-button
                 >
                 <el-button
