@@ -1,29 +1,37 @@
-/*
- * Copyright 2014-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* * Copyright 2014-2020 the original author or authors. * * Licensed under the
+Apache License, Version 2.0 (the "License"); * you may not use this file except
+in compliance with the License. * You may obtain a copy of the License at * *
+http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law
+or agreed to in writing, software * distributed under the License is distributed
+on an "AS IS" BASIS, * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied. * See the License for the specific language governing
+permissions and * limitations under the License. */
 <template>
   <div class="over-view-wrapper">
     <nav-menu :headTitle="$t('title.dataOverview')"></nav-menu>
     <div style="margin: 5px">
       <div style="margin: 10px 10px 6px 10px">
         <el-row type="flex">
-          <el-col :xs="24" :sm="24" :md="11" :lg="10" :xl="8" v-loading="loadingNumber" class="overview-info">
-            <div class="overview-item" v-for="(item, index) in detailsList" :key="item.label"
-              @click="goDetailRouter(item)">
+          <el-col
+            :xs="24"
+            :sm="24"
+            :md="11"
+            :lg="10"
+            :xl="8"
+            v-loading="loadingNumber"
+            class="overview-info"
+          >
+            <div
+              class="overview-item"
+              v-for="(item, index) in detailsList"
+              :key="item.label"
+              @click="goDetailRouter(item)"
+            >
               <div class="overview-item-img" :class="item.bg">
-                <img :class="['img-icon', `icon${index}`]" :src="require('../../assets/image/' + item.icon)" />
+                <img
+                  :class="['img-icon', `icon${index}`]"
+                  :src="require('../../assets/image/' + item.icon)"
+                />
               </div>
               <div class="overview-item-content">
                 <div class="overview-item-number">{{ item.value }}</div>
@@ -42,28 +50,54 @@
                 }}</span>
               </div>
               <div class="chart" ref="chart">
-                <v-chart ref="linechart" :id="'homeId'" v-if="chartStatistics.show" :data="chartStatistics.date"
-                  :transactionDataArr="chartStatistics.dataArr" :size="chartStatistics.chartSize"
-                  v-loading="loadingCharts"></v-chart>
+                <v-chart
+                  ref="linechart"
+                  :id="'homeId'"
+                  v-if="chartStatistics.show"
+                  :data="chartStatistics.date"
+                  :transactionDataArr="chartStatistics.dataArr"
+                  :size="chartStatistics.chartSize"
+                  v-loading="loadingCharts"
+                ></v-chart>
               </div>
             </div>
           </el-col>
         </el-row>
       </div>
       <el-row :gutter="24">
-        <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
-          <div class="module-wrapper-small" style="padding: 30px 31px 26px 32px">
-            <el-table :data="nodeData" class="search-table-content" v-loading="loadingNodes">
-              <el-table-column v-for="head in nodeHead" :label="head.name" :key="head.enName" show-overflow-tooltip
-                align="" :width="head.width">
+        <el-col :xs="24" :sm="24" :md="12" :lg="14" :xl="14">
+          <div
+            class="module-wrapper-small"
+            style="padding: 30px 31px 26px 32px"
+          >
+            <el-table
+              :data="nodeData"
+              class="search-table-content"
+              v-loading="loadingNodes"
+            >
+              <el-table-column
+                v-for="head in nodeHead"
+                :label="head.name"
+                :key="head.enName"
+                show-overflow-tooltip
+                align=""
+                :width="head.width"
+              >
                 <template slot-scope="scope">
                   <template>
                     <span v-if="head.enName === 'nodeActive'">
-                      <i :style="{ color: textColor(scope.row[head.enName]) }" class="wbs-icon-radio font-6"></i>
+                      <i
+                        :style="{ color: textColor(scope.row[head.enName]) }"
+                        class="wbs-icon-radio font-6"
+                      ></i>
                       {{ nodesStatus(scope.row[head.enName]) }}
                     </span>
                     <span v-else-if="head.enName === 'nodeId'">
-                      <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(scope.row[head.enName])" title="复制"></i>
+                      <i
+                        class="wbs-icon-copy font-12"
+                        @click="copyNodeIdKey(scope.row[head.enName])"
+                        title="复制"
+                      ></i>
                       {{ scope.row[head.enName] }}
                     </span>
                     <span v-else>{{ scope.row[head.enName] }}</span>
@@ -77,56 +111,90 @@
               <span class="overview-title">{{
                 this.$t("home.transaction")
               }}</span>
-              <span class="overview-more cursor-pointer" @click="goRouter('transactions')">{{ this.$t("home.more")
-              }}</span>
+              <span
+                class="overview-more cursor-pointer"
+                @click="goRouter('transactions')"
+                >{{ this.$t("home.more") }}</span
+              >
             </p>
-            <div class="overview-item-base trans" v-loading="loadingTransaction">
-              <div class="block-item font-color-2e384d" v-for="item in transactionList" :key="item.transHash">
-                <div class="block-amount">
+            <div
+              class="overview-item-base trans"
+              v-loading="loadingTransaction"
+            >
+              <el-row
+                class="block-item font-color-2e384d"
+                v-for="item in transactionList"
+                :key="item.transHash"
+              >
+                <el-col class="block-amount" :lg="18" :md="16">
                   <p class="trans-hash" :title="`${item.transHash}`">
-                    <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(item.transHash)" :title="$t('text.copy')"></i>
-                    <router-link :to="{
-                      path: 'transactionInfo',
-                      query: { blockNumber: item.transHash },
-                    }" class="node-ip">
+                    <i
+                      class="wbs-icon-copy font-12"
+                      @click="copyNodeIdKey(item.transHash)"
+                      :title="$t('text.copy')"
+                    ></i>
+                    <router-link
+                      :to="{
+                        path: 'transactionInfo',
+                        query: { blockNumber: item.transHash },
+                      }"
+                      class="node-ip"
+                    >
                       {{ item.transHash }}
                     </router-link>
                   </p>
                   <p class="trans-address color-8798AD">
                     <span>
-                      <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(item.transFrom)"
-                        :title="$t('text.copy')"></i>
+                      <i
+                        class="wbs-icon-copy font-12"
+                        @click="copyNodeIdKey(item.transFrom)"
+                        :title="$t('text.copy')"
+                      ></i>
                       {{ splitAddress(item.transFrom) }}
                     </span>
                     <img :src="sRight" :alt="$t('text.arrow')" />
                     <span>
-                      <i class="wbs-icon-copy font-12" @click="copyNodeIdKey(item.transTo)" :title="$t('text.copy')"></i>
+                      <i
+                        class="wbs-icon-copy font-12"
+                        @click="copyNodeIdKey(item.transTo)"
+                        :title="$t('text.copy')"
+                      ></i>
                       {{ splitAddress(item.transTo) }}
                     </span>
                   </p>
-                </div>
-                <p class="color-8798AD text-right">
+                </el-col>
+                <el-col class="color-8798AD text-right" :lg="6" :md="8">
                   {{ item.blockTimestamp }}
-                </p>
-              </div>
+                </el-col>
+              </el-row>
             </div>
           </div>
-
         </el-col>
-        <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
+        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
           <div class="overview-wrapper">
             <p>
               <span class="overview-title">{{ this.$t("home.block") }}</span>
-              <span class="overview-more cursor-pointer" @click="goRouter('blocks')">{{ this.$t("home.more") }}</span>
+              <span
+                class="overview-more cursor-pointer"
+                @click="goRouter('blocks')"
+                >{{ this.$t("home.more") }}</span
+              >
             </p>
             <div class="overview-item-base block" v-loading="loadingBlock">
-              <div class="block-item font-color-2e384d" v-for="item in blockData" :key="item.blockNumber">
+              <div
+                class="block-item font-color-2e384d"
+                v-for="item in blockData"
+                :key="item.blockNumber"
+              >
                 <div class="block-amount" style="padding-bottom: 7px">
                   <span>
-                    <router-link :to="{
-                      path: 'blockInfo',
-                      query: { blockNumber: item.blockNumber },
-                    }" class="node-ip">
+                    <router-link
+                      :to="{
+                        path: 'blockInfo',
+                        query: { blockNumber: item.blockNumber },
+                      }"
+                      class="node-ip"
+                    >
                       <span>{{ $t("home.blockHeight") }}</span>
                       {{ item.blockNumber }}
                     </router-link>
@@ -139,7 +207,10 @@
                     <p :title="`${item.sealer}`">{{ item.sealer }}</p>
                   </div>
                   <div class="text-right">
-                    <span class="block-trans" @click="linkRouter(item.blockNumber)">
+                    <span
+                      class="block-trans"
+                      @click="linkRouter(item.blockNumber)"
+                    >
                       <!-- <router-link :to="{'path': 'blockInfo', 'query': {blockNumber: item.blockNumber}}" class="node-ip"> -->
                       <span>{{ item.transCount }}</span>
                       <span>txns</span>
@@ -157,7 +228,7 @@
 </template>
 
 <script>
-import NavMenu from '../../components/navs/navMenu.vue';
+import NavMenu from "../../components/navs/navMenu.vue";
 import charts from "./components/chart";
 import {
   getDeployType,
@@ -180,7 +251,7 @@ import Bus from "@/bus";
 export default {
   name: "home",
   components: {
-    'nav-menu': NavMenu,
+    "nav-menu": NavMenu,
     "v-chart": charts,
   },
   computed: {
@@ -223,6 +294,11 @@ export default {
           enName: "nodeId",
           name: this.$t("home.nodeId"),
           width: "",
+        },
+        {
+          enName: "nodeIp",
+          name: this.$t("home.nodeIp"),
+          width: "150",
         },
         {
           enName: "blockNumber",
@@ -288,7 +364,7 @@ export default {
         this.getChart();
       });
     }
-    Bus.$on("changGroup", val => {
+    Bus.$on("changGroup", (val) => {
       this.groupId = val;
       this.getNetworkDetails();
       this.getNodeTable();
@@ -299,7 +375,7 @@ export default {
         this.chartStatistics.chartSize.height = this.$refs.chart.offsetHeight;
         this.getChart();
       });
-    })
+    });
   },
   destroyed() {
     Bus.$off("changGroup");
@@ -310,7 +386,6 @@ export default {
         .then((res) => {
           if (res.data.code == 0) {
             localStorage.setItem("deployType1", res.data.data);
-
           } else {
             this.$message({
               message: this.$chooseLang(res.data.code),
@@ -413,10 +488,10 @@ export default {
       this.loadingNodes = true;
       let groupId = localStorage.getItem("groupId1");
       let reqData = {
-        groupId: groupId,
-        pageNumber: 1,
-        pageSize: 100,
-      },
+          groupId: groupId,
+          pageNumber: 1,
+          pageSize: 100,
+        },
         reqQuery = {},
         reqParam = {
           groupId: groupId,
@@ -448,6 +523,7 @@ export default {
                   });
                 }
               });
+
               this.nodeData.forEach((item) => {
                 if (item.nodeType === "observer") {
                   item.pbftView = "--";
@@ -464,16 +540,16 @@ export default {
       this.loadingBlock = true;
       let groupId = localStorage.getItem("groupId1");
       let reqData = {
-        groupId: groupId,
-        pageNumber: 1,
-        pageSize: 6,
-      },
+          groupId: groupId,
+          pageNumber: 1,
+          pageSize: 6,
+        },
         reqQuery = {};
       getBlockPage(reqData, reqQuery)
         .then((res) => {
           this.loadingBlock = false;
           if (res.data.code === 0) {
-            this.blockData = res.data.data;
+            this.blockData = res.data.data.slice(0, 10);
           } else {
             this.$message({
               message: this.$chooseLang(res.data.code),
@@ -494,10 +570,10 @@ export default {
       this.loadingTransaction = true;
       let groupId = localStorage.getItem("groupId1");
       let reqData = {
-        groupId: groupId,
-        pageNumber: 1,
-        pageSize: 6,
-      },
+          groupId: groupId,
+          pageNumber: 1,
+          pageSize: 6,
+        },
         reqQuery = {};
       getTransactionList(reqData, reqQuery)
         .then((res) => {
@@ -648,27 +724,27 @@ export default {
 <style scoped>
 .node-bg {
   /* background: linear-gradient(102.87deg, #4ccbf3 0%, #94eefb 100%); */
-  background: url('../../assets/image/node.png') no-repeat;
+  background: url("../../assets/image/node.png") no-repeat;
 }
 
 .contract-bg {
   /* background: linear-gradient(102.87deg, #4886ff 0%, #62b0f8 100%); */
-  background: url('../../assets/image/contract.png') no-repeat;
+  background: url("../../assets/image/contract.png") no-repeat;
 }
 
 .block-bg {
   /* background: linear-gradient(102.87deg, #7280ff 0%, #98afff 100%); */
-  background: url('../../assets/image/block.png') no-repeat;
+  background: url("../../assets/image/block.png") no-repeat;
 }
 
 .transation-bg {
   /* background: linear-gradient(102.87deg, #ff9472 0%, #ffc1ad 100%); */
-  background: url('../../assets/image/trans.png') no-repeat;
+  background: url("../../assets/image/trans.png") no-repeat;
 }
 
 .over-view-wrapper {
   background: #f7f7f7;
-  margin-bottom:80px;
+  margin-bottom: 80px;
 }
 
 .amount-wrapper {
@@ -755,8 +831,8 @@ export default {
   font-size: 12px;
 }
 
-.part3-table-content>>>th,
-.part3-table-content>>>td {
+.part3-table-content >>> th,
+.part3-table-content >>> td {
   padding: 8px 0;
 }
 
@@ -776,13 +852,13 @@ export default {
   width: 100%;
 }
 
-.search-table-content>>>th {
+.search-table-content >>> th {
   background: #fafafa;
   color: #2e384d;
 }
 
-.search-table-content>>>th,
-.search-table-content>>>td {
+.search-table-content >>> th,
+.search-table-content >>> td {
   font-size: 14px;
 }
 
@@ -791,10 +867,10 @@ export default {
   font-size: 15px;
   box-shadow: 0 4px 12px 0 #dfe2e9;
   border-radius: 2px;
-  margin:0px 8px 0 9px;
+  margin: 0px 8px 0 9px;
 }
 
-.overview-wrapper>p {
+.overview-wrapper > p {
   padding: 26px 18px 0px 22px;
   border-bottom: 1px solid #f2f2f2;
   display: flex;
@@ -832,11 +908,11 @@ export default {
 }
 
 .block {
-  max-height:500px;
+  /* max-height: 500px; */
 }
 
-.trans{
-  max-height:250px;
+.trans {
+  /* max-height: 250px; */
 }
 
 .block-miner {
@@ -844,7 +920,7 @@ export default {
   flex-flow: row wrap;
 }
 
-.block-miner>p {
+.block-miner > p {
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -852,7 +928,6 @@ export default {
 }
 
 .trans-hash {
-  max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -927,7 +1002,7 @@ export default {
 
 .overview-item-number {
   font-size: 30px;
-  color: #1B2337;
+  color: #1b2337;
   font-weight: bold;
 }
 

@@ -1,27 +1,41 @@
 <template>
   <div class="navMenu">
-    <div v-if='isMicroApp && noShow' class="content-head-network">
-      <span v-if="abnormalList.length>0">
+    <div v-if="isMicroApp && noShow" class="content-head-network">
+      <span v-if="abnormalList.length > 0">
         <el-tooltip class="item" effect="dark" placement="bottom-end">
           <div slot="content">
-            <span>{{$t('text.group')}}</span>
-            <span>{{abnormalList}}</span>
-            <span>{{$t('text.groupConf4')}}</span>
-            <span class="cursor-pointer font-color-2956a3" @click="goGroupMgmt">{{$t('text.groupMgmt')}}</span>
-            <span>{{$t('text.groupConf4_1')}}</span>
+            <span>{{ $t("text.group") }}</span>
+            <span>{{ abnormalList }}</span>
+            <span>{{ $t("text.groupConf4") }}</span>
+            <span
+              class="cursor-pointer font-color-2956a3"
+              @click="goGroupMgmt"
+              >{{ $t("text.groupMgmt") }}</span
+            >
+            <span>{{ $t("text.groupConf4_1") }}</span>
           </div>
           <i class="el-icon-warning-outline font-color-E6A23C"></i>
         </el-tooltip>
       </span>
       <el-dropdown trigger="click" @command="changeGroup" placement="bottom">
         <span class="el-dropdown-link" @click="groupVisible = !groupVisible">
-            {{this.$t("head.group")}}: {{groupName}}<i :class="[groupVisible?'el-icon-arrow-up':'el-icon-arrow-down']"></i>
+          {{ this.$t("head.group") }}: {{ groupName
+          }}<i
+            :class="[groupVisible ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"
+          ></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <ul style="max-height: 220px;overflow-y:auto" class="text-center">
-            <el-dropdown-item v-for=" item in groupList" :key="item.group" :command="item">
-              <i class="wbs-icon-radio font-6" :style="{'color': groupStatusColor(item.groupStatus)}"></i>
-              {{item.groupName}}
+          <ul style="max-height: 220px; overflow-y: auto" class="text-center">
+            <el-dropdown-item
+              v-for="item in groupList"
+              :key="item.group"
+              :command="item"
+            >
+              <i
+                class="wbs-icon-radio font-6"
+                :style="{ color: groupStatusColor(item.groupStatus) }"
+              ></i>
+              {{ item.groupName }}
             </el-dropdown-item>
           </ul>
         </el-dropdown-menu>
@@ -52,8 +66,8 @@
         >{{ headHref.content }}</a
       >
     </div>
-    
-    <div :class="['guideLine',{'guideCheck':navContentShow}]" v-if="false">
+
+    <div :class="['guideLine', { guideCheck: navContentShow }]" v-if="false">
       <el-button
         size="small"
         type=""
@@ -104,7 +118,7 @@ export default {
       groupVisible: false,
       versionInfoVisible: false,
       navContentShow: false,
-      noShow:true
+      noShow: true,
     };
   },
   watch: {
@@ -113,20 +127,21 @@ export default {
     },
   },
   beforeDestroy: function () {
-    Bus.$off("closeContent")
-    Bus.$off("deleteFront")
-    Bus.$off("addFront")
-    Bus.$off("changeHeadGroup")
+    Bus.$off("closeContent");
+    Bus.$off("deleteFront");
+    Bus.$off("addFront");
+    Bus.$off("changeHeadGroup");
   },
-  mounted(){
+  mounted() {
     let that = this;
     Bus.$on("closeContent", () => {
       that.navContentShow = false;
     });
-    this.currentRoute=this.$route.path;
-    let pre=this.currentRoute.substring(1)
-    if(pre=='groupManagement'){
-      this.noShow=false
+    this.currentRoute = this.$route.path;
+    let pre = this.currentRoute.substring(1);
+    console.log(pre);
+    if (pre == "groupManagement" || pre === "node/chain") {
+      this.noShow = false;
     }
     if (localStorage.getItem("groupName1")) {
       this.groupName = localStorage.getItem("groupName1");
@@ -134,15 +149,15 @@ export default {
     this.getGroupList();
     Bus.$on("deleteFront", () => {
       that.groupName = "";
-      that.getGroupList('delete');
-    })
+      that.getGroupList("delete");
+    });
     Bus.$on("addFront", () => {
       that.getGroupList();
-    })
+    });
     Bus.$on("changeHeadGroup", () => {
       that.getGroupList();
-    })
-    this.queryGroupStatus4()
+    });
+    this.queryGroupStatus4();
   },
   methods: {
     skip: function () {
@@ -156,97 +171,101 @@ export default {
       this.navContentShow = !this.navContentShow;
     },
     getGroupList: function (type) {
-      getGroupsInvalidIncluded().then(res => {
-        if (res.data.code === 0) {
-          if (res.data.data && res.data.data.length) {
-            this.groupList = res.data.data || []
-            if (this.updateGroupType === 'update') {
-              this.$nextTick(_ => {
-                this.groupName = res.data.data[0].groupName;
-                // localStorage.setItem("groupName1", res.data.data[0].groupName)
-                // localStorage.setItem("groupId1", res.data.data[0].groupId)
-                return;
-              })
-            }
+      getGroupsInvalidIncluded()
+        .then((res) => {
+          if (res.data.code === 0) {
+            if (res.data.data && res.data.data.length) {
+              this.groupList = res.data.data || [];
+              if (this.updateGroupType === "update") {
+                this.$nextTick((_) => {
+                  this.groupName = res.data.data[0].groupName;
+                  // localStorage.setItem("groupName1", res.data.data[0].groupName)
+                  // localStorage.setItem("groupId1", res.data.data[0].groupId)
+                  return;
+                });
+              }
 
-            if (type || !localStorage.getItem("groupName1")) {
+              if (type || !localStorage.getItem("groupName1")) {
                 this.groupName = res.data.data[0].groupName;
                 // localStorage.setItem("groupName1", res.data.data[0].groupName)
                 // localStorage.setItem("groupId1", res.data.data[0].groupId)
-            } else if (localStorage.getItem("groupName1")) {
+              } else if (localStorage.getItem("groupName1")) {
                 this.groupName = localStorage.getItem("groupName1");
+              }
+            } else {
+              this.groupList = [];
+              // localStorage.setItem("groupName1", "")
+              // localStorage.setItem("groupId1", "")
             }
           } else {
             this.groupList = [];
+            this.$message({
+              message: this.$chooseLang(res.data.code),
+              type: "error",
+              duration: 2000,
+            });
             // localStorage.setItem("groupName1", "")
             // localStorage.setItem("groupId1", "")
           }
-        } else {
+        })
+        .catch((err) => {
           this.groupList = [];
-          this.$message({
-            message: this.$chooseLang(res.data.code),
-            type: "error",
-            duration: 2000
-          });
           // localStorage.setItem("groupName1", "")
           // localStorage.setItem("groupId1", "")
-        }
-      }).catch(err => {
-        this.groupList = [];
-        // localStorage.setItem("groupName1", "")
-        // localStorage.setItem("groupId1", "")
-        this.$message({
-          message: err.data || this.$t('text.systemError'),
-          type: "error",
-          duration: 2000
+          this.$message({
+            message: err.data || this.$t("text.systemError"),
+            type: "error",
+            duration: 2000,
+          });
         });
-      });
     },
     changeGroup: function (val) {
-      this.groupName = val.groupName
+      this.groupName = val.groupName;
       localStorage.setItem("groupName1", val.groupName);
       localStorage.setItem("groupId1", val.groupId);
-      this.$emit('changGroup', val.groupId);
+      this.$emit("changGroup", val.groupId);
       Bus.$emit("changGroup", val.groupId);
     },
     queryGroupStatus4() {
-      groupStatus4(4).then(res => {
-        if (res.data.code === 0) {
-          var abnormalData = res.data.data;
-          this.abnormalList = []
-          if (abnormalData) {
-            abnormalData.forEach(item => {
-                this.abnormalList.push(item.groupId)
+      groupStatus4(4)
+        .then((res) => {
+          if (res.data.code === 0) {
+            var abnormalData = res.data.data;
+            this.abnormalList = [];
+            if (abnormalData) {
+              abnormalData.forEach((item) => {
+                this.abnormalList.push(item.groupId);
+              });
+            }
+          } else {
+            this.$message({
+              message: this.$chooseLang(res.data.code),
+              type: "error",
+              duration: 2000,
             });
           }
-        } else {
+        })
+        .catch((err) => {
           this.$message({
-            message: this.$chooseLang(res.data.code),
+            message: err.data || this.$t("text.systemError"),
             type: "error",
-            duration: 2000
+            duration: 2000,
           });
-        }
-      }).catch(err => {
-        this.$message({
-          message: err.data || this.$t('text.systemError'),
-          type: "error",
-          duration: 2000
         });
-      })
     },
     groupStatusColor(key) {
       switch (key) {
         case 1:
-          return 'rgb(88, 203, 125)'
+          return "rgb(88, 203, 125)";
           break;
         case 2:
-          return '#E6A23C'
+          return "#E6A23C";
           break;
         case 3:
-          return '#F56C6C'
+          return "#F56C6C";
           break;
         case 4:
-          return '#F56C6C'
+          return "#F56C6C";
           break;
       }
     },
@@ -279,21 +298,23 @@ export default {
   float: right;
   padding-right: 25px;
 }
-.guideLine button{
-    color: rgb(96, 98, 102);
-    border-color: #DCDFE6;
-    background-color: #FFF;
+.guideLine button {
+  color: rgb(96, 98, 102);
+  border-color: #dcdfe6;
+  background-color: #fff;
 }
-.guideCheck button{
-    color: #409EFF;
-    border-color: #c6e2ff;
-    background-color: #ecf5ff;
+.guideCheck button {
+  color: #409eff;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
 }
 .el-dropdown-link {
   cursor: pointer;
-  color: #409EFF;
+  color: #409eff;
 }
-.el-dropdown, .el-icon-arrow-down, .el-icon-arrow-up {
+.el-dropdown,
+.el-icon-arrow-down,
+.el-icon-arrow-up {
   font-size: 16px;
   font-weight: bold;
 }
