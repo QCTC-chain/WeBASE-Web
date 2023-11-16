@@ -416,7 +416,7 @@ export default {
     },
     head: {
         helpText: "帮助文档",
-        group: "群组",
+        group: "选择群组",
         changePassword: "修改密码",
         exit: "退出",
         versionInfo: "版本信息",
