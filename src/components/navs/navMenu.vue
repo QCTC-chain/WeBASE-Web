@@ -7,11 +7,11 @@
             <span>{{ $t("text.group") }}</span>
             <span>{{ abnormalList }}</span>
             <span>{{ $t("text.groupConf4") }}</span>
-            <span
+            <!-- <span
               class="cursor-pointer font-color-2956a3"
               @click="goGroupMgmt"
               >{{ $t("text.groupMgmt") }}</span
-            >
+            > -->
             <span>{{ $t("text.groupConf4_1") }}</span>
           </div>
           <i class="el-icon-warning-outline font-color-E6A23C"></i>

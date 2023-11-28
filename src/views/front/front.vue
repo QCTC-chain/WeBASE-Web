@@ -355,7 +355,6 @@ export default {
       total: 0,
       nodetotal: 0,
       loading: false,
-      nodesLoading: false,
       nodesDialogVisible: false,
       nodesDialogTitle: "",
       nodesDialogOptions: {},
@@ -462,6 +461,7 @@ export default {
     Bus.$on("changGroup", (data) => {
       this.getFrontTable();
     });
+    
     //this.getConfigList();
 
     let isDeploy = false;
