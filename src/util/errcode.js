@@ -1591,7 +1591,7 @@ let errCode = {
   },
   "202456": {
     en: "Node is still a sealer or observer, delete failed.",
-    zh: "节点处于观察或共识状态，删除失败。请先将节点移出群组再操作"
+    zh: "节点在其他群组处于观察或共识状态，删除失败。请先将节点移出对应群组再操作"
   },
   "202457": {
     en: "Fetch node list from host's configuration files.",
