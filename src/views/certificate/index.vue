@@ -241,7 +241,6 @@ export default {
 
   mounted() {
     if (
-      localStorage.getItem("root") === "admin" ||
       localStorage.getItem("groupId1")
     ) {
       this.disabled = false;
