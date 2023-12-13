@@ -10,7 +10,7 @@ permissions and * limitations under the License. */
   <div class="front-module">
     <nav-menu :headTitle="$t('title.nodeTitle')"></nav-menu>
     <div class="module-wrapper">
-      <div class="search-part" style="padding-top: 20px" v-if="!disabled">
+      <div class="search-part" style="padding-top: 20px">
         <div class="search-part-left">
           <el-button
             type="primary"
@@ -157,10 +157,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="start(scope.row)"
                   v-hasPermi="['bcos:chain:startNode']"
                   >{{ $t("text.start") }}</el-button
@@ -172,10 +170,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="stop(scope.row)"
                   v-hasPermi="['bcos:chain:stopNode']"
                   >{{ $t("text.stop") }}</el-button
@@ -188,10 +184,8 @@ permissions and * limitations under the License. */
                       configData &&
                       configData.chainStatus == 3)
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="deleted(scope.row)"
                   v-hasPermi="['bcos:chain:deleteNode']"
                   >{{ $t("text.delete") }}</el-button
@@ -202,10 +196,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="modifyNodeType(scope.row)"
                   v-hasPermi="['bcos:chain:updateNodeDesc']"
                   >{{ $t("text.update") }}</el-button
@@ -216,10 +208,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="restartNode(scope.row)"
                   v-hasPermi="['bcos:chain:restartNode']"
                   >{{ $t("text.restart") }}</el-button
@@ -227,7 +217,6 @@ permissions and * limitations under the License. */
                 <el-button
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="remarks(scope.row)"
                   >{{ $t("text.remarks") }}</el-button
                 >
@@ -360,7 +349,6 @@ export default {
       nodesDialogOptions: {},
       loadingNodes: false,
       nodeData: [],
-      disabled: false,
       modifyNode: {},
       modifyDialogVisible: false,
       addNodeShow: false,
@@ -450,11 +438,11 @@ export default {
     clearInterval(this.progressInterval);
   },
   mounted() {
-    if (localStorage.getItem("root") === "admin") {
-      this.disabled = false;
-    } else {
-      this.disabled = true;
-    }
+    // if (localStorage.getItem("root") === "admin") {
+    //   this.disabled = false;
+    // } else {
+    //   this.disabled = true;
+    // }
     Bus.$on("changeConfig", (data) => {
       this.getData();
     });
