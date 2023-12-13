@@ -35,6 +35,9 @@ export default {
     props: {
         modifyNode: {
             type: Object
+        },
+        sealerNodeCount: {
+            type: Number
         }
     },
 
@@ -110,6 +113,14 @@ export default {
         submit(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
+                    // 现在共识节点的数量小于等于2个，不允许再修改共识节点为观察或者游离节点
+                    if (this.sealerNodeCount <= 2 && this.modifyNode.nodeType == 'sealer' && this.modifyForm.nodeType != 'sealer') {
+                        this.$message({
+                            type: 'warning',
+                            message: this.$t("nodes.selearCountWarn")
+                        })
+                        return;
+                    }
                     if (this.modifyNode.nodeType === 'sealer' && this.modifyForm.nodeType === 'observer') {
                         this.$confirm(this.$t("nodes.observerText"), this.$t("text.tips"), {
                             confirmButtonText: this.$t("text.sure"),

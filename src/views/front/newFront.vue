@@ -212,6 +212,7 @@
             @nodeModifyClose="nodeModifyClose"
             @nodeModifySuccess="nodeModifySuccess"
             :modifyNode="modifyNode"
+            :sealerNodeCount="sealerNodeCount"
           ></modify-node-type>
         </el-dialog>
         <el-dialog
@@ -293,6 +294,7 @@ export default {
       modifyDialogVisible: false,
       remarkNode: {},
       remarkDialogVisible: false,
+      sealerNodeCount: 0
     };
   },
   computed: {
@@ -654,6 +656,7 @@ export default {
                 return item.nodeId;
               });
               this.nodeData = [];
+              this.sealerNodeCount = 0;
               nodesAuthorList.forEach((item, index) => {
                 nodesStatusList.forEach((it) => {
                   if (nodesStatusIdList.includes(item.nodeId)) {
@@ -672,6 +675,9 @@ export default {
                   item.pbftView = "--";
                   item.blockNumber = "--";
                   item.nodeActive = 1;
+                }
+                if (nodeType == "sealer") {
+                    this.sealerNodeCount += 1
                 }
               });
               this.nodeData = unique(this.nodeData, "nodeId");
