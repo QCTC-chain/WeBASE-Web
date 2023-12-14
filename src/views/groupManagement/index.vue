@@ -82,22 +82,20 @@
               <template slot-scope="scope">
                 <el-button
                   type="text"
-                  size="small"
                   @click="queryCrudGroup(scope.row)"
                   v-hasPermi="['bcos:groups:operate']"
                   >{{ $t("text.update") }}</el-button
                 >
                 <el-button
                   type="text"
-                  size="small"
                   :loading="dropLoading && dropIndex === scope.row.groupId"
                   @click="queryDeleteGroupData(scope.row)"
                   v-hasPermi="['bcos:groups:operate']"
                   >{{ $t("text.dropGroupData") }}</el-button
                 >
                 <el-button
+                  style="margin-left: 0px;"
                   type="text"
-                  size="small"
                   v-if="scope.row.groupType !== 1"
                   :disabled="scope.row.groupType === 1 ? true : false"
                   @click="exportFile(scope.row)"
@@ -105,7 +103,6 @@
                 >
                 <el-button
                   type="text"
-                  size="small"
                   @click="remarks(scope.row)"
                   >{{ $t("text.remarks") }}</el-button
                 >
