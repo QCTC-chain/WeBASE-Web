@@ -600,6 +600,7 @@ export default {
         starting: "启动中",
         notice: "注意：确保群组至少有两个共识节点，如果少于2个，将会报错。",
         addContract: "导入合约",
+        selearCountWarn: "群组至少需要两个共识节点"
     },
     contracts: {
         createFile: "新建文件",

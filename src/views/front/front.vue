@@ -10,7 +10,7 @@ permissions and * limitations under the License. */
   <div class="front-module">
     <nav-menu :headTitle="$t('title.nodeTitle')"></nav-menu>
     <div class="module-wrapper">
-      <div class="search-part" style="padding-top: 20px" v-if="!disabled">
+      <div class="search-part" style="padding-top: 20px">
         <div class="search-part-left">
           <el-button
             type="primary"
@@ -157,10 +157,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="start(scope.row)"
                   v-hasPermi="['bcos:chain:startNode']"
                   >{{ $t("text.start") }}</el-button
@@ -172,10 +170,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="stop(scope.row)"
                   v-hasPermi="['bcos:chain:stopNode']"
                   >{{ $t("text.stop") }}</el-button
@@ -188,10 +184,8 @@ permissions and * limitations under the License. */
                       configData &&
                       configData.chainStatus == 3)
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="deleted(scope.row)"
                   v-hasPermi="['bcos:chain:deleteNode']"
                   >{{ $t("text.delete") }}</el-button
@@ -202,10 +196,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="modifyNodeType(scope.row)"
                   v-hasPermi="['bcos:chain:updateNodeDesc']"
                   >{{ $t("text.update") }}</el-button
@@ -216,10 +208,8 @@ permissions and * limitations under the License. */
                     configData &&
                     configData.chainStatus == 3
                   "
-                  :disabled="disabled"
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="restartNode(scope.row)"
                   v-hasPermi="['bcos:chain:restartNode']"
                   >{{ $t("text.restart") }}</el-button
@@ -227,7 +217,6 @@ permissions and * limitations under the License. */
                 <el-button
                   type="text"
                   size="small"
-                  :style="{ color: disabled ? '#666' : '' }"
                   @click="remarks(scope.row)"
                   >{{ $t("text.remarks") }}</el-button
                 >
@@ -255,6 +244,7 @@ permissions and * limitations under the License. */
             @nodeModifyClose="nodeModifyClose"
             @nodeModifySuccess="nodeModifySuccess"
             :modifyNode="modifyNode"
+            :sealerNodeCount="sealerNodeCount"
           ></modify-node-type>
         </el-dialog>
         <add-node
@@ -355,13 +345,11 @@ export default {
       total: 0,
       nodetotal: 0,
       loading: false,
-      nodesLoading: false,
       nodesDialogVisible: false,
       nodesDialogTitle: "",
       nodesDialogOptions: {},
       loadingNodes: false,
       nodeData: [],
-      disabled: false,
       modifyNode: {},
       modifyDialogVisible: false,
       addNodeShow: false,
@@ -383,6 +371,7 @@ export default {
       loadingTxt: this.$t("text.loading"),
       optShow: false,
       remarkDialogVisible: false,
+      sealerNodeCount: 0
     };
   },
   computed: {
@@ -451,17 +440,18 @@ export default {
     clearInterval(this.progressInterval);
   },
   mounted() {
-    if (localStorage.getItem("root") === "admin") {
-      this.disabled = false;
-    } else {
-      this.disabled = true;
-    }
+    // if (localStorage.getItem("root") === "admin") {
+    //   this.disabled = false;
+    // } else {
+    //   this.disabled = true;
+    // }
     Bus.$on("changeConfig", (data) => {
       this.getData();
     });
     Bus.$on("changGroup", (data) => {
       this.getFrontTable();
     });
+    
     //this.getConfigList();
 
     let isDeploy = false;
@@ -949,15 +939,21 @@ export default {
         .then((res) => {
           if (res.data.code === 0) {
             if (res.data.data) {
+              this.sealerNodeCount = 0;
               for (let i = 0; i < this.frontData.length; i++) {
                 // this.frontData[i].nodeType = "";
                 for (let index = 0; index < res.data.data.length; index++) {
                   if (this.frontData[i].nodeId == res.data.data[index].nodeId) {
+                    let nodeType =  res.data.data[index].nodeType;
                     this.$set(
                       this.frontData[i],
                       "nodeType",
-                      res.data.data[index].nodeType
+                      nodeType
                     );
+
+                    if (nodeType == "sealer") {
+                      this.sealerNodeCount += 1
+                    }
                   }
                 }
               }
