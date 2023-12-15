@@ -525,8 +525,12 @@ export default {
             let ipconf = [],
                 deployNodeInfoList = [],
                 hostIdList = []
+            let groupId = localStorage.getItem("groupId1");
+            if (!groupId) {
+                groupId = 1;
+            }
             for (let i = 0; i < this.nodeList.length; i++) {
-                ipconf[i] = `${this.nodeList[i].ip}:1 agency1 1 ${this.nodeList[i].p2pPort},${this.nodeList[i].channelPort},${this.nodeList[i].rpcPort}`;
+                ipconf[i] = `${this.nodeList[i].ip}:1 agency1 ${groupId} ${this.nodeList[i].p2pPort},${this.nodeList[i].channelPort},${this.nodeList[i].rpcPort}`;
                 hostIdList.push(this.nodeList[i].hostId)
                 deployNodeInfoList[i] = {};
                 deployNodeInfoList[i].hostId = this.nodeList[i].hostId;
@@ -753,11 +757,15 @@ export default {
                 });
         },
         addNode() {
+            let groupId = localStorage.getItem("groupId1");
+            if (!groupId) {
+                groupId = 1;
+            }
             let data = this.formatParam()
             const reqData = {
                 chainName: data.chainName,
                 deployNodeInfoList: data.deployNodeInfoList,
-                groupId: 1,
+                groupId: groupId,
                 agencyName: data.agencyName,
                 encryptType: data.encryptType
             }
