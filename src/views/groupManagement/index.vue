@@ -163,7 +163,7 @@
               :itemGroupData="itemGroupData"
             ></modify-group>
           </el-dialog>
-          <el-dialog
+          <!-- <el-dialog
             :title="$t('text.joinExitedGroup')"
             :visible.sync="joinGroupTipsVisibility"
             v-if="joinGroupTipsVisibility"
@@ -172,6 +172,9 @@
             <join-group-tips
               @joinGroupTipsSuccess="joinGroupTipsSuccess"
             ></join-group-tips>
+          </el-dialog> -->
+          <el-dialog :title="$t('text.groupConfTitle')" :visible.sync="groupConfVisible" width="557px" :close-on-click-modal="false" v-if="groupConfVisible" center append-to-body>
+            <group-conf @closeGroupConf="closeGroupConf" @addGroupSuccess="addGroupSuccess"></group-conf>
           </el-dialog>
           <el-dialog
             :title="$t('nodes.description')"
@@ -204,6 +207,7 @@ import contentHead from "@/components/contentHead";
 import generateGroup from "./components/generateGroup";
 import modifyGroup from "./components/modifyGroup";
 import joinGroupTips from "./components/joinGroupTips";
+import groupConf from "./components/groupConf.vue";
 import {
   crudGroup,
   getUpdateGroup,
@@ -220,7 +224,8 @@ export default {
     generateGroup,
     modifyGroup,
     joinGroupTips,
-        'nav-menu':NavMenu,
+    'nav-menu':NavMenu,
+    groupConf,
   },
 
   props: {},
@@ -243,6 +248,7 @@ export default {
       updateGroupType: "",
       modifyGroupId: "",
       joinGroupTipsVisibility: false,
+      groupConfVisible: false,
       descriptionShow: false,
       nodes: {
         description: "",
@@ -303,7 +309,8 @@ export default {
       this.generateGroupVisibility = true;
     },
     addHadGroup() {
-      this.joinGroupTipsVisibility = true;
+      // this.joinGroupTipsVisibility = true;
+      this.groupConfVisible = true;
     },
     modify() {
       this.modifyGroupVisibility = true;
@@ -330,6 +337,12 @@ export default {
     joinGroupTipsSuccess() {
       this.joinGroupTipsVisibility = false;
       this.queryGroupTable();
+    },
+    closeGroupConf() {
+      this.groupConfVisible = false;
+    },
+    addGroupSuccess() {
+      this.closeGroupConf()
     },
     queryGroupTable() {
       let reqData = {

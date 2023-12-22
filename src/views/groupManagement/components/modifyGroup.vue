@@ -24,15 +24,15 @@
         <el-dialog :title="$t('text.joinExitedGroup')+'('+ 'ID:'+' '+`${itemNodeData.groupId}`+')'" :visible.sync="addGroupVisibility" v-if="addGroupVisibility" center append-to-body>
             <node-add-group @addGroupSuccess="addGroupSuccess" @addClose="addClose" :itemGroupData="itemGroupData" :addGroupData="addGroupData"></node-add-group>
         </el-dialog>
-        <el-dialog :title="$t('text.joinExitedGroup')+'('+ 'ID:'+' '+`${itemNodeData.groupId}`+')'" :visible.sync="agreeNodeVisibility" v-if="agreeNodeVisibility" center append-to-body>
+        <!-- <el-dialog :title="$t('text.joinExitedGroup')+'('+ 'ID:'+' '+`${itemNodeData.groupId}`+')'" :visible.sync="agreeNodeVisibility" v-if="agreeNodeVisibility" center append-to-body>
             <agree-node @addSuccess="addSuccess" @addClose="addClose" :itemNodeData="itemNodeData" @nodeHadGroup="nodeHadGroup"></agree-node>
-        </el-dialog>
+        </el-dialog> -->
     </div>
 </template>
 
 <script>
 
-import { createGroup, getFronts, crudGroup, groupStatus, getNodeList, p2pNodeList, getConsensusNodeId } from "@/util/api"
+import { getFronts, crudGroup, groupStatus, p2pNodeList, getConsensusNodeId } from "@/util/api"
 import nodeAddGroup from "./nodeAddGroup";
 import agreeNode from "./agreeNode";
 import { substring_0_40 } from "@/util/util"
@@ -127,7 +127,9 @@ export default {
     methods: {
 
         queryNodeList() {
-            let groupId = localStorage.getItem("groupId1");
+            // let groupId = localStorage.getItem("groupId1");
+            let groupId = this.itemGroupData.groupId;
+            console.log("@@this.itemGroupData:", this.itemGroupData);
 
             p2pNodeList(groupId)
                 .then(res => {
@@ -156,7 +158,13 @@ export default {
             getFronts(data)
                 .then(res => {
                     if (res.data.code === 0) {
-                        this.nodeList = res.data.data;
+                        // 停止的front不使用，因为front和节点是在一起的
+                        this.nodeList = []
+                        res.data.data.forEach(item => {
+                            if (item.status == 1) {
+                                this.nodeList.push(item);
+                            }
+                        })
                         this.nodeIdList = [];
                         var recomNodelist = [];
                         var outsideList = []
@@ -396,17 +404,19 @@ export default {
                     this.$confirm(this.$t("text.confirmStop"), {
                         type: 'warning'
                     })
-                        .then(_ => {
-                            this.queryCrudGroup(val, type)
-                        })
-                        .catch(_ => { });
+                    .then(_ => {
+                        this.queryCrudGroup(val, type)
+                    })
+                    .catch(_ => { });
                 } else {
                     this.queryCrudGroup(val, type)
                 }
 
             } else {
-                // this.queryCreateGroup(val)
-                this.queryAgreeNode(val)
+                // this.queryAgreeNode(val)
+                this.itemNodeData = val
+                this.itemNodeData.groupId = this.itemGroupData.groupId
+                this.nodeHadGroup(this.itemNodeData)
             }
         },
         queryCrudGroup(val, type) {
