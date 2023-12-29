@@ -340,7 +340,8 @@ export default {
         importContractTip: 'Decoding transaction output requires compiling contract in IDE or import abi of contract',
         nodeActive:'Node active',
         nodeNotActive:'Node not active',
-        remarks:'remarks'
+        remarks:'remarks',
+        removeNodeBeforeStop : 'Modify the node type to remove before stopping group.'
     },
     rule: {
         textLong: "1 to 32 characters in length",

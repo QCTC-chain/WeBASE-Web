@@ -341,6 +341,7 @@ export default {
         bindSuccessed:'绑定私钥成功',
         unsavedContract: '合约已修改，请对合约处理再进行下一步操作，是否保存',
         noSave:'合约未保存，请进行下一步操作',
+        removeNodeBeforeStop : '先修改节点为游离节点，再停止群组'
     },
     rule: {
         textLong: "长度在 1 到 32 个字符",

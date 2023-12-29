@@ -129,7 +129,6 @@ export default {
         queryNodeList() {
             // let groupId = localStorage.getItem("groupId1");
             let groupId = this.itemGroupData.groupId;
-            console.log("@@this.itemGroupData:", this.itemGroupData);
 
             p2pNodeList(groupId)
                 .then(res => {
@@ -401,6 +400,15 @@ export default {
             this.operateType = type;
             if (type != 'add') {
                 if (type === 'stop') {
+                    // 节点在群组中是游离节点才可以停止
+                    if (val.groupId != '-') {
+                        this.$message({
+                            type: "error",
+                            message: this.$t("text.removeNodeBeforeStop")
+                        })
+                        return;
+                    }
+
                     this.$confirm(this.$t("text.confirmStop"), {
                         type: 'warning'
                     })
