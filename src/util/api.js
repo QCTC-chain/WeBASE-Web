@@ -441,7 +441,7 @@ export function roleList(data, list) {
 export function accountList(data, list) {
     const params = reviseParam(data, list);
     return get({
-        url: `${url.ORG_LIST}/account/accountList/${params.str}`,
+        url: `/prod-api/system/user/list`,
         method: 'get',
         params: params.querys,
         headers: getAuthHeaders()

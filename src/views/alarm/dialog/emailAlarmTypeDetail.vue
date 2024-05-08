@@ -14,7 +14,7 @@
                     </el-form-item>
                     <el-form-item :label="$t('alarm.recipientEmail')">
                         <el-select v-model="alarmForm.userList" multiple :placeholder="$t('alarm.pleaseSlect')" @change='userChange($event)' style="width: 250px;">
-                            <el-option v-for="item in accountList" :key="item.account" :label="item.account + '(' + item.email + ')'" :value="item.email">
+                            <el-option v-for="item in accountList" :key="item.userName" :label="item.userName + '(' + item.email + ')'" :value="item.email">
                             </el-option>
                         </el-select>
                         <el-tooltip class="item" effect="dark" :content="$t('alarm.recipientEmailTip')" placement="top-start">
@@ -153,16 +153,15 @@ export default {
         },
         getAccountList() {
             let reqData = {
-                pageNumber: this.currentPage,
-                pageSize: this.pageSize
             },
                 reqQuery = {
-                    account: ''
+                    pageNum: 1,
+                    pageSize: 100,
                 };
             accountList(reqData, reqQuery)
                 .then(res => {
-                    if (res.data.code === 0) {
-                        this.accountList = res.data.data || [];
+                    if (res.data.code === 200) {
+                        this.accountList = res.data.rows || [];
                     } else {
                         this.$message({
                             message: this.$chooseLang(res.data.code),
