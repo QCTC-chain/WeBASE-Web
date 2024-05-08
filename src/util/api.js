@@ -1206,6 +1206,16 @@ export function getHostList() {
     })
 }
 
+//修改资源配置
+export function setResource(data) {
+    return get({
+      url: `${url.ORG_LIST}/front/setResource`,
+      method: "post",
+      data: data,
+      headers: getAuthHeaders(),
+    });
+}
+
 //治理委员会list
 export function committeeList(data) {
     return get({

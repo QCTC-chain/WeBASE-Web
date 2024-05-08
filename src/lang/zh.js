@@ -40,6 +40,7 @@ export default {
         delete: "删除",
         update: "修改",
         updatePassword: "修改密码",
+        updateSetting: "修改配置",
         email: "修改",
         confirmDelete: "确认删除？",
         confirmDorp: "先停止群组,再删除本地群组数据,确认？",
@@ -413,7 +414,9 @@ export default {
         frontId: '请选择节点',
         checkContract: '请选择合约',
         contractAddressLong: '合约地址长度应该为42',
-        contractAddressHex: '合约地址以0x或0X开头且为十六进制'
+        contractAddressHex: '合约地址以0x或0X开头且为十六进制',
+        inputCPU: "请输入cpu核数",
+        inputMemory: "请输入内存",
     },
     head: {
         helpText: "帮助文档",
@@ -526,6 +529,7 @@ export default {
         nodeList: "节点列表",
         nodeDescription: "节点管理说明：可以通过节点管理设置节点类型。包括：1、根据节点NodeID设置对应节点为共识节点。2、 根据节点NodeID设置对应节点为观察节点。3、根据节点NodeID设置对应节点为游离节点。",
         updateNodesType: "修改节点类型",
+        updateNodesSetting: "修改配置",
         frontConfig: "节点前置配置",
         addFrontSuccessMsg: "添加前置成功",
         addFrontErrMsg: "添加前置失败",
@@ -601,7 +605,9 @@ export default {
         starting: "启动中",
         notice: "注意：确保群组至少有两个共识节点，如果少于2个，将会报错。",
         addContract: "导入合约",
-        selearCountWarn: "群组至少需要两个共识节点"
+        selearCountWarn: "群组至少需要两个共识节点",
+        cpus:"CPU",
+        memory:"内存"
     },
     contracts: {
         createFile: "新建文件",

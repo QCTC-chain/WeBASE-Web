@@ -27,6 +27,12 @@
                 <el-form-item :label='$t("nodes.nodeCount")'>
                     <el-input v-model="nodeFrom.nodecount" :placeholder="$t('nodes.inputNodes')" type="number" style="width: 240px;" maxlength="16"></el-input>
                 </el-form-item>
+                <el-form-item :label='"CPU(核)"' prop="cpus">
+                    <el-input v-model="nodeFrom.cpus" :placeholder="$t('text.input')" type="number" style="width: 240px;" maxlength="16"></el-input>
+                </el-form-item>
+                <el-form-item :label='$t("nodes.memory")+"(MB)"' prop="memory">
+                    <el-input v-model="nodeFrom.memory" :placeholder="$t('text.input')" type="number" style="width: 240px;" maxlength="16"></el-input>
+                </el-form-item>
             </el-form>
             <div class="text-right sure-btn" style="margin-top:10px">
                 <el-button @click="modelClose">{{this.$t("text.cancel")}}</el-button>
@@ -63,7 +69,9 @@ export default {
                 p2pPort: 30300,
                 channelPort: 20200,
                 rpcPort: 8545,
-                nodecount: 1
+                nodecount: 1,
+                cpus: 1,
+                memory: 1
             },
             loading: false,
             hostList: [],
@@ -88,7 +96,13 @@ export default {
                 ],
                 rpcPort: [
                     { required: true, message: this.$t('text.notNull'), trigger: 'blur' },
-                ]
+                ],
+                cpus: [
+                    { required: true, message: this.$t('text.notNull'), trigger: 'blur' },
+                ],
+                memory: [
+                    { required: true, message: this.$t('text.notNull'), trigger: 'blur' },
+                ],
             }
             return data
         }
@@ -207,6 +221,8 @@ export default {
                         p2pPort: parseInt(this.nodeFrom.p2pPort) + i,
                         channelPort: parseInt(this.nodeFrom.channelPort) + i,
                         rpcPort: parseInt(this.nodeFrom.rpcPort) + i,
+                        cpus: parseInt(this.nodeFrom.cpus) + i,
+                        memory: parseInt(this.nodeFrom.memory) + i
                     }
                     if (!node) {
                         list.push(data)
@@ -270,7 +286,6 @@ export default {
             console.log(this.frontList)
             let validate = true
             let list = []
-            console.log(sessionStorage.getItem("nodeList"))
             if (!!sessionStorage.getItem("nodeList")) {
                 list = JSON.parse(sessionStorage.getItem("nodeList"))
             }

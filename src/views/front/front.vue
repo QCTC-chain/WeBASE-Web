@@ -210,6 +210,18 @@ permissions and * limitations under the License. */
                   "
                   type="text"
                   size="small"
+                  @click="modifySetting(scope.row)"
+                  v-hasPermi="['bcos:chain:updateNodeDesc']"
+                  >{{ $t("text.updateSetting") }}</el-button
+                >
+                <el-button
+                  v-if="
+                    scope.row.status == 1 &&
+                    configData &&
+                    configData.chainStatus == 3
+                  "
+                  type="text"
+                  size="small"
                   @click="restartNode(scope.row)"
                   v-hasPermi="['bcos:chain:restartNode']"
                   >{{ $t("text.restart") }}</el-button
@@ -246,6 +258,20 @@ permissions and * limitations under the License. */
             :modifyNode="modifyNode"
             :sealerNodeCount="sealerNodeCount"
           ></modify-node-type>
+        </el-dialog>
+        <el-dialog
+          :title="$t('nodes.updateNodesSetting')"
+          :visible.sync="modifySettingDialogVisible"
+          width="387px"
+          v-if="modifySettingDialogVisible"
+          center
+        >
+          <modify-node-setting
+            @nodeModifyClose="settingModifySuccess"
+            @nodeModifySuccess="settingModifySuccess"
+            :modifyNodeSetting="modifyNodeSetting"
+            :sealerNodeCount="sealerNodeCount"
+          ></modify-node-setting>
         </el-dialog>
         <add-node
           v-if="addNodeShow"
@@ -290,6 +316,7 @@ permissions and * limitations under the License. */
 
 <script>
 import modifyNodeType from "./components/modifyNodeType";
+import modifyNodeSetting from "./components/modifyNodeSetting";
 import {
   getFronts,
   addnodes,
@@ -325,6 +352,7 @@ export default {
   components: {
     "v-setFront": setFront,
     modifyNodeType,
+    modifyNodeSetting,
     "add-node": addNode,
     "new-node": newNode,
     "update-node": updateNode,
@@ -352,6 +380,8 @@ export default {
       nodeData: [],
       modifyNode: {},
       modifyDialogVisible: false,
+      modifyNodeSetting: {},
+      modifySettingDialogVisible: false,
       addNodeShow: false,
       frontInterval: null,
       newNodeShow: false,
@@ -371,7 +401,7 @@ export default {
       loadingTxt: this.$t("text.loading"),
       optShow: false,
       remarkDialogVisible: false,
-      sealerNodeCount: 0
+      sealerNodeCount: 0,
     };
   },
   computed: {
@@ -425,9 +455,19 @@ export default {
           width: 80,
         },
         {
+          enName: "cpus",
+          name: this.$t("nodes.cpus")+"(核)",
+          width: 80,
+        },
+        {
+          enName: "memory",
+          name: this.$t("nodes.memory")+"(MB)",
+          width: 80,
+        },
+        {
           enName: "operate",
           name: this.$t("nodes.operation"),
-          width: 180,
+          width: 200,
         },
       ];
       return data;
@@ -451,7 +491,7 @@ export default {
     Bus.$on("changGroup", (data) => {
       this.getFrontTable();
     });
-    
+
     //this.getConfigList();
 
     let isDeploy = false;
@@ -944,15 +984,11 @@ export default {
                 // this.frontData[i].nodeType = "";
                 for (let index = 0; index < res.data.data.length; index++) {
                   if (this.frontData[i].nodeId == res.data.data[index].nodeId) {
-                    let nodeType =  res.data.data[index].nodeType;
-                    this.$set(
-                      this.frontData[i],
-                      "nodeType",
-                      nodeType
-                    );
+                    let nodeType = res.data.data[index].nodeType;
+                    this.$set(this.frontData[i], "nodeType", nodeType);
 
                     if (nodeType == "sealer") {
-                      this.sealerNodeCount += 1
+                      this.sealerNodeCount += 1;
                     }
                   }
                 }
@@ -1195,6 +1231,10 @@ export default {
       this.modifyNode = param;
       this.modifyDialogVisible = true;
     },
+    modifySetting(param) {
+      this.modifyNodeSetting = param;
+      this.modifySettingDialogVisible = true;
+    },
     copyNodeIdKey(val) {
       if (!val) {
         this.$message({
@@ -1220,6 +1260,13 @@ export default {
     },
     nodeModifyClose() {
       this.modifyDialogVisible = false;
+    },
+    settingModifySuccess() {
+      this.modifySettingDialogVisible = false;
+      this.getNodeTable();
+    },
+    settingModifyClose() {
+      this.modifySettingDialogVisible = false;
     },
     Status(val) {
       switch (val) {
