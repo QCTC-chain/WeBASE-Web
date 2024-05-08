@@ -7,7 +7,7 @@
       label-width="90px"
       class="demo-ruleForm"
     >
-      <el-form-item :label="'CPU(核)'" prop="cpus">
+      <el-form-item :label="$t('nodes.cpus')" prop="cpus">
         <el-input
           v-model="modifyForm.cpus"
           :placeholder="$t('text.input')"
@@ -15,7 +15,7 @@
           maxlength="16"
         ></el-input>
       </el-form-item>
-      <el-form-item :label="$t('nodes.memory') + '(MB)'" prop="memory">
+      <el-form-item :label="$t('nodes.memory')" prop="memory">
         <el-input
           v-model="modifyForm.memory"
           :placeholder="$t('text.input')"
@@ -105,7 +105,7 @@ export default {
               if (res.data.code === 0 || res.data.code === 200) {
                 this.$message({
                   type: "success",
-                  message: "设置成功",
+                  message: this.$t("text.configSuccessed"),
                 });
                 this.$emit("nodeModifySuccess");
               } else {
@@ -125,84 +125,6 @@ export default {
           return false;
         }
       });
-    },
-    queryConsensusNodeId() {
-      this.loading = true;
-      let reqData = {
-        groupId: localStorage.getItem("groupId1"),
-        nodeType: this.modifyForm.nodeType,
-        nodeId: this.modifyNode.nodeId,
-        fromAddress: this.modifyForm.adminRivateKey,
-      };
-      consensusNodeId(reqData)
-        .then((res) => {
-          this.loading = false;
-          if (res.data.code === 0) {
-            this.$message({
-              type: "success",
-              message: this.$t("text.updateSuccessMsg"),
-            });
-            this.$emit("nodeModifySuccess");
-          } else {
-            this.$message({
-              message: this.$chooseLang(res.data.code),
-              type: "error",
-              duration: 2000,
-            });
-          }
-        })
-        .catch((err) => {
-          this.loading = false;
-          this.$message({
-            message: err.data || this.$t("text.systemError"),
-            type: "error",
-            duration: 2000,
-          });
-        });
-    },
-    changeRivateKey(val) {
-      this.adminRivateKey = val;
-    },
-    getUserData: function () {
-      let reqData = {
-        groupId: localStorage.getItem("groupId1"),
-        pageNumber: 1,
-        pageSize: 1000,
-      };
-      let query = {};
-      if (localStorage.getItem("root") === "developer") {
-        query.account = localStorage.getItem("user");
-      }
-      getUserList(reqData, query)
-        .then((res) => {
-          if (res.data.code === 0) {
-            if (res.data.data.length === 0) {
-              this.ruleTest = this.$t("text.ruleAddUser");
-            }
-            this.adminRivateKeyList = [];
-            res.data.data.forEach((value) => {
-              if (value.hasPk === 1) {
-                this.adminRivateKeyList.push(value);
-              }
-            });
-            if (this.adminRivateKeyList.length)
-              this.modifyForm.adminRivateKey =
-                this.adminRivateKeyList[0]["address"];
-          } else {
-            this.$message({
-              message: this.$chooseLang(res.data.code),
-              type: "error",
-              duration: 2000,
-            });
-          }
-        })
-        .catch((err) => {
-          this.$message({
-            message: err.data || this.$t("text.systemError"),
-            type: "error",
-            duration: 2000,
-          });
-        });
     },
   },
 };

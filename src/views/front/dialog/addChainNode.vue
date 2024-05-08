@@ -27,10 +27,10 @@
                 <el-form-item :label='$t("nodes.nodeCount")'>
                     <el-input v-model="nodeFrom.nodecount" :placeholder="$t('nodes.inputNodes')" type="number" style="width: 240px;" maxlength="16"></el-input>
                 </el-form-item>
-                <el-form-item :label='"CPU(核)"' prop="cpus">
+                <el-form-item :label='$t("nodes.cpus")' prop="cpus">
                     <el-input v-model="nodeFrom.cpus" :placeholder="$t('text.input')" type="number" style="width: 240px;" maxlength="16"></el-input>
                 </el-form-item>
-                <el-form-item :label='$t("nodes.memory")+"(MB)"' prop="memory">
+                <el-form-item :label='$t("nodes.memory")' prop="memory">
                     <el-input v-model="nodeFrom.memory" :placeholder="$t('text.input')" type="number" style="width: 240px;" maxlength="16"></el-input>
                 </el-form-item>
             </el-form>

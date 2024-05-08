@@ -203,11 +203,6 @@ permissions and * limitations under the License. */
                   >{{ $t("text.update") }}</el-button
                 >
                 <el-button
-                  v-if="
-                    scope.row.status == 1 &&
-                    configData &&
-                    configData.chainStatus == 3
-                  "
                   type="text"
                   size="small"
                   @click="modifySetting(scope.row)"
@@ -456,12 +451,12 @@ export default {
         },
         {
           enName: "cpus",
-          name: this.$t("nodes.cpus")+"(核)",
+          name: this.$t("nodes.cpus"),
           width: 80,
         },
         {
           enName: "memory",
-          name: this.$t("nodes.memory")+"(MB)",
+          name: this.$t("nodes.memory"),
           width: 80,
         },
         {

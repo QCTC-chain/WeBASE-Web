@@ -43,6 +43,7 @@ export default {
         delete: "Delete",
         update: "Change",
         updatePassword: "Change Password",
+        updateSetting: "Config",
         email: "Change",
         confirmDelete: "Are you sure to delete?",
         confirmDorp: "Make sure stop the group first, then drop local group data. Are you sure ?",
@@ -341,7 +342,8 @@ export default {
         nodeActive:'Node active',
         nodeNotActive:'Node not active',
         remarks:'remarks',
-        removeNodeBeforeStop : 'Modify the node type to remove before stopping group.'
+        removeNodeBeforeStop : 'Modify the node type to remove before stopping group.',
+        configSuccessed:'Config Success. Please restart the node to apply the configuration.'
     },
     rule: {
         textLong: "1 to 32 characters in length",
@@ -415,7 +417,9 @@ export default {
         checkContract: 'Please check contract',
         addContractAddress: 'bind',
         contractAddressLong: 'contract address\' length supposed to be 42',
-        contractAddressHex: 'contract address supposed to start with 0x/0X and all hex string'
+        contractAddressHex: 'contract address supposed to start with 0x/0X and all hex string',
+        inputCPU: "Please enter CPU cores",
+        inputMemory: 'Please enter memory size(GB)',
     },
     head: {
         helpText: "Document",
@@ -524,6 +528,7 @@ export default {
         nodeList: "Node List",
         nodeDescription: "Node management Description: node types can be set through node management. Including: 1. Set the corresponding node as a consensus node according to the node node ID. 2. Set the corresponding node as the observation node according to the node nodeid. 3. Set the corresponding node as free node according to node nodeid.",
         updateNodesType: "Update Nodes Type",
+        updateNodesSetting: "Update Nodes Resource",
         frontConfig: "Front Configure",
         addFrontSuccessMsg: "Add Front Success",
         addFrontErrMsg: "add Front Fail",
@@ -599,7 +604,9 @@ export default {
         starting: "starting",
         notice: "Note: Make sure the group has at least two consensus nodes. If there are less than two, an error will be reported.",
         addContract: "Import Contract",
-        selearCountWarn: "Groups require at least two consensus nodes"
+        selearCountWarn: "Groups require at least two consensus nodes",
+        cpus:"CPU(Cores)",
+        memory:"Mems(GB)"
     },
     contracts: {
         createFile: "Create File",
