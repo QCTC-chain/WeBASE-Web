@@ -539,6 +539,8 @@ export default {
                 deployNodeInfoList[i].p2pPort = this.nodeList[i].p2pPort;
                 deployNodeInfoList[i].channelPort = this.nodeList[i].channelPort;
                 deployNodeInfoList[i].rpcPort = this.nodeList[i].rpcPort;
+                deployNodeInfoList[i].cpus = this.nodeList[i].cpus;
+                deployNodeInfoList[i].memory = this.nodeList[i].memory;
             }
             let data = {
                 chainName: "default_chain",
