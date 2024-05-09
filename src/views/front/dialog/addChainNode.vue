@@ -365,4 +365,7 @@ export default {
 </script>
 
 <style>
+.el-dialog__body {
+  max-height: 530px;
+}
 </style>
