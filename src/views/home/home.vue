@@ -349,11 +349,8 @@ export default {
   mounted: function () {
     this.getConfigType();
     this.groupId = localStorage.getItem("groupId1");
-    if (
-      this.groupId
-      // || (localStorage.getItem("configData1") == 3 ||
-      //   localStorage.getItem("deployType1") == 0)
-    ) {
+
+    if (this.groupId && this.groupId.length > 0) {
       this.getNetworkDetails();
       this.getNodeTable();
       this.getBlockList();
@@ -365,6 +362,9 @@ export default {
       });
     }
     Bus.$on("changGroup", (val) => {
+      if (!val || val.length < 1) {
+        return;
+      }
       this.groupId = val;
       this.getNetworkDetails();
       this.getNodeTable();
